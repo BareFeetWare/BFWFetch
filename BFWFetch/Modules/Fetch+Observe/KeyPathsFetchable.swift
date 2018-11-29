@@ -16,9 +16,17 @@ public protocol KeyPathsFetchable: Observable {
 
 public extension KeyPathsFetchable {
     
-    public func fetch<T: Decodable>(keyPath: ReferenceWritableKeyPath<Self, T>) throws {
+    func request<T>(for keyPath: KeyPath<Self, T>) throws -> URLRequest {
+        throw Fetch.Error.missingRequest
+    }
+
+    public func fetch<T: Decodable>(
+        keyPath: ReferenceWritableKeyPath<Self, T>,
+        from request: URLRequest? = nil
+        ) throws
+    {
+        let request = try request ?? self.request(for: keyPath)
         post(keyPath: keyPath, event: .inProgress)
-        let request = try self.request(for: keyPath)
         T.fetch(with: request) { result in
             switch result {
             case .success(let value):

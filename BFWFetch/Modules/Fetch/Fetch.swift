@@ -17,6 +17,7 @@ public enum Fetch {
     public enum Error: Swift.Error {
         case authentication
         case url
+        case missingRequest
         case data
         case decoding
     }
