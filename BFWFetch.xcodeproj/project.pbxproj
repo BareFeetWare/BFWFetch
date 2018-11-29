@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E29A36B321AF9A290069DF78 /* KeyPathsFetchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29A36B221AF9A290069DF78 /* KeyPathsFetchable.swift */; };
 		E2A55E9221AAD3A500812DC6 /* BFWFetch.h in Headers */ = {isa = PBXBuildFile; fileRef = E2A55E9021AAD3A500812DC6 /* BFWFetch.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E2A55EB421AAD48E00812DC6 /* Decodable+Fetch.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A55EAE21AAD48D00812DC6 /* Decodable+Fetch.swift */; };
 		E2A55EB521AAD48E00812DC6 /* Fetch.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A55EAF21AAD48D00812DC6 /* Fetch.swift */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E29A36B221AF9A290069DF78 /* KeyPathsFetchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyPathsFetchable.swift; sourceTree = "<group>"; };
 		E2A55E8D21AAD3A500812DC6 /* BFWFetch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BFWFetch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2A55E9021AAD3A500812DC6 /* BFWFetch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BFWFetch.h; sourceTree = "<group>"; };
 		E2A55E9121AAD3A500812DC6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -41,6 +43,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E29A36B421AF9BA80069DF78 /* Fetch+Observe */ = {
+			isa = PBXGroup;
+			children = (
+				E2A55EC121AAD98E00812DC6 /* Fetch+Event.swift */,
+				E29A36B221AF9A290069DF78 /* KeyPathsFetchable.swift */,
+			);
+			path = "Fetch+Observe";
+			sourceTree = "<group>";
+		};
 		E2A55E8321AAD3A500812DC6 = {
 			isa = PBXGroup;
 			children = (
@@ -71,7 +82,8 @@
 			isa = PBXGroup;
 			children = (
 				E2A55EAC21AAD48D00812DC6 /* Fetch */,
-				E2A55EB021AAD48E00812DC6 /* Observing */,
+				E29A36B421AF9BA80069DF78 /* Fetch+Observe */,
+				E2A55EB021AAD48E00812DC6 /* Observe */,
 				E2A55EBC21AAD60800812DC6 /* URL */,
 			);
 			path = Modules;
@@ -86,14 +98,13 @@
 			path = Fetch;
 			sourceTree = "<group>";
 		};
-		E2A55EB021AAD48E00812DC6 /* Observing */ = {
+		E2A55EB021AAD48E00812DC6 /* Observe */ = {
 			isa = PBXGroup;
 			children = (
-				E2A55EC121AAD98E00812DC6 /* Fetch+Event.swift */,
 				E2A55EB221AAD48E00812DC6 /* Notification.Event.swift */,
 				E2A55EB321AAD48E00812DC6 /* Observable.swift */,
 			);
-			path = Observing;
+			path = Observe;
 			sourceTree = "<group>";
 		};
 		E2A55EBC21AAD60800812DC6 /* URL */ = {
@@ -184,6 +195,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E2A55EC221AAD98E00812DC6 /* Fetch+Event.swift in Sources */,
+				E29A36B321AF9A290069DF78 /* KeyPathsFetchable.swift in Sources */,
 				E2A55EB721AAD48E00812DC6 /* Observable.swift in Sources */,
 				E2A55EB521AAD48E00812DC6 /* Fetch.swift in Sources */,
 				E2A55EB621AAD48E00812DC6 /* Notification.Event.swift in Sources */,
