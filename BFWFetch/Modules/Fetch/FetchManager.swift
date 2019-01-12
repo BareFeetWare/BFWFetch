@@ -7,20 +7,50 @@
 
 import Foundation
 
-struct FetchManager {
+public struct FetchManager {
     
-    static let shared = FetchManager()
+    public static let shared = FetchManager()
     
-    public func fetch<T: Decodable>(
-        _ type: T.Type,
-        with url: URL,
-        decoder: JSONDecoder? = nil,
-        completion: @escaping ((Fetch.Result<T>) -> Void)
+    public func fetchData(
+        with request: URLRequest,
+        completion: @escaping ((Fetch.Result<Data>) -> Void)
         )
     {
-        fetch(type, with: URLRequest(url: url), completion: completion)
+        debugPrint("fetch(with: \(request.url!.absoluteString))")
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            let result: Fetch.Result<Data>
+            if let error = error {
+                debugPrint("response = \(String(describing: response))")
+                result = .failure(error: error)
+            } else {
+                result = .success(value: data!)
+            }
+            completion(result)
+        }
+        .resume()
     }
-
+    
+    public func fetchImage(
+        with request: URLRequest,
+        completion: @escaping ((Fetch.Result<UIImage>) -> Void)
+        )
+    {
+        fetchData(with: request) { dataResult in
+            let result: Fetch.Result<UIImage>
+            switch dataResult {
+            case .success(let data):
+                if let image = UIImage(data: data) {
+                    result = .success(value: image)
+                } else {
+                    result = .failure(error: Fetch.Error.decoding)
+                }
+            case .failure(let error):
+                result = .failure(error: error)
+            }
+            completion(result)
+        }
+    }
+    
     public func fetch<T: Decodable>(
         _ type: T.Type,
         with request: URLRequest,
@@ -28,14 +58,10 @@ struct FetchManager {
         completion: @escaping ((Fetch.Result<T>) -> Void)
         )
     {
-        debugPrint("fetch(_ type: \(type), with: \(request.url!.absoluteString))")
-        URLSession.shared.dataTask(with: request) { (data, response, error) in
+        fetchData(with: request) { dataResult in
             let result: Fetch.Result<T>
-            if let error = error {
-                debugPrint("response = \(String(describing: response))")
-                result = .failure(error: error)
-            } else {
-                let data = data!
+            switch dataResult {
+            case .success(let data):
                 do {
                     let decoder = decoder ?? JSONDecoder()
                     let decoded = try decoder.decode(type, from: data)
@@ -45,10 +71,21 @@ struct FetchManager {
                     debugPrint("error = \(error)")
                     result = .failure(error: error)
                 }
+            case .failure(let error):
+                result = .failure(error: error)
             }
             completion(result)
         }
-        .resume()
+    }
+    
+    public func fetch<T: Decodable>(
+        _ type: T.Type,
+        with url: URL,
+        decoder: JSONDecoder? = nil,
+        completion: @escaping ((Fetch.Result<T>) -> Void)
+        )
+    {
+        fetch(type, with: URLRequest(url: url), completion: completion)
     }
     
 }
