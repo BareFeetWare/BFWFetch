@@ -20,13 +20,32 @@ public extension Observable {
         NotificationCenter.default.post(notification)
     }
     
-    // MARK: - KeyPath and Event:
+    // MARK: - Event
     
     public func post(name: Notification.Name, event: Notification.Event = .changed) {
         let notification = Notification(name: name, object: self, event: event)
         NotificationCenter.default.post(notification)
     }
-    
+
+    public func addObserver(
+        ofName name: Notification.Name,
+        events: [Notification.Event] = [],
+        queue: OperationQueue = OperationQueue.current!,
+        using block: @escaping (Notification) -> Void)
+    {
+        NotificationCenter.default.addObserver(
+            forName: name,
+            object: self,
+            queue: queue)
+        { notification in
+            guard events == [] || notification.event != nil && events.contains(notification.event!)
+                else { return }
+            block(notification)
+        }
+    }
+
+    // MARK: - KeyPath
+
     public func post<Value>(keyPath: KeyPath<Self, Value>, event: Notification.Event = .changed) {
         post(name: Notification.Name(keyPath: keyPath), event: event)
     }
@@ -37,15 +56,10 @@ public extension Observable {
         queue: OperationQueue = OperationQueue.current!,
         using block: @escaping (Notification) -> Void)
     {
-        NotificationCenter.default.addObserver(
-            forName: Notification.Name(keyPath: keyPath),
-            object: self,
-            queue: queue)
-        { notification in
-            guard events == [] || notification.event != nil && events.contains(notification.event!)
-                else { return }
-            block(notification)
-        }
+        addObserver(ofName: Notification.Name(keyPath: keyPath),
+            events: events,
+            queue: queue,
+            using: block)
     }
 
 }
