@@ -29,7 +29,7 @@ public extension Decodable {
             guard let data = data
                 else {
                     debugPrint("response = \(String(describing: response))")
-                    completion(.failure(error: .data))
+                    completion(.failure(error: Fetch.Error.data))
                     return
             }
             let decoder = JSONDecoder()
@@ -40,7 +40,7 @@ public extension Decodable {
             } catch {
                 debugPrint("String(data) = \(String(data: data, encoding: .utf8) ?? "nil")")
                 debugPrint("error = \(error)")
-                completion(.failure(error: .decoding))
+                completion(.failure(error: Fetch.Error.decoding))
             }
             }
             .resume()

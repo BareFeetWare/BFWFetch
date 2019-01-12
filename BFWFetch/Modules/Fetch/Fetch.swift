@@ -11,7 +11,7 @@ public enum Fetch {
     
     public enum Result<Value> {
         case success(value: Value)
-        case failure(error: Error)
+        case failure(error: Swift.Error)
     }
     
     public enum Error: Swift.Error {
