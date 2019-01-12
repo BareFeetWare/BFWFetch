@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		E29A36B321AF9A290069DF78 /* KeyPathsFetchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29A36B221AF9A290069DF78 /* KeyPathsFetchable.swift */; };
 		E2A55E9221AAD3A500812DC6 /* BFWFetch.h in Headers */ = {isa = PBXBuildFile; fileRef = E2A55E9021AAD3A500812DC6 /* BFWFetch.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		E2A55EB421AAD48E00812DC6 /* Decodable+Fetch.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A55EAE21AAD48D00812DC6 /* Decodable+Fetch.swift */; };
+		E2A55EB421AAD48E00812DC6 /* FetchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A55EAE21AAD48D00812DC6 /* FetchManager.swift */; };
 		E2A55EB521AAD48E00812DC6 /* Fetch.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A55EAF21AAD48D00812DC6 /* Fetch.swift */; };
 		E2A55EB621AAD48E00812DC6 /* Notification.Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A55EB221AAD48E00812DC6 /* Notification.Event.swift */; };
 		E2A55EB721AAD48E00812DC6 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A55EB321AAD48E00812DC6 /* Observable.swift */; };
@@ -23,7 +23,7 @@
 		E2A55E8D21AAD3A500812DC6 /* BFWFetch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BFWFetch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2A55E9021AAD3A500812DC6 /* BFWFetch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BFWFetch.h; sourceTree = "<group>"; };
 		E2A55E9121AAD3A500812DC6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E2A55EAE21AAD48D00812DC6 /* Decodable+Fetch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Decodable+Fetch.swift"; sourceTree = "<group>"; };
+		E2A55EAE21AAD48D00812DC6 /* FetchManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchManager.swift; sourceTree = "<group>"; };
 		E2A55EAF21AAD48D00812DC6 /* Fetch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fetch.swift; sourceTree = "<group>"; };
 		E2A55EB221AAD48E00812DC6 /* Notification.Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification.Event.swift; sourceTree = "<group>"; };
 		E2A55EB321AAD48E00812DC6 /* Observable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
@@ -92,8 +92,8 @@
 		E2A55EAC21AAD48D00812DC6 /* Fetch */ = {
 			isa = PBXGroup;
 			children = (
-				E2A55EAE21AAD48D00812DC6 /* Decodable+Fetch.swift */,
 				E2A55EAF21AAD48D00812DC6 /* Fetch.swift */,
+				E2A55EAE21AAD48D00812DC6 /* FetchManager.swift */,
 			);
 			path = Fetch;
 			sourceTree = "<group>";
@@ -200,7 +200,7 @@
 				E2A55EB521AAD48E00812DC6 /* Fetch.swift in Sources */,
 				E2A55EB621AAD48E00812DC6 /* Notification.Event.swift in Sources */,
 				E2A55EC021AAD8E200812DC6 /* URLRequest+parameters.swift in Sources */,
-				E2A55EB421AAD48E00812DC6 /* Decodable+Fetch.swift in Sources */,
+				E2A55EB421AAD48E00812DC6 /* FetchManager.swift in Sources */,
 				E2A55EBF21AAD8E200812DC6 /* URLComponents+queryItems.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
