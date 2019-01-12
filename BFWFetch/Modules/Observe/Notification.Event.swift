@@ -43,9 +43,13 @@ public extension Notification {
         }
     }
     
+    public init(name: Notification.Name, object: Any?, event: Event = .changed) {
+        self.init(name: name, object: object, userInfo: [Key.event.rawValue : event])
+    }
+    
     public init<Root, Value>(keyPath: KeyPath<Root, Value>, object: Any?, event: Event = .changed) {
         let name = Notification.Name(keyPath: keyPath)
-        self.init(name: name, object: object, userInfo: [Key.event.rawValue : event])
+        self.init(name: name, object: object, event: event)
     }
     
 }

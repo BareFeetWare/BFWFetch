@@ -22,9 +22,13 @@ public extension Observable {
     
     // MARK: - KeyPath and Event:
     
-    public func post<Value>(keyPath: KeyPath<Self, Value>, event: Notification.Event = .changed) {
-        let notification = Notification(keyPath: keyPath, object: self, event: event)
+    public func post(name: Notification.Name, event: Notification.Event = .changed) {
+        let notification = Notification(name: name, object: self, event: event)
         NotificationCenter.default.post(notification)
+    }
+    
+    public func post<Value>(keyPath: KeyPath<Self, Value>, event: Notification.Event = .changed) {
+        post(name: Notification.Name(keyPath: keyPath), event: event)
     }
     
     public func addObserver<Value>(
