@@ -30,27 +30,6 @@ public struct FetchManager {
         .resume()
     }
     
-    public func fetchImage(
-        with request: URLRequest,
-        completion: @escaping ((Fetch.Result<UIImage>) -> Void)
-        )
-    {
-        fetchData(with: request) { dataResult in
-            let result: Fetch.Result<UIImage>
-            switch dataResult {
-            case .success(let data):
-                if let image = UIImage(data: data) {
-                    result = .success(value: image)
-                } else {
-                    result = .failure(error: Fetch.Error.decoding)
-                }
-            case .failure(let error):
-                result = .failure(error: error)
-            }
-            completion(result)
-        }
-    }
-    
     public func fetch<T: Decodable>(
         _ type: T.Type,
         with request: URLRequest,
