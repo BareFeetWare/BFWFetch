@@ -12,11 +12,11 @@ public extension FetchManager {
     
     public func fetch<T: DataConvertible>(
         _ type: T.Type,
-        with request: URLRequest,
+        from request: URLRequest,
         completion: @escaping ((Fetch.Result<T>) -> Void)
         )
     {
-        fetchData(with: request) { dataResult in
+        fetchData(from: request) { dataResult in
             let result: Fetch.Result<T>
             switch dataResult {
             case .success(let data):

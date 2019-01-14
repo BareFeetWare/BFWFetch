@@ -34,7 +34,7 @@ public extension KeyPathsFetchable {
         let request = try request ?? self.request(for: keyPath)
         let decoder = self.decoder(for: keyPath)
         post(keyPath: keyPath, event: .inProgress)
-        FetchManager.shared.fetch(T.self, with: request, decoder: decoder) { result in
+        FetchManager.shared.fetch(T.self, from: request, decoder: decoder) { result in
             switch result {
             case .success(let value):
                 self[keyPath : keyPath] = value

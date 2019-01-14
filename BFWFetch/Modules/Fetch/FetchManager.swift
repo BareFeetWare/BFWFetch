@@ -12,11 +12,11 @@ public struct FetchManager {
     public static let shared = FetchManager()
     
     public func fetchData(
-        with request: URLRequest,
+        from request: URLRequest,
         completion: @escaping ((Fetch.Result<Data>) -> Void)
         )
     {
-        debugPrint("fetch(with: \(request.url!.absoluteString))")
+        debugPrint("fetch(from: \(request.url!.absoluteString))")
         URLSession.shared.dataTask(with: request) { (data, response, error) in
             let result: Fetch.Result<Data>
             if let error = error {
@@ -32,12 +32,12 @@ public struct FetchManager {
     
     public func fetch<T: Decodable>(
         _ type: T.Type,
-        with request: URLRequest,
+        from request: URLRequest,
         decoder: JSONDecoder? = nil,
         completion: @escaping ((Fetch.Result<T>) -> Void)
         )
     {
-        fetchData(with: request) { dataResult in
+        fetchData(from: request) { dataResult in
             let result: Fetch.Result<T>
             switch dataResult {
             case .success(let data):
@@ -59,12 +59,12 @@ public struct FetchManager {
     
     public func fetch<T: Decodable>(
         _ type: T.Type,
-        with url: URL,
+        from url: URL,
         decoder: JSONDecoder? = nil,
         completion: @escaping ((Fetch.Result<T>) -> Void)
         )
     {
-        fetch(type, with: URLRequest(url: url), completion: completion)
+        fetch(type, from: URLRequest(url: url), completion: completion)
     }
     
 }
