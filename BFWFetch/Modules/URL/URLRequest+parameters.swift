@@ -34,4 +34,10 @@ public extension URLRequest {
         }
     }
     
+    public mutating func appendHeaderFields(_ headerFields: [String : String]) {
+        headerFields.forEach { element in
+            setValue(element.value, forHTTPHeaderField: element.key)
+        }
+    }
+    
 }
