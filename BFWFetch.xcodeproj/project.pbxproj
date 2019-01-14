@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E208E0BE21EAFB5700A7E161 /* FetchManager+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E208E0BD21EAFB5700A7E161 /* FetchManager+UIImage.swift */; };
+		E208E0D321EC3E9200A7E161 /* FetchManager+DataConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = E208E0D221EC3E9100A7E161 /* FetchManager+DataConvertible.swift */; };
 		E29A36B321AF9A290069DF78 /* KeyPathsFetchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29A36B221AF9A290069DF78 /* KeyPathsFetchable.swift */; };
 		E2A55E9221AAD3A500812DC6 /* BFWFetch.h in Headers */ = {isa = PBXBuildFile; fileRef = E2A55E9021AAD3A500812DC6 /* BFWFetch.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E2A55EB421AAD48E00812DC6 /* FetchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A55EAE21AAD48D00812DC6 /* FetchManager.swift */; };
@@ -20,7 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		E208E0BD21EAFB5700A7E161 /* FetchManager+UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FetchManager+UIImage.swift"; sourceTree = "<group>"; };
+		E208E0D221EC3E9100A7E161 /* FetchManager+DataConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FetchManager+DataConvertible.swift"; sourceTree = "<group>"; };
 		E29A36B221AF9A290069DF78 /* KeyPathsFetchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyPathsFetchable.swift; sourceTree = "<group>"; };
 		E2A55E8D21AAD3A500812DC6 /* BFWFetch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BFWFetch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2A55E9021AAD3A500812DC6 /* BFWFetch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BFWFetch.h; sourceTree = "<group>"; };
@@ -96,7 +96,7 @@
 			children = (
 				E2A55EAF21AAD48D00812DC6 /* Fetch.swift */,
 				E2A55EAE21AAD48D00812DC6 /* FetchManager.swift */,
-				E208E0BD21EAFB5700A7E161 /* FetchManager+UIImage.swift */,
+				E208E0D221EC3E9100A7E161 /* FetchManager+DataConvertible.swift */,
 			);
 			path = Fetch;
 			sourceTree = "<group>";
@@ -198,11 +198,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				E2A55EC221AAD98E00812DC6 /* Fetch+Event.swift in Sources */,
+				E208E0D321EC3E9200A7E161 /* FetchManager+DataConvertible.swift in Sources */,
 				E29A36B321AF9A290069DF78 /* KeyPathsFetchable.swift in Sources */,
 				E2A55EB721AAD48E00812DC6 /* Observable.swift in Sources */,
 				E2A55EB521AAD48E00812DC6 /* Fetch.swift in Sources */,
 				E2A55EB621AAD48E00812DC6 /* Notification.Event.swift in Sources */,
-				E208E0BE21EAFB5700A7E161 /* FetchManager+UIImage.swift in Sources */,
 				E2A55EC021AAD8E200812DC6 /* URLRequest+parameters.swift in Sources */,
 				E2A55EB421AAD48E00812DC6 /* FetchManager.swift in Sources */,
 				E2A55EBF21AAD8E200812DC6 /* URLComponents+queryItems.swift in Sources */,

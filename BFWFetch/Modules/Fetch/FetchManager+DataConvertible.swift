@@ -1,27 +1,27 @@
 //
-//  FetchManager+UIImage.swift
+//  FetchManager+DataConvertible.swift
 //  BFWFetch
 //
 //  Created by Tom Brodhurst-Hill on 13/1/19.
 //  Copyright © 2019 BareFeetWare. All rights reserved.
 //
 
-// UIKit only for UIImage type
-import UIKit
+import Foundation
 
 public extension FetchManager {
     
-    public func fetchImage(
+    public func fetch<T: DataConvertible>(
+        _ type: T.Type,
         with request: URLRequest,
-        completion: @escaping ((Fetch.Result<UIImage>) -> Void)
+        completion: @escaping ((Fetch.Result<T>) -> Void)
         )
     {
         fetchData(with: request) { dataResult in
-            let result: Fetch.Result<UIImage>
+            let result: Fetch.Result<T>
             switch dataResult {
             case .success(let data):
-                if let image = UIImage(data: data) {
-                    result = .success(value: image)
+                if let value = T.init(data: data) {
+                    result = .success(value: value)
                 } else {
                     result = .failure(error: Fetch.Error.decoding)
                 }
@@ -33,3 +33,15 @@ public extension FetchManager {
     }
     
 }
+
+public protocol DataConvertible {
+    init?(data: Data)
+}
+
+extension String: DataConvertible {
+    public init?(data: Data) {
+        self.init(data: data, encoding: .utf8)
+    }
+}
+
+extension UIImage: DataConvertible {}
