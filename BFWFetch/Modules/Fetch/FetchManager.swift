@@ -46,9 +46,17 @@ public struct FetchManager {
                     let decoded = try decoder.decode(type, from: data)
                     result = .success(value: decoded)
                 } catch {
-                    debugPrint("String(data) = \(String(data: data, encoding: .utf8) ?? "nil")")
-                    debugPrint("error = \(error)")
-                    result = .failure(error: error)
+                    let string = String(data: data, encoding: .utf8)
+                    if string == "null" {
+                        // If the JSON just contains null, treat it as an empty array.
+                        if let array = [] as? T {
+                            result = .success(value: array)
+                        } else {
+                            result = .failure(error: error)
+                        }
+                    } else {
+                        result = .failure(error: error)
+                    }
                 }
             case .failure(let error):
                 result = .failure(error: error)
