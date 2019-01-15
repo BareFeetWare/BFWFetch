@@ -47,13 +47,12 @@ public struct FetchManager {
                     result = .success(value: decoded)
                 } catch {
                     let string = String(data: data, encoding: .utf8)
-                    if string == "null" {
-                        // If the JSON just contains null, treat it as an empty array.
-                        if let array = [] as? T {
-                            result = .success(value: array)
-                        } else {
-                            result = .failure(error: error)
-                        }
+                    // If the JSON just contains null, treat it as an empty array.
+                    // TODO: More robust parsing of null using single value json decoder.
+                    if string?.trimmingCharacters(in: .whitespacesAndNewlines) == "null",
+                        let array = [] as? T
+                    {
+                        result = .success(value: array)
                     } else {
                         result = .failure(error: error)
                     }
