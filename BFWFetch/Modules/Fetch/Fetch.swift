@@ -20,6 +20,7 @@ public enum Fetch {
         case missingRequest
         case data
         case decoding
+        case encoding
     }
     
 }
