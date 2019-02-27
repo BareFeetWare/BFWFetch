@@ -10,7 +10,7 @@ import Foundation
 
 public extension FetchManager {
     
-    public func fetch<T: DataConvertible>(
+    func fetch<T: DataConvertible>(
         _ type: T.Type,
         from request: URLRequest,
         completion: @escaping ((Fetch.Result<T>) -> Void)

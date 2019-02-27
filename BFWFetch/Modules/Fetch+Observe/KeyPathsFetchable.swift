@@ -26,7 +26,7 @@ public extension KeyPathsFetchable {
         return nil
     }
     
-    public func fetch<T: Decodable>(
+    func fetch<T: Decodable>(
         keyPath: ReferenceWritableKeyPath<Self, T>,
         from request: URLRequest? = nil
         ) throws

@@ -9,7 +9,7 @@ import Foundation
 
 public extension URLRequest {
     
-    public var parameters: [String : String]? {
+    var parameters: [String : String]? {
         get {
             guard let data = httpBody,
                 let string = String(data: data, encoding: .utf8)
@@ -34,7 +34,7 @@ public extension URLRequest {
         }
     }
     
-    public mutating func appendHeaderFields(_ headerFields: [String : String]) {
+    mutating func appendHeaderFields(_ headerFields: [String : String]) {
         headerFields.forEach { element in
             setValue(element.value, forHTTPHeaderField: element.key)
         }

@@ -13,7 +13,7 @@ public extension Notification {
         case event
     }
     
-    public enum Event: Equatable {
+    enum Event: Equatable {
         case inProgress
         case failure(error: Error)
         case success
@@ -34,7 +34,7 @@ public extension Notification {
 
     }
     
-    public var event: Event? {
+    var event: Event? {
         get {
             return userInfo?[Key.event.rawValue] as? Event
         }
@@ -43,11 +43,11 @@ public extension Notification {
         }
     }
     
-    public init(name: Notification.Name, object: Any?, event: Event = .changed) {
+    init(name: Notification.Name, object: Any?, event: Event = .changed) {
         self.init(name: name, object: object, userInfo: [Key.event.rawValue : event])
     }
     
-    public init<Root, Value>(keyPath: KeyPath<Root, Value>, object: Any?, event: Event = .changed) {
+    init<Root, Value>(keyPath: KeyPath<Root, Value>, object: Any?, event: Event = .changed) {
         let name = Notification.Name(keyPath: keyPath)
         self.init(name: name, object: object, event: event)
     }
@@ -56,7 +56,7 @@ public extension Notification {
 
 public extension Notification.Name {
     
-    public init<Root, Value>(keyPath: KeyPath<Root, Value>) {
+    init<Root, Value>(keyPath: KeyPath<Root, Value>) {
         self.init(String(describing: keyPath))
     }
     

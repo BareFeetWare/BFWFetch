@@ -11,23 +11,23 @@ public protocol Observable {}
 
 public extension Observable {
     
-    public func post(_ notification: Notification) {
+    func post(_ notification: Notification) {
         NotificationCenter.default.post(notification)
     }
     
-    public func post(name: Notification.Name, userInfo: [AnyHashable : Any]? = nil) {
+    func post(name: Notification.Name, userInfo: [AnyHashable : Any]? = nil) {
         let notification = Notification(name: name, object: self, userInfo: userInfo)
         NotificationCenter.default.post(notification)
     }
     
     // MARK: - Event
     
-    public func post(name: Notification.Name, event: Notification.Event = .changed) {
+    func post(name: Notification.Name, event: Notification.Event = .changed) {
         let notification = Notification(name: name, object: self, event: event)
         NotificationCenter.default.post(notification)
     }
 
-    public func addObserver(
+    func addObserver(
         ofName name: Notification.Name,
         events: [Notification.Event] = [],
         queue: OperationQueue = OperationQueue.current!,
@@ -46,11 +46,11 @@ public extension Observable {
 
     // MARK: - KeyPath
 
-    public func post<Value>(keyPath: KeyPath<Self, Value>, event: Notification.Event = .changed) {
+    func post<Value>(keyPath: KeyPath<Self, Value>, event: Notification.Event = .changed) {
         post(name: Notification.Name(keyPath: keyPath), event: event)
     }
     
-    public func addObserver<Value>(
+    func addObserver<Value>(
         of keyPath: KeyPath<Self, Value>,
         events: [Notification.Event] = [],
         queue: OperationQueue = OperationQueue.current!,

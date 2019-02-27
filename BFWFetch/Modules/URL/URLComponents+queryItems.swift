@@ -9,7 +9,7 @@ import Foundation
 
 public extension URLComponents {
     
-    public var queryItemsDictionary: [String : String]? {
+    var queryItemsDictionary: [String : String]? {
         get {
             return queryItems?.reduce([String : String]()) { (dictionary, queryItem) in
                 var newDictionary = dictionary

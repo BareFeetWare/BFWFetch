@@ -9,7 +9,7 @@ import Foundation
 
 public extension Fetch.Result {
     
-    public var event: Notification.Event {
+    var event: Notification.Event {
         switch self {
         case .success(_): return .success
         case .failure(let error): return .failure(error: error)
