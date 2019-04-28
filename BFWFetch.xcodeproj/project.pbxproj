@@ -173,6 +173,7 @@
 				TargetAttributes = {
 					E2A55E8C21AAD3A500812DC6 = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1020;
 					};
 				};
 			};
@@ -182,6 +183,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = E2A55E8321AAD3A500812DC6;
 			productRefGroup = E2A55E8E21AAD3A500812DC6 /* Products */;
@@ -366,7 +368,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = barefeetware.com.BFWFetch;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -391,7 +393,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = barefeetware.com.BFWFetch;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
