@@ -25,6 +25,7 @@
 		E29168F922A2AF9C005D638E /* Fetchable+Decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29168F822A2AF9C005D638E /* Fetchable+Decodable.swift */; };
 		E29168FF22A3787B005D638E /* Result+Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29168FE22A3787B005D638E /* Result+Event.swift */; };
 		E291690322A38087005D638E /* UIViewController+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = E291690222A38087005D638E /* UIViewController+Alert.swift */; };
+		E291690822A38D2F005D638E /* SiteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E291690722A38D2F005D638E /* SiteViewController.swift */; };
 		E29A36B321AF9A290069DF78 /* KeyPathsFetchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29A36B221AF9A290069DF78 /* KeyPathsFetchable.swift */; };
 		E2A55E9221AAD3A500812DC6 /* BFWFetch.h in Headers */ = {isa = PBXBuildFile; fileRef = E2A55E9021AAD3A500812DC6 /* BFWFetch.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E2A55EB421AAD48E00812DC6 /* Fetchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A55EAE21AAD48D00812DC6 /* Fetchable.swift */; };
@@ -78,6 +79,7 @@
 		E29168F822A2AF9C005D638E /* Fetchable+Decodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Fetchable+Decodable.swift"; sourceTree = "<group>"; };
 		E29168FE22A3787B005D638E /* Result+Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Result+Event.swift"; sourceTree = "<group>"; };
 		E291690222A38087005D638E /* UIViewController+Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alert.swift"; sourceTree = "<group>"; };
+		E291690722A38D2F005D638E /* SiteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteViewController.swift; sourceTree = "<group>"; };
 		E29A36B221AF9A290069DF78 /* KeyPathsFetchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyPathsFetchable.swift; sourceTree = "<group>"; };
 		E2A55E8D21AAD3A500812DC6 /* BFWFetch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BFWFetch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2A55E9021AAD3A500812DC6 /* BFWFetch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BFWFetch.h; sourceTree = "<group>"; };
@@ -153,6 +155,7 @@
 			isa = PBXGroup;
 			children = (
 				E29168DF22A298B1005D638E /* SitesViewController.swift */,
+				E291690722A38D2F005D638E /* SiteViewController.swift */,
 				E29168DD22A29871005D638E /* Weather.storyboard */,
 			);
 			path = Controller;
@@ -447,6 +450,7 @@
 				E29168E022A298B1005D638E /* SitesViewController.swift in Sources */,
 				E29168CA22A2973D005D638E /* AppDelegate.swift in Sources */,
 				E29168EE22A29DC8005D638E /* Site+Decodable.swift in Sources */,
+				E291690822A38D2F005D638E /* SiteViewController.swift in Sources */,
 				E29168F022A2A754005D638E /* Site.swift in Sources */,
 				E29168EA22A29957005D638E /* Root.swift in Sources */,
 				E29168F222A2ABB7005D638E /* Root+KeyPathsFetchable.swift in Sources */,
