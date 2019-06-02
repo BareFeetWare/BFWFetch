@@ -26,6 +26,7 @@ extension Site: Decodable {
         self.city = json.name
     }
     
+    /// Structure of Site in the JSON file.
     private struct JSON: Decodable {
         let weather: [Weather]
         let main: Main
