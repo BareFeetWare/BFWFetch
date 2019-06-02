@@ -208,10 +208,10 @@
 		E29168F722A2AF42005D638E /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				E2A55EAF21AAD48D00812DC6 /* Fetch+Error.swift */,
 				E2A55EAE21AAD48D00812DC6 /* Fetchable.swift */,
 				E208E0D221EC3E9100A7E161 /* Fetchable+DataConvertible.swift */,
 				E29168F822A2AF9C005D638E /* Fetchable+Decodable.swift */,
-				E2A55EAF21AAD48D00812DC6 /* Fetch+Error.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -232,10 +232,36 @@
 			path = Controller;
 			sourceTree = "<group>";
 		};
-		E29A36B421AF9BA80069DF78 /* Fetch+Observe */ = {
+		E291690422A386B1005D638E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E2A55EB221AAD48E00812DC6 /* Notification.Event.swift */,
+				E2A55EB321AAD48E00812DC6 /* Observable.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		E291690522A386C3005D638E /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				E29A36B221AF9A290069DF78 /* KeyPathsFetchable.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		E291690622A386D5005D638E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E2A55EBE21AAD64600812DC6 /* URLComponents+queryItems.swift */,
+				E2A55EBD21AAD64600812DC6 /* URLRequest+parameters.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		E29A36B421AF9BA80069DF78 /* Fetch+Observe */ = {
+			isa = PBXGroup;
+			children = (
+				E291690522A386C3005D638E /* Model */,
 			);
 			path = "Fetch+Observe";
 			sourceTree = "<group>";
@@ -271,10 +297,10 @@
 		E2A55E9F21AAD3C400812DC6 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				E29168F322A2ACED005D638E /* Result */,
 				E2A55EAC21AAD48D00812DC6 /* Fetch */,
 				E29A36B421AF9BA80069DF78 /* Fetch+Observe */,
 				E2A55EB021AAD48E00812DC6 /* Observe */,
+				E29168F322A2ACED005D638E /* Result */,
 				E2A55EBC21AAD60800812DC6 /* URL */,
 			);
 			path = Modules;
@@ -291,8 +317,7 @@
 		E2A55EB021AAD48E00812DC6 /* Observe */ = {
 			isa = PBXGroup;
 			children = (
-				E2A55EB221AAD48E00812DC6 /* Notification.Event.swift */,
-				E2A55EB321AAD48E00812DC6 /* Observable.swift */,
+				E291690422A386B1005D638E /* Model */,
 			);
 			path = Observe;
 			sourceTree = "<group>";
@@ -300,8 +325,7 @@
 		E2A55EBC21AAD60800812DC6 /* URL */ = {
 			isa = PBXGroup;
 			children = (
-				E2A55EBE21AAD64600812DC6 /* URLComponents+queryItems.swift */,
-				E2A55EBD21AAD64600812DC6 /* URLRequest+parameters.swift */,
+				E291690622A386D5005D638E /* Model */,
 			);
 			path = URL;
 			sourceTree = "<group>";
