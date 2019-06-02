@@ -7,7 +7,7 @@
 
 import Foundation
 
-public extension Fetch.Result {
+public extension Result {
     
     var event: Notification.Event {
         switch self {

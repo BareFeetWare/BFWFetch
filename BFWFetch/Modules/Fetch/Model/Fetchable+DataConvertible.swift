@@ -1,32 +1,29 @@
 //
-//  FetchManager+DataConvertible.swift
+//  Fetchable+DataConvertible.swift
 //  BFWFetch
 //
 //  Created by Tom Brodhurst-Hill on 13/1/19.
 //  Copyright © 2019 BareFeetWare. All rights reserved.
 //
 
-import Foundation
-
-public extension FetchManager {
+public extension Fetchable where Self: DataConvertible {
     
-    func fetch<T: DataConvertible>(
-        _ type: T.Type,
-        from request: URLRequest,
-        completion: @escaping ((Fetch.Result<T>) -> Void)
+    static func fetch(
+        from urlRequest: URLRequest,
+        completion: @escaping ((Result<Self>) -> Void)
         )
     {
-        fetchData(from: request) { dataResult in
-            let result: Fetch.Result<T>
+        fetchData(from: urlRequest) { dataResult in
+            let result: Result<Self>
             switch dataResult {
             case .success(let data):
-                if let value = T.init(data: data) {
-                    result = .success(value: value)
+                if let value = Self.init(data: data) {
+                    result = .success(value)
                 } else {
-                    result = .failure(error: Fetch.Error.decoding)
+                    result = .failure(Fetch.Error.decoding)
                 }
             case .failure(let error):
-                result = .failure(error: error)
+                result = .failure(error)
             }
             completion(result)
         }

@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E208E0D321EC3E9200A7E161 /* FetchManager+DataConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = E208E0D221EC3E9100A7E161 /* FetchManager+DataConvertible.swift */; };
+		E208E0D321EC3E9200A7E161 /* Fetchable+DataConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = E208E0D221EC3E9100A7E161 /* Fetchable+DataConvertible.swift */; };
 		E29A36B321AF9A290069DF78 /* KeyPathsFetchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29A36B221AF9A290069DF78 /* KeyPathsFetchable.swift */; };
 		E2A55E9221AAD3A500812DC6 /* BFWFetch.h in Headers */ = {isa = PBXBuildFile; fileRef = E2A55E9021AAD3A500812DC6 /* BFWFetch.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		E2A55EB421AAD48E00812DC6 /* FetchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A55EAE21AAD48D00812DC6 /* FetchManager.swift */; };
-		E2A55EB521AAD48E00812DC6 /* Fetch.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A55EAF21AAD48D00812DC6 /* Fetch.swift */; };
+		E2A55EB421AAD48E00812DC6 /* Fetchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A55EAE21AAD48D00812DC6 /* Fetchable.swift */; };
+		E2A55EB521AAD48E00812DC6 /* Fetch+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A55EAF21AAD48D00812DC6 /* Fetch+Error.swift */; };
 		E2A55EB621AAD48E00812DC6 /* Notification.Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A55EB221AAD48E00812DC6 /* Notification.Event.swift */; };
 		E2A55EB721AAD48E00812DC6 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A55EB321AAD48E00812DC6 /* Observable.swift */; };
 		E2A55EBF21AAD8E200812DC6 /* URLComponents+queryItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A55EBE21AAD64600812DC6 /* URLComponents+queryItems.swift */; };
@@ -20,13 +20,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		E208E0D221EC3E9100A7E161 /* FetchManager+DataConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FetchManager+DataConvertible.swift"; sourceTree = "<group>"; };
+		E208E0D221EC3E9100A7E161 /* Fetchable+DataConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Fetchable+DataConvertible.swift"; sourceTree = "<group>"; };
 		E29A36B221AF9A290069DF78 /* KeyPathsFetchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyPathsFetchable.swift; sourceTree = "<group>"; };
 		E2A55E8D21AAD3A500812DC6 /* BFWFetch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BFWFetch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2A55E9021AAD3A500812DC6 /* BFWFetch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BFWFetch.h; sourceTree = "<group>"; };
 		E2A55E9121AAD3A500812DC6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E2A55EAE21AAD48D00812DC6 /* FetchManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchManager.swift; sourceTree = "<group>"; };
-		E2A55EAF21AAD48D00812DC6 /* Fetch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fetch.swift; sourceTree = "<group>"; };
+		E2A55EAE21AAD48D00812DC6 /* Fetchable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fetchable.swift; sourceTree = "<group>"; };
+		E2A55EAF21AAD48D00812DC6 /* Fetch+Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Fetch+Error.swift"; sourceTree = "<group>"; };
 		E2A55EB221AAD48E00812DC6 /* Notification.Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification.Event.swift; sourceTree = "<group>"; };
 		E2A55EB321AAD48E00812DC6 /* Observable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		E2A55EBD21AAD64600812DC6 /* URLRequest+parameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequest+parameters.swift"; sourceTree = "<group>"; };
@@ -45,6 +45,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E29168F322A2ACED005D638E /* Result */ = {
+			isa = PBXGroup;
+			children = (
+				E29168F422A2ACFF005D638E /* Model */,
+			);
+			path = Result;
+			sourceTree = "<group>";
+		};
+		E29168F422A2ACFF005D638E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E29168F522A2AD1A005D638E /* Result.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		E29168F722A2AF42005D638E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E2A55EAE21AAD48D00812DC6 /* Fetchable.swift */,
+				E208E0D221EC3E9100A7E161 /* Fetchable+DataConvertible.swift */,
+				E29168F822A2AF9C005D638E /* Fetchable+Decodable.swift */,
+				E2A55EAF21AAD48D00812DC6 /* Fetch+Error.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		E29A36B421AF9BA80069DF78 /* Fetch+Observe */ = {
 			isa = PBXGroup;
 			children = (
@@ -83,6 +110,7 @@
 		E2A55E9F21AAD3C400812DC6 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				E29168F322A2ACED005D638E /* Result */,
 				E2A55EAC21AAD48D00812DC6 /* Fetch */,
 				E29A36B421AF9BA80069DF78 /* Fetch+Observe */,
 				E2A55EB021AAD48E00812DC6 /* Observe */,
@@ -94,9 +122,7 @@
 		E2A55EAC21AAD48D00812DC6 /* Fetch */ = {
 			isa = PBXGroup;
 			children = (
-				E2A55EAF21AAD48D00812DC6 /* Fetch.swift */,
-				E2A55EAE21AAD48D00812DC6 /* FetchManager.swift */,
-				E208E0D221EC3E9100A7E161 /* FetchManager+DataConvertible.swift */,
+				E29168F722A2AF42005D638E /* Model */,
 			);
 			path = Fetch;
 			sourceTree = "<group>";
@@ -198,13 +224,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				E2A55EC221AAD98E00812DC6 /* Fetch+Event.swift in Sources */,
-				E208E0D321EC3E9200A7E161 /* FetchManager+DataConvertible.swift in Sources */,
+				E208E0D321EC3E9200A7E161 /* Fetchable+DataConvertible.swift in Sources */,
 				E29A36B321AF9A290069DF78 /* KeyPathsFetchable.swift in Sources */,
+				E29168F922A2AF9C005D638E /* Fetchable+Decodable.swift in Sources */,
 				E2A55EB721AAD48E00812DC6 /* Observable.swift in Sources */,
-				E2A55EB521AAD48E00812DC6 /* Fetch.swift in Sources */,
+				E2A55EB521AAD48E00812DC6 /* Fetch+Error.swift in Sources */,
 				E2A55EB621AAD48E00812DC6 /* Notification.Event.swift in Sources */,
+				E29168F622A2AD1A005D638E /* Result.swift in Sources */,
 				E2A55EC021AAD8E200812DC6 /* URLRequest+parameters.swift in Sources */,
-				E2A55EB421AAD48E00812DC6 /* FetchManager.swift in Sources */,
+				E2A55EB421AAD48E00812DC6 /* Fetchable.swift in Sources */,
 				E2A55EBF21AAD8E200812DC6 /* URLComponents+queryItems.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
