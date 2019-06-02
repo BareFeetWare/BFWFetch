@@ -10,13 +10,13 @@ import UIKit
 import BFWFetch
 
 class SitesViewController: UITableViewController {
-
+    
     // MARK: - Variables
     
     let root = Root.shared
     
     // MARK: - Observing
-
+    
     func addObservers() {
         root.addObserver(of: \.sites) { [weak self] notification in
             guard let self = self else { return }
@@ -29,24 +29,42 @@ class SitesViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         addObservers()
-        root.fetchSites() {_ in }
+        do {
+            try root.fetchSites() {_ in }
+        } catch {
+            showAlert(error: error)
+        }
     }
-
+    
 }
 
-// MARK: UITabelViewDataSource
+// MARK: View Model
 
 extension SitesViewController {
+    
+    enum CellIdentifier: String {
+        case site
+        case loading
+    }
+    
+}
 
+// MARK: UITableViewDataSource
+
+extension SitesViewController {
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return root.sites?.count ?? 0
+        return root.sites?.count ?? 1
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "site", for: indexPath)
-        let site = root.sites![indexPath.row]
-        cell.textLabel?.text = site.city
-        cell.detailTextLabel?.text = "\(site.weather.temperature)°C"
+        let cellIdentifier: CellIdentifier = root.sites == nil ? .loading : .site
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier.rawValue, for: indexPath)
+        if let site = root.sites?[indexPath.row] {
+            cell.textLabel?.text = site.city
+            cell.detailTextLabel?.text = "\(site.weather.temperature) °C"
+        }
         return cell
     }
+    
 }

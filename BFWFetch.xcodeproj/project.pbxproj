@@ -25,6 +25,7 @@
 		E29168F922A2AF9C005D638E /* Fetchable+Decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29168F822A2AF9C005D638E /* Fetchable+Decodable.swift */; };
 		E29168FD22A2BBC0005D638E /* Sites+Decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29168FC22A2BBC0005D638E /* Sites+Decodable.swift */; };
 		E29168FF22A3787B005D638E /* Result+Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29168FE22A3787B005D638E /* Result+Event.swift */; };
+		E291690322A38087005D638E /* UIViewController+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = E291690222A38087005D638E /* UIViewController+Alert.swift */; };
 		E29A36B321AF9A290069DF78 /* KeyPathsFetchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29A36B221AF9A290069DF78 /* KeyPathsFetchable.swift */; };
 		E2A55E9221AAD3A500812DC6 /* BFWFetch.h in Headers */ = {isa = PBXBuildFile; fileRef = E2A55E9021AAD3A500812DC6 /* BFWFetch.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E2A55EB421AAD48E00812DC6 /* Fetchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A55EAE21AAD48D00812DC6 /* Fetchable.swift */; };
@@ -78,6 +79,7 @@
 		E29168F822A2AF9C005D638E /* Fetchable+Decodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Fetchable+Decodable.swift"; sourceTree = "<group>"; };
 		E29168FC22A2BBC0005D638E /* Sites+Decodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sites+Decodable.swift"; sourceTree = "<group>"; };
 		E29168FE22A3787B005D638E /* Result+Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Result+Event.swift"; sourceTree = "<group>"; };
+		E291690222A38087005D638E /* UIViewController+Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alert.swift"; sourceTree = "<group>"; };
 		E29A36B221AF9A290069DF78 /* KeyPathsFetchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyPathsFetchable.swift; sourceTree = "<group>"; };
 		E2A55E8D21AAD3A500812DC6 /* BFWFetch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BFWFetch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2A55E9021AAD3A500812DC6 /* BFWFetch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BFWFetch.h; sourceTree = "<group>"; };
@@ -133,6 +135,7 @@
 		E29168DA22A2981A005D638E /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				E291690022A38060005D638E /* Controls */,
 				E29168E722A2992C005D638E /* Root */,
 				E29168DB22A29827005D638E /* Weather */,
 			);
@@ -211,6 +214,22 @@
 				E2A55EAF21AAD48D00812DC6 /* Fetch+Error.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		E291690022A38060005D638E /* Controls */ = {
+			isa = PBXGroup;
+			children = (
+				E291690122A3806C005D638E /* Controller */,
+			);
+			path = Controls;
+			sourceTree = "<group>";
+		};
+		E291690122A3806C005D638E /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				E291690222A38087005D638E /* UIViewController+Alert.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 		E29A36B421AF9BA80069DF78 /* Fetch+Observe */ = {
@@ -402,6 +421,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E291690322A38087005D638E /* UIViewController+Alert.swift in Sources */,
 				E29168EC22A29CE6005D638E /* Weather.swift in Sources */,
 				E29168E022A298B1005D638E /* SitesViewController.swift in Sources */,
 				E29168CA22A2973D005D638E /* AppDelegate.swift in Sources */,
