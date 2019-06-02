@@ -1,5 +1,5 @@
 //
-//  Fetch+Event.swift
+//  Result+Event.swift
 //
 //  Created by Tom Brodhurst-Hill on 26/11/18.
 //  Copyright © 2018 BareFeetWare. All rights reserved.
