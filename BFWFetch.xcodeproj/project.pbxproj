@@ -8,6 +8,22 @@
 
 /* Begin PBXBuildFile section */
 		E208E0D321EC3E9200A7E161 /* Fetchable+DataConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = E208E0D221EC3E9100A7E161 /* Fetchable+DataConvertible.swift */; };
+		E29168CA22A2973D005D638E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29168C922A2973D005D638E /* AppDelegate.swift */; };
+		E29168CF22A2973D005D638E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E29168CD22A2973D005D638E /* Main.storyboard */; };
+		E29168D122A29740005D638E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E29168D022A29740005D638E /* Assets.xcassets */; };
+		E29168D422A29740005D638E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E29168D222A29740005D638E /* LaunchScreen.storyboard */; };
+		E29168DE22A29871005D638E /* Weather.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E29168DD22A29871005D638E /* Weather.storyboard */; };
+		E29168E022A298B1005D638E /* SitesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29168DF22A298B1005D638E /* SitesViewController.swift */; };
+		E29168E122A29902005D638E /* BFWFetch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2A55E8D21AAD3A500812DC6 /* BFWFetch.framework */; };
+		E29168E222A29902005D638E /* BFWFetch.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E2A55E8D21AAD3A500812DC6 /* BFWFetch.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		E29168EA22A29957005D638E /* Root.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29168E922A29957005D638E /* Root.swift */; };
+		E29168EC22A29CE6005D638E /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29168EB22A29CE6005D638E /* Weather.swift */; };
+		E29168EE22A29DC8005D638E /* Site+Decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29168ED22A29DC8005D638E /* Site+Decodable.swift */; };
+		E29168F022A2A754005D638E /* Site.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29168EF22A2A754005D638E /* Site.swift */; };
+		E29168F222A2ABB7005D638E /* Root+FetchSites.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29168F122A2ABB7005D638E /* Root+FetchSites.swift */; };
+		E29168F622A2AD1A005D638E /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29168F522A2AD1A005D638E /* Result.swift */; };
+		E29168F922A2AF9C005D638E /* Fetchable+Decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29168F822A2AF9C005D638E /* Fetchable+Decodable.swift */; };
+		E29168FD22A2BBC0005D638E /* Sites+Decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29168FC22A2BBC0005D638E /* Sites+Decodable.swift */; };
 		E29A36B321AF9A290069DF78 /* KeyPathsFetchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29A36B221AF9A290069DF78 /* KeyPathsFetchable.swift */; };
 		E2A55E9221AAD3A500812DC6 /* BFWFetch.h in Headers */ = {isa = PBXBuildFile; fileRef = E2A55E9021AAD3A500812DC6 /* BFWFetch.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E2A55EB421AAD48E00812DC6 /* Fetchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A55EAE21AAD48D00812DC6 /* Fetchable.swift */; };
@@ -19,8 +35,48 @@
 		E2A55EC221AAD98E00812DC6 /* Fetch+Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A55EC121AAD98E00812DC6 /* Fetch+Event.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		E29168E322A29902005D638E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E2A55E8421AAD3A500812DC6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E2A55E8C21AAD3A500812DC6;
+			remoteInfo = BFWFetch;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		E29168E522A29902005D638E /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				E29168E222A29902005D638E /* BFWFetch.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		E208E0D221EC3E9100A7E161 /* Fetchable+DataConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Fetchable+DataConvertible.swift"; sourceTree = "<group>"; };
+		E29168C722A2973D005D638E /* BFWFetch-Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "BFWFetch-Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E29168C922A2973D005D638E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		E29168CE22A2973D005D638E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		E29168D022A29740005D638E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E29168D322A29740005D638E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		E29168D522A29740005D638E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E29168DD22A29871005D638E /* Weather.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Weather.storyboard; sourceTree = "<group>"; };
+		E29168DF22A298B1005D638E /* SitesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SitesViewController.swift; sourceTree = "<group>"; };
+		E29168E922A29957005D638E /* Root.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Root.swift; sourceTree = "<group>"; };
+		E29168EB22A29CE6005D638E /* Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
+		E29168ED22A29DC8005D638E /* Site+Decodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Site+Decodable.swift"; sourceTree = "<group>"; };
+		E29168EF22A2A754005D638E /* Site.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Site.swift; sourceTree = "<group>"; };
+		E29168F122A2ABB7005D638E /* Root+FetchSites.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Root+FetchSites.swift"; sourceTree = "<group>"; };
+		E29168F522A2AD1A005D638E /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
+		E29168F822A2AF9C005D638E /* Fetchable+Decodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Fetchable+Decodable.swift"; sourceTree = "<group>"; };
+		E29168FC22A2BBC0005D638E /* Sites+Decodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sites+Decodable.swift"; sourceTree = "<group>"; };
 		E29A36B221AF9A290069DF78 /* KeyPathsFetchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyPathsFetchable.swift; sourceTree = "<group>"; };
 		E2A55E8D21AAD3A500812DC6 /* BFWFetch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BFWFetch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2A55E9021AAD3A500812DC6 /* BFWFetch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BFWFetch.h; sourceTree = "<group>"; };
@@ -35,6 +91,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		E29168C422A2973D005D638E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E29168E122A29902005D638E /* BFWFetch.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E2A55E8A21AAD3A500812DC6 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -45,6 +109,82 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E29168C822A2973D005D638E /* BFWFetch-Demo */ = {
+			isa = PBXGroup;
+			children = (
+				E29168D922A2974D005D638E /* Launch */,
+				E29168DA22A2981A005D638E /* Modules */,
+			);
+			path = "BFWFetch-Demo";
+			sourceTree = "<group>";
+		};
+		E29168D922A2974D005D638E /* Launch */ = {
+			isa = PBXGroup;
+			children = (
+				E29168C922A2973D005D638E /* AppDelegate.swift */,
+				E29168CD22A2973D005D638E /* Main.storyboard */,
+				E29168D022A29740005D638E /* Assets.xcassets */,
+				E29168D222A29740005D638E /* LaunchScreen.storyboard */,
+				E29168D522A29740005D638E /* Info.plist */,
+			);
+			path = Launch;
+			sourceTree = "<group>";
+		};
+		E29168DA22A2981A005D638E /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				E29168E722A2992C005D638E /* Root */,
+				E29168DB22A29827005D638E /* Weather */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		E29168DB22A29827005D638E /* Weather */ = {
+			isa = PBXGroup;
+			children = (
+				E29168DC22A2982F005D638E /* Controller */,
+				E29168E622A29918005D638E /* Model */,
+			);
+			path = Weather;
+			sourceTree = "<group>";
+		};
+		E29168DC22A2982F005D638E /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				E29168DF22A298B1005D638E /* SitesViewController.swift */,
+				E29168DD22A29871005D638E /* Weather.storyboard */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		E29168E622A29918005D638E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E29168F122A2ABB7005D638E /* Root+FetchSites.swift */,
+				E29168EF22A2A754005D638E /* Site.swift */,
+				E29168ED22A29DC8005D638E /* Site+Decodable.swift */,
+				E29168FC22A2BBC0005D638E /* Sites+Decodable.swift */,
+				E29168EB22A29CE6005D638E /* Weather.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		E29168E722A2992C005D638E /* Root */ = {
+			isa = PBXGroup;
+			children = (
+				E29168E822A29945005D638E /* Model */,
+			);
+			path = Root;
+			sourceTree = "<group>";
+		};
+		E29168E822A29945005D638E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E29168E922A29957005D638E /* Root.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		E29168F322A2ACED005D638E /* Result */ = {
 			isa = PBXGroup;
 			children = (
@@ -85,6 +225,7 @@
 			isa = PBXGroup;
 			children = (
 				E2A55E8F21AAD3A500812DC6 /* BFWFetch */,
+				E29168C822A2973D005D638E /* BFWFetch-Demo */,
 				E2A55E8E21AAD3A500812DC6 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -93,6 +234,7 @@
 			isa = PBXGroup;
 			children = (
 				E2A55E8D21AAD3A500812DC6 /* BFWFetch.framework */,
+				E29168C722A2973D005D638E /* BFWFetch-Demo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -159,6 +301,25 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		E29168C622A2973D005D638E /* BFWFetch-Demo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E29168D822A29740005D638E /* Build configuration list for PBXNativeTarget "BFWFetch-Demo" */;
+			buildPhases = (
+				E29168C322A2973D005D638E /* Sources */,
+				E29168C422A2973D005D638E /* Frameworks */,
+				E29168C522A2973D005D638E /* Resources */,
+				E29168E522A29902005D638E /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E29168E422A29902005D638E /* PBXTargetDependency */,
+			);
+			name = "BFWFetch-Demo";
+			productName = "BFWFetch-Demo";
+			productReference = E29168C722A2973D005D638E /* BFWFetch-Demo.app */;
+			productType = "com.apple.product-type.application";
+		};
 		E2A55E8C21AAD3A500812DC6 /* BFWFetch */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = E2A55E9521AAD3A500812DC6 /* Build configuration list for PBXNativeTarget "BFWFetch" */;
@@ -183,9 +344,13 @@
 		E2A55E8421AAD3A500812DC6 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 1020;
 				LastUpgradeCheck = 1010;
 				ORGANIZATIONNAME = BareFeetWare;
 				TargetAttributes = {
+					E29168C622A2973D005D638E = {
+						CreatedOnToolsVersion = 10.2.1;
+					};
 					E2A55E8C21AAD3A500812DC6 = {
 						CreatedOnToolsVersion = 10.1;
 					};
@@ -197,6 +362,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = E2A55E8321AAD3A500812DC6;
 			productRefGroup = E2A55E8E21AAD3A500812DC6 /* Products */;
@@ -204,11 +370,23 @@
 			projectRoot = "";
 			targets = (
 				E2A55E8C21AAD3A500812DC6 /* BFWFetch */,
+				E29168C622A2973D005D638E /* BFWFetch-Demo */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		E29168C522A2973D005D638E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E29168D422A29740005D638E /* LaunchScreen.storyboard in Resources */,
+				E29168DE22A29871005D638E /* Weather.storyboard in Resources */,
+				E29168D122A29740005D638E /* Assets.xcassets in Resources */,
+				E29168CF22A2973D005D638E /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E2A55E8B21AAD3A500812DC6 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -219,6 +397,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		E29168C322A2973D005D638E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E29168EC22A29CE6005D638E /* Weather.swift in Sources */,
+				E29168E022A298B1005D638E /* SitesViewController.swift in Sources */,
+				E29168CA22A2973D005D638E /* AppDelegate.swift in Sources */,
+				E29168EE22A29DC8005D638E /* Site+Decodable.swift in Sources */,
+				E29168F022A2A754005D638E /* Site.swift in Sources */,
+				E29168EA22A29957005D638E /* Root.swift in Sources */,
+				E29168FD22A2BBC0005D638E /* Sites+Decodable.swift in Sources */,
+				E29168F222A2ABB7005D638E /* Root+FetchSites.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E2A55E8921AAD3A500812DC6 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -239,7 +432,72 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		E29168E422A29902005D638E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E2A55E8C21AAD3A500812DC6 /* BFWFetch */;
+			targetProxy = E29168E322A29902005D638E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		E29168CD22A2973D005D638E /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E29168CE22A2973D005D638E /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		E29168D222A29740005D638E /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E29168D322A29740005D638E /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
+		E29168D622A29740005D638E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = "$(SRCROOT)/BFWFetch-Demo/Launch/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.barefeetware.BFWFetch-Demo";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		E29168D722A29740005D638E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = "$(SRCROOT)/BFWFetch-Demo/Launch/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.barefeetware.BFWFetch-Demo";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		E2A55E9321AAD3A500812DC6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -413,6 +671,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		E29168D822A29740005D638E /* Build configuration list for PBXNativeTarget "BFWFetch-Demo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E29168D622A29740005D638E /* Debug */,
+				E29168D722A29740005D638E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		E2A55E8721AAD3A500812DC6 /* Build configuration list for PBXProject "BFWFetch" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
