@@ -5,6 +5,8 @@
 //  Copyright © 2018 BareFeetWare. All rights reserved.
 //
 
+import Foundation
+
 /**
  A model object is Fetchable if it can be fetched for a URL. Decodable types are automatically Fetchable.
  */
