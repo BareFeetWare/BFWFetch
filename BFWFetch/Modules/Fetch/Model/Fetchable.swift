@@ -42,3 +42,21 @@ public extension Fetchable {
     }
     
 }
+
+extension Optional: Fetchable where Wrapped: Fetchable {
+    
+    public static func fetch(from url: URL, completion: @escaping (Result<Optional<Wrapped>>) -> Void) {
+        Wrapped.fetch(from: url) { result in
+            // TODO: Simplify transformation
+            let optionalResult: Result<Optional<Wrapped>>
+            switch result {
+            case .success(let value):
+                optionalResult = .success(value)
+            case .failure(let error):
+                optionalResult = .failure(error)
+            }
+            completion(optionalResult)
+        }
+    }
+    
+}

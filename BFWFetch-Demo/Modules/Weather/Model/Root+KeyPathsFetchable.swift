@@ -25,7 +25,7 @@ extension Root: KeyPathsFetchable {
         }
     }
     
-    fileprivate var json: JSON {
+    var json: JSON {
         get {
             return JSON(sites: sites ?? [])
         }
@@ -35,7 +35,7 @@ extension Root: KeyPathsFetchable {
     }
 }
 
-fileprivate struct JSON: Decodable, Fetchable {
+struct JSON: Decodable, Fetchable {
     let sites: [Site]
     
     enum CodingKeys: String, CodingKey {

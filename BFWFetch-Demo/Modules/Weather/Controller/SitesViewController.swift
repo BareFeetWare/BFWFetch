@@ -16,11 +16,15 @@ class SitesViewController: UITableViewController {
     let root = Root.shared
     
     // MARK: - Observing
-    
-    func addObservers() {
-        root.addObserver(of: \.sites) { [weak self] notification in
-            guard let self = self else { return }
-            self.tableView.reloadData()
+
+    func fetch() {
+        do {
+            try root.fetch(keyPath: \Root.json) { [weak self] (notification) in
+                guard let self = self else { return }
+                self.tableView.reloadData()
+            }
+        } catch {
+            showAlert(error: error)
         }
     }
     
@@ -28,12 +32,7 @@ class SitesViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        addObservers()
-        do {
-            try root.fetchSites() {_ in }
-        } catch {
-            showAlert(error: error)
-        }
+        fetch()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
