@@ -11,8 +11,7 @@ public extension Fetchable where Self: DataConvertible {
     static func fetch(
         from urlRequest: URLRequest,
         completion: @escaping ((Result<Self>) -> Void)
-        )
-    {
+    ) {
         fetchData(from: urlRequest) { dataResult in
             let result: Result<Self>
             switch dataResult {

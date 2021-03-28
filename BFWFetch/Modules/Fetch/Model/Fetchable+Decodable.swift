@@ -12,11 +12,15 @@ public extension Fetchable where Self: Decodable {
     
     // Fetchable:
     
-    static func fetch(from url: URL,
-                      completion: @escaping (Result<Self>) -> Void) {
-        fetch(from: url,
-              decoder: nil,
-              completion: completion)
+    static func fetch(
+        from url: URL,
+        completion: @escaping (Result<Self>) -> Void
+    ) {
+        fetch(
+            from: url,
+            decoder: nil,
+            completion: completion
+        )
     }
     
     /**
@@ -27,10 +31,16 @@ public extension Fetchable where Self: Decodable {
          - decoder: The JSON decoder to parse the data. Defaults to an uncustomised JSONDecoder(). Supply another if you want to customise it, such as the date decoding strategy.
          - completion: Closure that takes the Result.
      */
-    static func fetch(from url: URL,
-                      decoder: JSONDecoder? = nil,
-                      completion: @escaping (Result<Self>) -> Void) {
-        fetch(from: URLRequest(url: url), decoder: decoder, completion: completion)
+    static func fetch(
+        from url: URL,
+        decoder: JSONDecoder? = nil,
+        completion: @escaping (Result<Self>) -> Void
+    ) {
+        fetch(
+            from: URLRequest(url: url),
+            decoder: decoder,
+            completion: completion
+        )
     }
     
     /**
@@ -41,9 +51,11 @@ public extension Fetchable where Self: Decodable {
          - decoder: The JSON decoder to parse the data. Defaults to an uncustomised JSONDecoder(). Supply another if you want to customise it, such as the date decoding strategy.
          - completion: Closure that takes the Result.
      */
-    static func fetch(from urlRequest: URLRequest,
-                      decoder: JSONDecoder? = nil,
-                      completion: @escaping (Result<Self>) -> Void) {
+    static func fetch(
+        from urlRequest: URLRequest,
+        decoder: JSONDecoder? = nil,
+        completion: @escaping (Result<Self>) -> Void
+    ) {
         fetchData(from: urlRequest) { dataResult in
             let result: Result<Self>
             switch dataResult {

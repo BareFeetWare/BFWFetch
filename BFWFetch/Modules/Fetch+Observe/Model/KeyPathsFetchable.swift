@@ -30,8 +30,7 @@ public extension KeyPathsFetchable {
         keyPath: ReferenceWritableKeyPath<Self, T>,
         from request: URLRequest? = nil,
         observer: ((Notification) -> Void)? = nil
-        ) throws
-    {
+    ) throws {
         let request = try request ?? self.request(for: keyPath)
         let decoder = self.decoder(for: keyPath)
         post(keyPath: keyPath, event: .inProgress)

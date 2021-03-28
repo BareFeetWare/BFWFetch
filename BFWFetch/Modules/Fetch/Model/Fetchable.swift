@@ -19,18 +19,29 @@ public protocol Fetchable {
          - url: The URL from which the object should be fetched.
          - completion: Closure that takes the Result.
      */
-    static func fetch(from url: URL,
-                      completion: @escaping (Result<Self>) -> Void)
+    static func fetch(
+        from url: URL,
+        completion: @escaping (Result<Self>) -> Void
+    )
     
 }
 
 public extension Fetchable {
     
-    static func fetchData(from url: URL, completion: @escaping (Result<Data>) -> Void) {
-        fetchData(from: URLRequest(url: url), completion: completion)
+    static func fetchData(
+        from url: URL,
+        completion: @escaping (Result<Data>) -> Void
+    ) {
+        fetchData(
+            from: URLRequest(url: url),
+            completion: completion
+        )
     }
     
-    static func fetchData(from urlRequest: URLRequest, completion: @escaping (Result<Data>) -> Void) {
+    static func fetchData(
+        from urlRequest: URLRequest,
+        completion: @escaping (Result<Data>) -> Void
+    ) {
         URLSession.shared.dataTask(with: urlRequest) { (data, _, error) in
             if let data = data {
                 completion(.success(data))
@@ -45,7 +56,10 @@ public extension Fetchable {
 
 extension Optional: Fetchable where Wrapped: Fetchable {
     
-    public static func fetch(from url: URL, completion: @escaping (Result<Optional<Wrapped>>) -> Void) {
+    public static func fetch(
+        from url: URL,
+        completion: @escaping (Result<Optional<Wrapped>>) -> Void
+    ) {
         Wrapped.fetch(from: url) { result in
             // TODO: Simplify transformation
             let optionalResult: Result<Optional<Wrapped>>

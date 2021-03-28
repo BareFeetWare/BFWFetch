@@ -36,10 +36,10 @@ public extension Observable {
         NotificationCenter.default.addObserver(
             forName: name,
             object: self,
-            queue: queue)
-        { notification in
+            queue: queue
+        ) { notification in
             guard events == [] || notification.event != nil && events.contains(notification.event!)
-                else { return }
+            else { return }
             block(notification)
         }
     }
@@ -54,12 +54,14 @@ public extension Observable {
         of keyPath: KeyPath<Self, Value>,
         events: [Notification.Event] = [],
         queue: OperationQueue = OperationQueue.current!,
-        using block: @escaping (Notification) -> Void)
-    {
-        addObserver(ofName: Notification.Name(keyPath: keyPath),
+        using block: @escaping (Notification) -> Void
+    ) {
+        addObserver(
+            ofName: Notification.Name(keyPath: keyPath),
             events: events,
             queue: queue,
-            using: block)
+            using: block
+        )
     }
-
+    
 }
