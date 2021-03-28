@@ -5,9 +5,11 @@
 //  Copyright © 2018 BareFeetWare. All rights reserved.
 //
 
-public enum Fetch {
-    
-    public enum Error: Swift.Error {
+public enum Fetch {}
+
+public extension Fetch {
+
+    enum Error: Swift.Error {
         case authentication
         case url
         case missingRequest
