@@ -37,7 +37,7 @@ public extension KeyPathsFetchable {
         if let observer = observer {
             addObserver(of: keyPath, using: observer)
         }
-        T.fetch(from: request, decoder: decoder) { result in
+        T.fetch(request: request, decoder: decoder) { result in
             switch result {
             case .success(let value):
                 self[keyPath : keyPath] = value

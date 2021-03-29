@@ -25,20 +25,18 @@ extension Root: KeyPathsFetchable {
         }
     }
     
-    var json: JSON {
-        get {
-            return JSON(sites: sites ?? [])
-        }
-        set {
-            sites = newValue.sites
-        }
-    }
 }
 
-struct JSON: Decodable, Fetchable {
-    let sites: [Site]
+extension Fetch {
+    struct Sites {}
+}
+
+extension Fetch.Sites: Fetchable {
     
-    enum CodingKeys: String, CodingKey {
-        case sites = "list"
-    }
+    typealias FetchedType = [Site]
+    
+    enum Key: FetchKey {}
+    
+    static var baseURL: URL { URL(string: "https://api.openweathermap.org/data/2.5/group?id=4163971,2147714,2174003&units=metric&APPID=9807c81866d8e03e6e1025de688b1e0e")! }
+    
 }

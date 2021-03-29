@@ -19,7 +19,7 @@ class SitesViewController: UITableViewController {
 
     func fetch() {
         do {
-            try root.fetch(keyPath: \Root.json) { [weak self] (notification) in
+            try Fetch.Sites.fetch() { [weak self] (notification) in
                 guard let self = self else { return }
                 self.tableView.reloadData()
             }

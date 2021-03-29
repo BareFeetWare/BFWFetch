@@ -8,20 +8,9 @@
 
 import Foundation
 
-public extension Fetchable where Self: Decodable {
+public extension Fetchable where FetchedType: Decodable {
     
     // Fetchable:
-    
-    static func fetch(
-        from url: URL,
-        completion: @escaping (Result<Self>) -> Void
-    ) {
-        fetch(
-            from: url,
-            decoder: nil,
-            completion: completion
-        )
-    }
     
     /**
      Fetch a new instance of the Self type from url, using Decodable.
@@ -32,37 +21,41 @@ public extension Fetchable where Self: Decodable {
          - completion: Closure that takes the Result.
      */
     static func fetch(
-        from url: URL,
+        keyValues: [Key: FetchValue?]? = nil,
         decoder: JSONDecoder? = nil,
-        completion: @escaping (Result<Self>) -> Void
+        completion: @escaping (Result<FetchedType>) -> Void
     ) {
-        fetch(
-            from: URLRequest(url: url),
-            decoder: decoder,
-            completion: completion
-        )
+        do {
+            try fetch(
+                request: request(keyValues: keyValues),
+                decoder: decoder,
+                completion: completion
+            )
+        } catch {
+            completion(.failure(error))
+        }
     }
     
     /**
-     Fetch a new instance of the Self type from a URLRequest, using Decodable.
+     Fetch a new instance of the FetchedType from a URLRequest, using Decodable.
      
      - parameters:
-         - from urlRequest: The URLRequest from which the object should be fetched.
+         - request: The URLRequest from which the object should be fetched.
          - decoder: The JSON decoder to parse the data. Defaults to an uncustomised JSONDecoder(). Supply another if you want to customise it, such as the date decoding strategy.
          - completion: Closure that takes the Result.
      */
     static func fetch(
-        from urlRequest: URLRequest,
+        request: URLRequest,
         decoder: JSONDecoder? = nil,
-        completion: @escaping (Result<Self>) -> Void
+        completion: @escaping (Result<FetchedType>) -> Void
     ) {
-        fetchData(from: urlRequest) { dataResult in
-            let result: Result<Self>
+        fetchData(request: request) { dataResult in
+            let result: Result<FetchedType>
             switch dataResult {
             case .success(let data):
                 do {
-                    let decoder = decoder ?? JSONDecoder()
-                    let decoded = try decoder.decode(self, from: data)
+                    let decoder = decoder ?? self.decoder
+                    let decoded = try decoder.decode(FetchedType.self, from: data)
                     result = .success(decoded)
                 } catch {
                     result = .failure(error)

@@ -7,12 +7,12 @@
 //
 
 public extension Fetchable where Self: DataConvertible {
-    
+
     static func fetch(
-        from urlRequest: URLRequest,
+        request: URLRequest,
         completion: @escaping ((Result<Self>) -> Void)
     ) {
-        fetchData(from: urlRequest) { dataResult in
+        fetchData(request: request) { dataResult in
             let result: Result<Self>
             switch dataResult {
             case .success(let data):
@@ -27,7 +27,7 @@ public extension Fetchable where Self: DataConvertible {
             completion(result)
         }
     }
-    
+
 }
 
 public protocol DataConvertible {
