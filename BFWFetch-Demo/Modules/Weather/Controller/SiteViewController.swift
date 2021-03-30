@@ -30,17 +30,16 @@ class SiteViewController: UITableViewController {
     // MARK: - Functions
     
     private func updateViews() {
-        cityNameCell.detailTextLabel?.text = site.city
-        let weather = site.weather
-        summaryCell.detailTextLabel?.text = weather.summary
-        descriptionCell.detailTextLabel?.text = weather.description
-        temperatureCell.detailTextLabel?.text = "\(weather.temperature) °C"
-        minimumTemperatureCell.detailTextLabel?.text = "\(weather.minimumTemperature) °C"
-        maximumTemperatureCell.detailTextLabel?.text = "\(weather.maximumTemperature) °C"
-        pressureCell.detailTextLabel?.text = "\(weather.pressure) mBar"
-        humidityCell.detailTextLabel?.text = "\(weather.humidity) %"
-        windSpeedCell.detailTextLabel?.text = "\(weather.windSpeed) km/h"
-        windDirectionCell.detailTextLabel?.text = "\(weather.windDirection) °"
+        cityNameCell.detailTextLabel?.text = site.name
+        summaryCell.detailTextLabel?.text = site.summary
+        descriptionCell.detailTextLabel?.text = site.description
+        temperatureCell.detailTextLabel?.text = site.temperatureString
+        minimumTemperatureCell.detailTextLabel?.text = site.minimumTemperatureString
+        maximumTemperatureCell.detailTextLabel?.text = site.maximumTemperatureString
+        pressureCell.detailTextLabel?.text = site.pressureString
+        humidityCell.detailTextLabel?.text = site.humidityString
+        windSpeedCell.detailTextLabel?.text = site.windSpeedString
+        windDirectionCell.detailTextLabel?.text = site.windDirectionString
     }
     
     // MARK: - UIViewController

@@ -12,7 +12,7 @@ import Foundation
  */
 public protocol Fetchable {
     
-    associatedtype FetchedType: Decodable
+    associatedtype FetchedType
     associatedtype Key: FetchKey
     
     static var baseURL: URL { get }
@@ -24,18 +24,6 @@ public protocol Fetchable {
     static var encoding: Fetch.Encoding { get }
     static var headers: [String: String]? { get }
     static var decoder: JSONDecoder { get }
-    
-    /**
-     Fetch a new instance of the Self type from url.
-     
-     - parameters:
-         - url: The URL from which the object should be fetched.
-         - completion: Closure that takes the Result.
-     */
-//    static func fetch(
-//        from url: URL,
-//        completion: @escaping (Result<Self>) -> Void
-//    )
     
 }
 
@@ -64,7 +52,7 @@ public extension Fetchable {
     
 }
 
-extension Fetchable where FetchedType: Decodable {
+extension Fetchable {
     
     static func request(keyValues: [Key: FetchValue?]? = nil) throws -> URLRequest {
         let nonNilKeyValues = keyValues?.compactMapValues { $0 } ?? [:]
@@ -91,68 +79,3 @@ extension Fetchable where FetchedType: Decodable {
     }
     
 }
-
-public extension Fetchable {
-    
-    static func fetch(
-        keyValues: [Key: FetchValue?]? = nil,
-        completion: @escaping (Result<FetchedType>) -> Void
-    ) {
-        fetchData(keyValues: keyValues) { result in
-            
-        }
-    }
-        
-    static func fetchData(
-        keyValues: [Key: FetchValue?]? = nil,
-        completion: @escaping (Result<Data>) -> Void
-    ) {
-        do {
-            try fetchData(
-                request: request(keyValues: keyValues),
-                completion: completion
-            )
-        } catch {
-            completion(.failure(error))
-        }
-    }
-    
-    static func fetchData(
-        request: URLRequest,
-        completion: @escaping (Result<Data>) -> Void
-    ) {
-        URLSession.shared.dataTask(with: request) { (data, _, error) in
-            // FIXME: post notification
-            if let data = data {
-                completion(.success(data))
-            } else if let error = error {
-                completion(.failure(error))
-            }
-        }
-        .resume()
-    }
-    
-}
-
-/*
-extension Optional: Fetchable where Wrapped: Fetchable {
-    
-    public static func fetch(
-        request: URLRequest,
-        completion: @escaping (Result<Optional<Wrapped>>) -> Void
-    ) {
-        Wrapped.fetch(request: request) { result in
-            // TODO: Simplify transformation
-            let optionalResult: Result<Optional<Wrapped>>
-            switch result {
-            case .success(let value):
-                optionalResult = .success(value)
-            case .failure(let error):
-                optionalResult = .failure(error)
-            }
-            completion(optionalResult)
-        }
-    }
-    
-}
-*/

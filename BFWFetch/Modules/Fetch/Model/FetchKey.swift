@@ -29,7 +29,8 @@ public extension FetchKey {
     var defaultAPIString: String {
         // TODO: Find a way to use the rawValue if it is RawRepresentable
         let rawString = String(describing: self)
-        return rawString.camelCaseToSnakeCase()
+        // TODO: Open to use .camelCaseToSnakeCase()
+        return rawString
     }
     
     var isInURLPath: Bool {

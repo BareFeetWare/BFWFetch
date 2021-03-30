@@ -7,64 +7,68 @@
 //
 
 import Foundation
+import Combine
 
 public extension Fetchable where FetchedType: Decodable {
     
-    // Fetchable:
+    private static func decodedPublisher(
+        request: URLRequest
+    ) -> AnyPublisher<FetchedType, Error> {
+        dataPublisher(request: request)
+            .decode(type: FetchedType.self, decoder: decoder)
+            .mapError {
+                debugPrint("decoded(): error: \($0) for request: \(request)")
+                return $0
+            }
+            .eraseToAnyPublisher()
+    }
     
-    /**
-     Fetch a new instance of the Self type from url, using Decodable.
-     
-     - parameters:
-         - url: The URL from which the object should be fetched.
-         - decoder: The JSON decoder to parse the data. Defaults to an uncustomised JSONDecoder(). Supply another if you want to customise it, such as the date decoding strategy.
-         - completion: Closure that takes the Result.
-     */
-    static func fetch(
-        keyValues: [Key: FetchValue?]? = nil,
-        decoder: JSONDecoder? = nil,
-        completion: @escaping (Result<FetchedType>) -> Void
-    ) {
+    private static func publisher(
+        request: URLRequest
+    ) -> AnyPublisher<FetchedType, Error> {
+        decodedPublisher(request: request)
+            /*
+            .tryMap {
+                guard !Root.shared.testing.isFakeFetchError
+                else {
+                    throw Fetch.Error.failure(.fake)
+                }
+                return $0.data
+            }
+            */
+            .tryCatch { error -> AnyPublisher<FetchedType, Error> in
+                guard error as? Fetch.Error == .noData,
+                      let empty = [] as? FetchedType
+                else { throw error }
+                return Just(empty)
+                    .mapError { _ -> Fetch.Error in }
+                    .eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    static func publisher(
+        keyValues: [Key: FetchValue?]? = nil
+    ) -> AnyPublisher<FetchedType, Error> {
         do {
-            try fetch(
-                request: request(keyValues: keyValues),
-                decoder: decoder,
-                completion: completion
+            return try publisher(
+                request: request(keyValues: keyValues)
             )
         } catch {
-            completion(.failure(error))
+            return Fail<FetchedType, Error>(error: error)
+                .eraseToAnyPublisher()
         }
     }
     
-    /**
-     Fetch a new instance of the FetchedType from a URLRequest, using Decodable.
-     
-     - parameters:
-         - request: The URLRequest from which the object should be fetched.
-         - decoder: The JSON decoder to parse the data. Defaults to an uncustomised JSONDecoder(). Supply another if you want to customise it, such as the date decoding strategy.
-         - completion: Closure that takes the Result.
-     */
-    static func fetch(
-        request: URLRequest,
-        decoder: JSONDecoder? = nil,
-        completion: @escaping (Result<FetchedType>) -> Void
-    ) {
-        fetchData(request: request) { dataResult in
-            let result: Result<FetchedType>
-            switch dataResult {
-            case .success(let data):
-                do {
-                    let decoder = decoder ?? self.decoder
-                    let decoded = try decoder.decode(FetchedType.self, from: data)
-                    result = .success(decoded)
-                } catch {
-                    result = .failure(error)
-                }
-            case .failure(let error):
-                result = .failure(error)
-            }
-            completion(result)
-        }
+    static func resultPublisher(
+        keyValues: [Key: FetchValue?]? = nil
+    ) -> AnyPublisher<Result<FetchedType, Error>, Never> {
+        publisher(
+            keyValues: keyValues
+        )
+        .map { Result.success($0) }
+        .catch { Just(Result.failure($0)) }
+        .eraseToAnyPublisher()
     }
     
 }

@@ -7,73 +7,66 @@
 //
 
 import UIKit
+import Combine
 import BFWFetch
 
 class SitesViewController: UITableViewController {
-    
-    // MARK: - Variables
-    
-    let root = Root.shared
-    
-    // MARK: - Observing
+    private let viewModel = ViewModel()
+    private var subscribers = Set<AnyCancellable>()
+}
 
-    func fetch() {
-        do {
-            try Fetch.Sites.fetch() { [weak self] (notification) in
-                guard let self = self else { return }
-                self.tableView.reloadData()
-            }
-        } catch {
-            showAlert(error: error)
-        }
-    }
-    
-    // MARK: - UIViewController
-    
+// MARK: - UIViewController
+
+extension SitesViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetch()
+        viewModel.viewDidLoad()
+        subscribe()
     }
+}
+
+// MARK: - UITableViewDelegate & UITableViewDataSource
+
+extension SitesViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? SiteViewController {
             guard let cell = sender as? UITableViewCell,
-                let indexPath = tableView.indexPath(for: cell),
-                let site = root.sites?[indexPath.row]
-                else { return }
+                  let indexPath = tableView.indexPath(for: cell),
+                  let site = viewModel.site(indexPath: indexPath)
+            else { return }
             destination.site = site
         }
     }
     
-}
-
-// MARK: View Model
-
-extension SitesViewController {
-    
-    enum CellIdentifier: String {
-        case site
-        case loading
-    }
-    
-}
-
-// MARK: UITableViewDataSource
-
-extension SitesViewController {
-    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return root.sites?.count ?? 1
+        viewModel.tableViewNumberOfRows
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cellIdentifier: CellIdentifier = root.sites == nil ? .loading : .site
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier.rawValue, for: indexPath)
-        if let site = root.sites?[indexPath.row] {
+        let cell = tableView.dequeueReusableCell(withIdentifier: viewModel.cellIdentifier, for: indexPath)
+        if let site = viewModel.site(indexPath: indexPath) {
             cell.textLabel?.text = site.city
-            cell.detailTextLabel?.text = "\(site.weather.temperature) °C"
+            cell.detailTextLabel?.text = site.temperatureString
         }
         return cell
     }
     
+}
+
+// MARK: - Private
+
+private extension SitesViewController {
+    func subscribe() {
+        viewModel.$sitesResult
+            .receive(on: DispatchQueue.main)
+            .sink { result in
+                switch result {
+                case .none, .success(_): break
+                case .failure(let error): self.showAlert(error: error)
+                }
+                self.tableView.reloadData()
+            }
+            .store(in: &subscribers)
+    }
 }
