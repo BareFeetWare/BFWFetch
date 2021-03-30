@@ -139,7 +139,7 @@
 		E29168DA22A2981A005D638E /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				E291690022A38060005D638E /* Controls */,
+				E291690022A38060005D638E /* Common */,
 				E29168DB22A29827005D638E /* Weather */,
 			);
 			path = Modules;
@@ -192,12 +192,12 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		E291690022A38060005D638E /* Controls */ = {
+		E291690022A38060005D638E /* Common */ = {
 			isa = PBXGroup;
 			children = (
 				E291690122A3806C005D638E /* Controller */,
 			);
-			path = Controls;
+			path = Common;
 			sourceTree = "<group>";
 		};
 		E291690122A3806C005D638E /* Controller */ = {
