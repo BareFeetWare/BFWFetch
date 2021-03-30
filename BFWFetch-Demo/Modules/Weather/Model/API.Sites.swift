@@ -27,7 +27,7 @@ extension API.Sites: Fetchable {
         case appID
     }
     
-    typealias FetchedType = API.ArrayResponse<Site>
+    typealias FetchedType = API.ArrayWrapper<Site>
     
     static func resultPublisher() -> AnyPublisher<Result<FetchedType, Error>, Never> {
         resultPublisher(
@@ -39,18 +39,4 @@ extension API.Sites: Fetchable {
         )
     }
     
-}
-
-extension API {
-    struct ArrayResponse<T: Decodable> {
-        let count: Int
-        let array: Array<T>
-    }
-}
-
-extension API.ArrayResponse: Decodable {
-    enum CodingKeys: String, CodingKey {
-        case count = "cnt"
-        case array = "list"
-    }
 }
