@@ -53,6 +53,8 @@ struct Site {
     }
 }
 
+extension Site: Identifiable {}
+
 extension Site: Decodable {
     enum CodingKeys: String, CodingKey {
         case id
