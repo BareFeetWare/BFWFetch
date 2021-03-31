@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension DateFormatter {
+public extension DateFormatter {
     
     static let sqlDateTime: DateFormatter = {
         let formatter = DateFormatter()
