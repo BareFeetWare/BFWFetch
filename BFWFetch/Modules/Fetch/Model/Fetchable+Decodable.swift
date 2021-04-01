@@ -7,71 +7,68 @@
 //
 
 import Foundation
+import Combine
 
-public extension Fetchable where Self: Decodable {
+public extension Fetchable where FetchedType: Decodable {
     
-    // Fetchable:
-    
-    static func fetch(
-        from url: URL,
-        completion: @escaping (Result<Self>) -> Void
-    ) {
-        fetch(
-            from: url,
-            decoder: nil,
-            completion: completion
-        )
-    }
-    
-    /**
-     Fetch a new instance of the Self type from url, using Decodable.
-     
-     - parameters:
-         - url: The URL from which the object should be fetched.
-         - decoder: The JSON decoder to parse the data. Defaults to an uncustomised JSONDecoder(). Supply another if you want to customise it, such as the date decoding strategy.
-         - completion: Closure that takes the Result.
-     */
-    static func fetch(
-        from url: URL,
-        decoder: JSONDecoder? = nil,
-        completion: @escaping (Result<Self>) -> Void
-    ) {
-        fetch(
-            from: URLRequest(url: url),
-            decoder: decoder,
-            completion: completion
-        )
-    }
-    
-    /**
-     Fetch a new instance of the Self type from a URLRequest, using Decodable.
-     
-     - parameters:
-         - from urlRequest: The URLRequest from which the object should be fetched.
-         - decoder: The JSON decoder to parse the data. Defaults to an uncustomised JSONDecoder(). Supply another if you want to customise it, such as the date decoding strategy.
-         - completion: Closure that takes the Result.
-     */
-    static func fetch(
-        from urlRequest: URLRequest,
-        decoder: JSONDecoder? = nil,
-        completion: @escaping (Result<Self>) -> Void
-    ) {
-        fetchData(from: urlRequest) { dataResult in
-            let result: Result<Self>
-            switch dataResult {
-            case .success(let data):
-                do {
-                    let decoder = decoder ?? JSONDecoder()
-                    let decoded = try decoder.decode(self, from: data)
-                    result = .success(decoded)
-                } catch {
-                    result = .failure(error)
-                }
-            case .failure(let error):
-                result = .failure(error)
+    private static func decodedPublisher(
+        request: URLRequest
+    ) -> AnyPublisher<FetchedType, Error> {
+        dataPublisher(request: request)
+            .decode(type: FetchedType.self, decoder: decoder)
+            .mapError {
+                debugPrint("decoded(): error: \($0) for request: \(request)")
+                return $0
             }
-            completion(result)
+            .eraseToAnyPublisher()
+    }
+    
+    private static func publisher(
+        request: URLRequest
+    ) -> AnyPublisher<FetchedType, Error> {
+        decodedPublisher(request: request)
+            /*
+            .tryMap {
+                guard !Root.shared.testing.isFakeFetchError
+                else {
+                    throw Fetch.Error.failure(.fake)
+                }
+                return $0.data
+            }
+            */
+            .tryCatch { error -> AnyPublisher<FetchedType, Error> in
+                guard error as? Fetch.Error == .noData,
+                      let empty = [] as? FetchedType
+                else { throw error }
+                return Just(empty)
+                    .mapError { _ -> Fetch.Error in }
+                    .eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    static func publisher(
+        keyValues: [Key: FetchValue?]? = nil
+    ) -> AnyPublisher<FetchedType, Error> {
+        do {
+            return try publisher(
+                request: request(keyValues: keyValues)
+            )
+        } catch {
+            return Fail<FetchedType, Error>(error: error)
+                .eraseToAnyPublisher()
         }
+    }
+    
+    static func resultPublisher(
+        keyValues: [Key: FetchValue?]? = nil
+    ) -> AnyPublisher<Result<FetchedType, Error>, Never> {
+        publisher(
+            keyValues: keyValues
+        )
+        .map { Result.success($0) }
+        .catch { Just(Result.failure($0)) }
+        .eraseToAnyPublisher()
     }
     
 }
