@@ -10,31 +10,29 @@ import Foundation
 
 public protocol FetchKey: Hashable {
     
-    /// String for API key. Defaults to string describing key.
+    /// String for API key. Defaults to rawValue (if RawRepresentable) or string describing key.
     var apiString: String { get }
     
-    /// Is this key set in the url path?
+    /// Is this key set in the url path, like "key/value"? If not, then set as a parameter, like "key=value".
     var isInURLPath: Bool { get }
     
+    // Must be declared in the protocol so that the most specific extension's implementation is used.
+    var defaultAPIString: String { get }
+    
+}
+
+public extension FetchKey where Self: RawRepresentable, RawValue == String {
+    var defaultAPIString: String { rawValue }
 }
 
 public extension FetchKey {
     
-    var apiVersion: Int { 1 }
-    
-    var apiString: String {
-        defaultAPIString
-    }
+    var apiString: String { defaultAPIString }
     
     var defaultAPIString: String {
-        // TODO: Find a way to use the rawValue if it is RawRepresentable
-        let rawString = String(describing: self)
-        // TODO: Open to use .camelCaseToSnakeCase()
-        return rawString
+        String(describing: self)
     }
     
-    var isInURLPath: Bool {
-        false
-    }
+    var isInURLPath: Bool { false }
     
 }
