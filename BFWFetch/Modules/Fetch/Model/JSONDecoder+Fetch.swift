@@ -21,9 +21,15 @@ public extension JSONDecoder {
         return decoder
     }
     
-    static var tSeparator: JSONDecoder {
+    static var tTimezone: JSONDecoder {
         let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .custom(tSeparator)
+        decoder.dateDecodingStrategy = .custom(tTimezone)
+        return decoder
+    }
+    
+    static var timezone: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .custom(timezone)
         return decoder
     }
     
@@ -42,9 +48,19 @@ public extension JSONDecoder {
         return date
     }
     
-    static func tSeparator(_ decoder: Decoder) throws -> Date {
+    static func tTimezone(_ decoder: Decoder) throws -> Date {
         let dateString = try decoder.singleValueContainer().decode(String.self)
-        guard let date = DateFormatter.tSeparator.date(from: dateString)
+        guard let date = DateFormatter.tTimezone.date(from: dateString)
+        else {
+            print("\(#function) couldn't decode date string \(dateString)")
+            throw Error.dateFormat
+        }
+        return date
+    }
+    
+    static func timezone(_ decoder: Decoder) throws -> Date {
+        let dateString = try decoder.singleValueContainer().decode(String.self)
+        guard let date = DateFormatter.timezone.date(from: dateString)
         else {
             print("\(#function) couldn't decode date string \(dateString)")
             throw Error.dateFormat
