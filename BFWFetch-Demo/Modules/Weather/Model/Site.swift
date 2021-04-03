@@ -25,8 +25,9 @@ struct Site {
     }
     
     struct Sys {
+        let id: Int?
         let country: String
-        let timezone: TimeInterval
+        let timezone: TimeInterval?
         let sunrise: TimeInterval
         let sunset: TimeInterval
     }

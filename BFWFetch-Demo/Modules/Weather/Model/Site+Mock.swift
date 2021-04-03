@@ -18,6 +18,7 @@ extension Site {
             longitude: 151.2073
         ),
         sys: Sys(
+            id: 9600,
             country: "AU",
             timezone: 0,
             sunrise: 0,
