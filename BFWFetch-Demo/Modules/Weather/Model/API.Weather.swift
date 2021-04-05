@@ -28,6 +28,9 @@ extension API.Weather: Fetchable {
     
     typealias FetchedType = Site
     
+}
+
+extension API.Weather {
     static func resultPublisher(
         city: String,
         countryCode: String?
@@ -40,5 +43,4 @@ extension API.Weather: Fetchable {
             ]
         )
     }
-    
 }
