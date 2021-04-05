@@ -29,7 +29,7 @@ extension WeatherScene : View {
             }
             AsyncNavigationLink(
                 destination: viewModel.site.map { SiteScene(site: $0) },
-                isActive: $viewModel.isActiveWeather,
+                isActive: $viewModel.isActiveSiteScene,
                 isInProgress: $viewModel.isInProgressWeather,
                 action: viewModel.fetchWeather
             ) {

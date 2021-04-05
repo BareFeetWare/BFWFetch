@@ -13,7 +13,7 @@ extension WeatherScene {
     class ViewModel: ObservableObject {
         @Published var city: String = "Sydney"
         @Published var countryCode: String = "AU"
-        @Published var isActiveWeather = false
+        @Published var isActiveSiteScene = false
         @Published var isInProgressWeather = false
         @Published var site: Site?
         @Published var alert: Alert?
@@ -46,22 +46,24 @@ extension WeatherScene.ViewModel {
         guard !city.isEmpty
         else { return }
         isInProgressWeather = true
-        API.Weather.resultPublisher(
+        API.Weather.publisher(
             city: city,
             countryCode: countryCode
         )
         .receive(on: DispatchQueue.main)
-        .sink { result in
-            self.isInProgressWeather = false
-            switch result {
-            case .success(let site):
+        .sink(
+            receiveCompletion: { completion in
+                self.isInProgressWeather = false
+                switch completion {
+                case .failure(let error): self.alert = .fetch(error: error)
+                case .finished: break
+                }
+            },
+            receiveValue: { site in
                 self.site = site
-                self.isActiveWeather = true
-            case .failure(let error):
-                self.alert = .fetch(error: error)
-                break
+                self.isActiveSiteScene = true
             }
-        }
+        )
         .store(in: &subscribers)
     }
 }

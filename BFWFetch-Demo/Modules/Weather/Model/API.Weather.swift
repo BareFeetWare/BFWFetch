@@ -31,11 +31,11 @@ extension API.Weather: Fetchable {
 }
 
 extension API.Weather {
-    static func resultPublisher(
+    static func publisher(
         city: String,
         countryCode: String?
-    ) -> AnyPublisher<Result<FetchedType, Error>, Never> {
-        resultPublisher(
+    ) -> AnyPublisher<FetchedType, Error> {
+        publisher(
             keyValues: [
                 .appID: "9807c81866d8e03e6e1025de688b1e0e",
                 .units: "metric",
