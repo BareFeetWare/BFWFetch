@@ -1,5 +1,5 @@
 //
-//  API.Sites.swift
+//  API.Group.swift
 //  BFWFetch-Demo
 //
 //  Created by Tom Brodhurst-Hill on 30/3/21.
@@ -11,32 +11,36 @@ import BFWFetch
 import Combine
 
 extension API {
-    struct Sites {}
+    struct Group {}
 }
 
-extension API.Sites: Fetchable {
+extension API.Group: Fetchable {
     
     static let baseURL = URL(string: "https://api.openweathermap.org/data/")!
     
     static var urlStartPath: String? { "2.5" }
-    static var urlEndPath: String? { "group" }
     
-    enum Key: FetchKey {
-        case id
-        case units
+    enum Key: String, FetchKey {
+        case siteIDs = "id"
+        case system = "units"
         case appID
     }
     
     typealias FetchedType = API.ArrayWrapper<Site>
     
-    static func resultPublisher() -> AnyPublisher<Result<FetchedType, Error>, Never> {
-        resultPublisher(
+}
+
+extension API.Group {
+    static func publisher(
+        siteIDs: String,
+        system: System
+    ) -> AnyPublisher<FetchedType, Error> {
+        publisher(
             keyValues: [
                 .appID: "9807c81866d8e03e6e1025de688b1e0e",
-                .units: "metric",
-                .id: "4163971,2147714,2174003"
+                .siteIDs: siteIDs,
+                .system: system
             ]
         )
     }
-    
 }

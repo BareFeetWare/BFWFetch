@@ -29,9 +29,9 @@ extension WeatherScene : View {
             }
             AsyncNavigationLink(
                 destination: viewModel.site.map { SiteScene(site: $0) },
-                isActive: $viewModel.isActiveSiteScene,
-                isInProgress: $viewModel.isInProgressWeather,
-                action: viewModel.fetchWeather
+                isActive: $viewModel.isActiveLinkedScene,
+                isInProgress: $viewModel.isInProgressFetch,
+                action: viewModel.fetch
             ) {
                 Text("Fetch Weather")
             }
@@ -40,7 +40,7 @@ extension WeatherScene : View {
         .alert(item: $viewModel.alert) { alert in
             Alert(title: Text(alert.title), message: Text(alert.message))
         }
-        .navigationTitle("Weather")
+        .navigationTitle("API Weather")
     }
 }
 

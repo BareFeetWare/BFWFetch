@@ -14,7 +14,7 @@ extension OpenWeatherScene: View {
     var body: some View {
         List {
             NavigationLink("Weather", destination: WeatherScene())
-            NavigationLink("Group", destination: SitesScene())
+            NavigationLink("Group", destination: GroupScene())
         }
         .navigationTitle("Open Weather")
     }
