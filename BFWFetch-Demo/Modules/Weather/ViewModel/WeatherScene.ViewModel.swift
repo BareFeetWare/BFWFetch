@@ -16,7 +16,28 @@ extension WeatherScene {
         @Published var isActiveWeather = false
         @Published var isInProgressWeather = false
         @Published var site: Site?
+        @Published var alert: Alert?
         private var subscribers = Set<AnyCancellable>()
+    }
+}
+
+extension WeatherScene.ViewModel {
+    enum Alert: Identifiable {
+        case fetch(error: Error)
+        
+        var id: String { String(describing: self) }
+        
+        var title: String {
+            switch self {
+            case .fetch: return "Fetch Error"
+            }
+        }
+        
+        var message: String {
+            switch self {
+            case .fetch(let error): return String(describing: error)
+            }
+        }
     }
 }
 
@@ -32,17 +53,15 @@ extension WeatherScene.ViewModel {
         .receive(on: DispatchQueue.main)
         .sink { result in
             self.isInProgressWeather = false
-//            self.siteResult = result
             switch result {
             case .success(let site):
                 self.site = site
                 self.isActiveWeather = true
-            case .failure(_):
-                // TODO: Display error
+            case .failure(let error):
+                self.alert = .fetch(error: error)
                 break
             }
         }
         .store(in: &subscribers)
     }
-    
 }
