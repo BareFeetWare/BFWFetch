@@ -37,8 +37,8 @@ extension WeatherScene : View {
             }
         }
         .textFieldStyle(RoundedBorderTextFieldStyle())
-        .alert(item: $viewModel.alert) { alert in
-            Alert(title: Text(alert.title), message: Text(alert.message))
+        .alert(isPresented: $viewModel.isPresentedAlert) {
+            Alert(error: viewModel.error)
         }
         .navigationTitle("API Weather")
     }

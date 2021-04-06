@@ -42,6 +42,7 @@
 		E2D001AC26182C3900318FD0 /* WeatherScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D001AB26182C3900318FD0 /* WeatherScene.swift */; };
 		E2D001AE261AF5F500318FD0 /* GroupScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D001AD261AF5F500318FD0 /* GroupScene.swift */; };
 		E2D001B2261BCC5C00318FD0 /* System.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D001B1261BCC5C00318FD0 /* System.swift */; };
+		E2D001B5261BD86100318FD0 /* Alert+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D001B4261BD86100318FD0 /* Alert+Error.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -106,6 +107,7 @@
 		E2D001AB26182C3900318FD0 /* WeatherScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherScene.swift; sourceTree = "<group>"; };
 		E2D001AD261AF5F500318FD0 /* GroupScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupScene.swift; sourceTree = "<group>"; };
 		E2D001B1261BCC5C00318FD0 /* System.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = System.swift; sourceTree = "<group>"; };
+		E2D001B4261BD86100318FD0 /* Alert+Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alert+Error.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -211,6 +213,7 @@
 		E291690022A38060005D638E /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				E2D001B3261BD7FF00318FD0 /* Controller */,
 				E29F61B42613E90200947455 /* View */,
 			);
 			path = Common;
@@ -296,6 +299,14 @@
 				E291690622A386D5005D638E /* Model */,
 			);
 			path = URL;
+			sourceTree = "<group>";
+		};
+		E2D001B3261BD7FF00318FD0 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				E2D001B4261BD86100318FD0 /* Alert+Error.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -426,6 +437,7 @@
 				E2D001A82618254200318FD0 /* CompressibleSpacer.swift in Sources */,
 				E2D001A62618252700318FD0 /* AsyncNavigationLink.swift in Sources */,
 				E29168F022A2A754005D638E /* Site.swift in Sources */,
+				E2D001B5261BD86100318FD0 /* Alert+Error.swift in Sources */,
 				E29F61B32613DC7000947455 /* RootScene.swift in Sources */,
 				E29F61AB2612CE0E00947455 /* GroupScene.ViewModel.swift in Sources */,
 			);

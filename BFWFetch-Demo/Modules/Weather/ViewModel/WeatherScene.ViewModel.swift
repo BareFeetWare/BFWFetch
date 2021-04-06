@@ -16,28 +16,9 @@ extension WeatherScene {
         @Published var site: Site?
         @Published var isActiveLinkedScene = false
         @Published var isInProgressFetch = false
-        @Published var alert: Alert?
+        @Published var isPresentedAlert = false
+        var error: Error?
         private var subscribers = Set<AnyCancellable>()
-    }
-}
-
-extension WeatherScene.ViewModel {
-    enum Alert: Identifiable {
-        case fetch(error: Error)
-        
-        var id: String { String(describing: self) }
-        
-        var title: String {
-            switch self {
-            case .fetch: return "Fetch Error"
-            }
-        }
-        
-        var message: String {
-            switch self {
-            case .fetch(let error): return String(describing: error)
-            }
-        }
     }
 }
 
@@ -55,8 +36,11 @@ extension WeatherScene.ViewModel {
             receiveCompletion: { completion in
                 self.isInProgressFetch = false
                 switch completion {
-                case .failure(let error): self.alert = .fetch(error: error)
-                case .finished: break
+                case .failure(let error):
+                    self.error = error
+                    self.isPresentedAlert = true
+                case .finished:
+                    break
                 }
             },
             receiveValue: { site in

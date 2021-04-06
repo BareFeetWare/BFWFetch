@@ -16,6 +16,8 @@ extension GroupScene {
         @Published var sites: [Site]?
         @Published var isActiveLinkedScene = false
         @Published var isInProgressFetch = false
+        @Published var isPresentedAlert = false
+        var error: Error?
         private var subscribers = Set<AnyCancellable>()
     }
 }
@@ -28,8 +30,11 @@ extension GroupScene.ViewModel {
                 receiveCompletion: { completion in
                     switch completion {
                     // TODO: Show error
-                    case .failure(let error): break
-                    case .finished: break
+                    case .failure(let error):
+                        self.error = error
+                        self.isPresentedAlert = true
+                    case .finished:
+                        break
                     }
                     self.isInProgressFetch = false
                 }

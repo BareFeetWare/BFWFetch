@@ -42,6 +42,9 @@ extension GroupScene : View {
             }
         }
         .textFieldStyle(RoundedBorderTextFieldStyle())
+        .alert(isPresented: $viewModel.isPresentedAlert) {
+            Alert(error: viewModel.error)
+        }
         .navigationTitle("Fetch Group")
     }
 }
