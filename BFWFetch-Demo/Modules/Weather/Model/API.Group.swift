@@ -26,7 +26,7 @@ extension API.Group: Fetchable {
         case appID
     }
     
-    typealias FetchedType = API.ArrayWrapper<Site>
+    typealias Fetched = API.ArrayWrapper<Site>
     
 }
 
@@ -34,7 +34,7 @@ extension API.Group {
     static func publisher(
         siteIDs: String,
         system: System
-    ) -> AnyPublisher<FetchedType, Error> {
+    ) -> AnyPublisher<Fetched, Error> {
         publisher(
             keyValues: [
                 .appID: "9807c81866d8e03e6e1025de688b1e0e",

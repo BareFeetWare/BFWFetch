@@ -12,12 +12,12 @@ import Foundation
  */
 public protocol Fetchable {
     
-    associatedtype FetchedType
+    associatedtype Fetched
     associatedtype Key: FetchKey
     
     static var baseURL: URL { get }
     static var urlStartPath: String? { get }
-    /// End point last path component. Defaults to lowercase of FetchedType.
+    /// End point last path component. Defaults to lowercase of Fetched type.
     static var urlEndPath: String? { get }
     static var defaultKeyValues: [Key : FetchValue] { get }
     static var httpMethod: Fetch.HTTPMethod { get }

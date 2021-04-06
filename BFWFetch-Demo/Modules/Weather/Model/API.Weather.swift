@@ -26,7 +26,7 @@ extension API.Weather: Fetchable {
         case appID
     }
     
-    typealias FetchedType = Site
+    typealias Fetched = Site
     
 }
 
@@ -34,7 +34,7 @@ extension API.Weather {
     static func publisher(
         city: String,
         countryCode: String?
-    ) -> AnyPublisher<FetchedType, Error> {
+    ) -> AnyPublisher<Fetched, Error> {
         publisher(
             keyValues: [
                 .appID: "9807c81866d8e03e6e1025de688b1e0e",
