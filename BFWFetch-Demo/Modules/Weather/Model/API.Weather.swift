@@ -14,12 +14,8 @@ extension API {
     struct Weather {}
 }
 
-extension API.Weather: Fetchable {
-    
-    static let baseURL = URL(string: "https://api.openweathermap.org/data/")!
-    
-    static var urlStartPath: String? { "2.5" }
-    
+extension API.Weather: Fetchable, APIFetchable {
+        
     enum Key: String, FetchKey {
         case site = "q"
         case system = "units"
@@ -38,7 +34,7 @@ extension API.Weather {
     ) -> AnyPublisher<Fetched, Error> {
         publisher(
             keyValues: [
-                .appID: "9807c81866d8e03e6e1025de688b1e0e",
+                .appID: appID,
                 .site: [city, countryCode].compactMap { $0 }.joined(separator: ","),
                 .system: system,
             ]

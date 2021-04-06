@@ -14,11 +14,7 @@ extension API {
     struct Group {}
 }
 
-extension API.Group: Fetchable {
-    
-    static let baseURL = URL(string: "https://api.openweathermap.org/data/")!
-    
-    static var urlStartPath: String? { "2.5" }
+extension API.Group: Fetchable, APIFetchable {
     
     enum Key: String, FetchKey {
         case siteIDs = "id"
@@ -37,7 +33,7 @@ extension API.Group {
     ) -> AnyPublisher<Fetched, Error> {
         publisher(
             keyValues: [
-                .appID: "9807c81866d8e03e6e1025de688b1e0e",
+                .appID: appID,
                 .siteIDs: siteIDs,
                 .system: system
             ]

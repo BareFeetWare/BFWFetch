@@ -45,6 +45,7 @@
 		E2D001B5261BD86100318FD0 /* Alert+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D001B4261BD86100318FD0 /* Alert+Error.swift */; };
 		E2D001B9261C341E00318FD0 /* System+FetchValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D001B8261C341E00318FD0 /* System+FetchValue.swift */; };
 		E2D001BB261C360600318FD0 /* SiteScene.ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D001BA261C360600318FD0 /* SiteScene.ViewModel.swift */; };
+		E2D001BD261D2A0900318FD0 /* APIFetchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D001BC261D2A0900318FD0 /* APIFetchable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -112,6 +113,7 @@
 		E2D001B4261BD86100318FD0 /* Alert+Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alert+Error.swift"; sourceTree = "<group>"; };
 		E2D001B8261C341E00318FD0 /* System+FetchValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "System+FetchValue.swift"; sourceTree = "<group>"; };
 		E2D001BA261C360600318FD0 /* SiteScene.ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteScene.ViewModel.swift; sourceTree = "<group>"; };
+		E2D001BC261D2A0900318FD0 /* APIFetchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIFetchable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,6 +192,7 @@
 				E29F61A72612CD3C00947455 /* API.Group.swift */,
 				E29F61B02613D6C800947455 /* API.swift */,
 				E2D001A3261823AA00318FD0 /* API.Weather.swift */,
+				E2D001BC261D2A0900318FD0 /* APIFetchable.swift */,
 				E29168EF22A2A754005D638E /* Site.swift */,
 				E29F61B72613EBF900947455 /* Site+Mock.swift */,
 				E2D001B1261BCC5C00318FD0 /* System.swift */,
@@ -437,6 +440,7 @@
 				E29F61B12613D6C800947455 /* API.swift in Sources */,
 				E2D001BB261C360600318FD0 /* SiteScene.ViewModel.swift in Sources */,
 				E2D001A4261823AA00318FD0 /* API.Weather.swift in Sources */,
+				E2D001BD261D2A0900318FD0 /* APIFetchable.swift in Sources */,
 				E2D001B9261C341E00318FD0 /* System+FetchValue.swift in Sources */,
 				E29168CA22A2973D005D638E /* BFWFetchApp.swift in Sources */,
 				E29F61AD2612E56F00947455 /* Site+ViewModel.swift in Sources */,
