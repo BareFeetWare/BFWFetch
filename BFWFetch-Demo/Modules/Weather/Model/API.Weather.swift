@@ -22,7 +22,7 @@ extension API.Weather: Fetchable {
     
     enum Key: String, FetchKey {
         case site = "q"
-        case units
+        case system = "units"
         case appID
     }
     
@@ -33,13 +33,14 @@ extension API.Weather: Fetchable {
 extension API.Weather {
     static func publisher(
         city: String,
-        countryCode: String?
+        countryCode: String?,
+        system: System
     ) -> AnyPublisher<Fetched, Error> {
         publisher(
             keyValues: [
                 .appID: "9807c81866d8e03e6e1025de688b1e0e",
-                .units: "metric",
-                .site: [city, countryCode].compactMap { $0 }.joined(separator: ",")
+                .site: [city, countryCode].compactMap { $0 }.joined(separator: ","),
+                .system: system,
             ]
         )
     }

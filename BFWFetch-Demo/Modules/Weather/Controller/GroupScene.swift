@@ -22,9 +22,9 @@ extension GroupScene : View {
                     .frame(width: 200)
             }
             HStack {
-                Text("Units:")
+                Text("Unit System:")
                 Spacer()
-                Picker("System", selection: $viewModel.system) {
+                Picker("Unit System", selection: $viewModel.system) {
                     ForEach(System.allCases) { system in
                         Text(system.title)
                     }
@@ -33,7 +33,7 @@ extension GroupScene : View {
                 .frame(width: 200)
             }
             AsyncNavigationLink(
-                destination: viewModel.sites.map { SitesScene(sites: $0) },
+                destination: viewModel.sites.map { SitesScene(sites: $0, system: viewModel.system) },
                 isActive: $viewModel.isActiveLinkedScene,
                 isInProgress: $viewModel.isInProgressFetch,
                 action: viewModel.fetch

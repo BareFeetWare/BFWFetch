@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import BFWFetch
 
 /// Measurement system, such as metric, imperial.
 enum System: CaseIterable, Identifiable {
@@ -19,6 +18,19 @@ enum System: CaseIterable, Identifiable {
     var title: String {
         String(describing: self).capitalized
     }
-}
+    
+    var speedUnit: String {
+        switch self {
+        case .metric: return "km/h"
+        case .imperial: return "mi/h"
+        }
+    }
+    
+    var temperatureUnit: String {
+        switch self {
+        case .metric: return "°C"
+        case .imperial: return "°F"
+        }
+    }
 
-extension System: FetchValue {}
+}

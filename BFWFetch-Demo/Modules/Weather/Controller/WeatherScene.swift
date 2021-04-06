@@ -27,8 +27,21 @@ extension WeatherScene : View {
                 TextField("Country Code", text: $viewModel.countryCode)
                     .frame(width: 200)
             }
+            HStack {
+                Text("Unit System:")
+                Spacer()
+                Picker("Unit System", selection: $viewModel.system) {
+                    ForEach(System.allCases) { system in
+                        Text(system.title)
+                    }
+                }
+                .pickerStyle(SegmentedPickerStyle())
+                .frame(width: 200)
+            }
             AsyncNavigationLink(
-                destination: viewModel.site.map { SiteScene(site: $0) },
+                destination: viewModel.siteViewModel.map {
+                    SiteScene(viewModel: $0)
+                },
                 isActive: $viewModel.isActiveLinkedScene,
                 isInProgress: $viewModel.isInProgressFetch,
                 action: viewModel.fetch

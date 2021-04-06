@@ -13,6 +13,7 @@ extension WeatherScene {
     class ViewModel: ObservableObject {
         @Published var city: String = "Sydney"
         @Published var countryCode: String = "AU"
+        @Published var system: System = .metric
         @Published var site: Site?
         @Published var isActiveLinkedScene = false
         @Published var isInProgressFetch = false
@@ -23,13 +24,19 @@ extension WeatherScene {
 }
 
 extension WeatherScene.ViewModel {
+    
+    var siteViewModel: SiteScene.ViewModel? {
+        site.map { SiteScene.ViewModel(site: $0, system: system) }
+    }
+    
     func fetch() {
         guard !city.isEmpty
         else { return }
         isInProgressFetch = true
         API.Weather.publisher(
             city: city,
-            countryCode: countryCode
+            countryCode: countryCode,
+            system: system
         )
         .receive(on: DispatchQueue.main)
         .sink(

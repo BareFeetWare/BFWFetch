@@ -43,6 +43,8 @@
 		E2D001AE261AF5F500318FD0 /* GroupScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D001AD261AF5F500318FD0 /* GroupScene.swift */; };
 		E2D001B2261BCC5C00318FD0 /* System.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D001B1261BCC5C00318FD0 /* System.swift */; };
 		E2D001B5261BD86100318FD0 /* Alert+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D001B4261BD86100318FD0 /* Alert+Error.swift */; };
+		E2D001B9261C341E00318FD0 /* System+FetchValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D001B8261C341E00318FD0 /* System+FetchValue.swift */; };
+		E2D001BB261C360600318FD0 /* SiteScene.ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D001BA261C360600318FD0 /* SiteScene.ViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -108,6 +110,8 @@
 		E2D001AD261AF5F500318FD0 /* GroupScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupScene.swift; sourceTree = "<group>"; };
 		E2D001B1261BCC5C00318FD0 /* System.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = System.swift; sourceTree = "<group>"; };
 		E2D001B4261BD86100318FD0 /* Alert+Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alert+Error.swift"; sourceTree = "<group>"; };
+		E2D001B8261C341E00318FD0 /* System+FetchValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "System+FetchValue.swift"; sourceTree = "<group>"; };
+		E2D001BA261C360600318FD0 /* SiteScene.ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteScene.ViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -189,6 +193,7 @@
 				E29168EF22A2A754005D638E /* Site.swift */,
 				E29F61B72613EBF900947455 /* Site+Mock.swift */,
 				E2D001B1261BCC5C00318FD0 /* System.swift */,
+				E2D001B8261C341E00318FD0 /* System+FetchValue.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -234,6 +239,7 @@
 			children = (
 				E29F61AC2612E56F00947455 /* Site+ViewModel.swift */,
 				E29F61AA2612CE0E00947455 /* GroupScene.ViewModel.swift */,
+				E2D001BA261C360600318FD0 /* SiteScene.ViewModel.swift */,
 				E2D001A92618270D00318FD0 /* WeatherScene.ViewModel.swift */,
 			);
 			path = ViewModel;
@@ -429,7 +435,9 @@
 				E29F61A82612CD3C00947455 /* API.Group.swift in Sources */,
 				E29168E022A298B1005D638E /* SitesScene.swift in Sources */,
 				E29F61B12613D6C800947455 /* API.swift in Sources */,
+				E2D001BB261C360600318FD0 /* SiteScene.ViewModel.swift in Sources */,
 				E2D001A4261823AA00318FD0 /* API.Weather.swift in Sources */,
+				E2D001B9261C341E00318FD0 /* System+FetchValue.swift in Sources */,
 				E29168CA22A2973D005D638E /* BFWFetchApp.swift in Sources */,
 				E29F61AD2612E56F00947455 /* Site+ViewModel.swift in Sources */,
 				E291690822A38D2F005D638E /* SiteScene.swift in Sources */,

@@ -10,18 +10,19 @@ import SwiftUI
 
 struct SitesScene {
     var sites: [Site]
+    var system: System
 }
 
 extension SitesScene: View {
     var body: some View {
         List(sites) { site in
             NavigationLink(
-                destination: SiteScene(site: site)
+                destination: SiteScene(viewModel: .init(site: site, system: system))
             ) {
                 HStack {
                     Text(site.name)
                     Spacer()
-                    Text(site.temperatureString)
+                    Text(site.temperatureString(system: system))
                 }
             }
         }
@@ -33,7 +34,7 @@ extension SitesScene: View {
 struct SitesScene_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            SitesScene(sites: [.cloudySydney])
+            SitesScene(sites: [.cloudySydney], system: .metric)
                 .navigationBarTitleDisplayMode(.inline)
         }
     }

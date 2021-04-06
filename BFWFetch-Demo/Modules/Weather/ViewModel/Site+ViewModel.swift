@@ -9,15 +9,15 @@
 import Foundation
 
 extension Site {
-    var city: String { name }
-    var temperatureString: String { "\(main.temperature) °C" }
     var weather: Weather? { weathers.first }
     var summary: String? { weather?.main }
     var description: String? { weather?.description }
-    var minimumTemperatureString: String { "\(main.minimumTemperature) °C" }
-    var maximumTemperatureString: String { "\(main.maximumTemperature) °C" }
     var pressureString: String { "\(main.pressure) mBar" }
     var humidityString: String { "\(main.humidity) %" }
-    var windSpeedString: String { "\(wind.speed) km/h" }
     var windDirectionString: String { "\(wind.degrees) °" }
+
+    func temperatureString(system: System) -> String { "\(main.temperature) \(system.temperatureUnit)" }
+    func minimumTemperatureString(system: System) -> String { "\(main.minimumTemperature) \(system.temperatureUnit)" }
+    func maximumTemperatureString(system: System) -> String { "\(main.maximumTemperature) \(system.temperatureUnit)" }
+    func windSpeedString(system: System) -> String { "\(wind.speed) \(system.speedUnit)" }
 }
