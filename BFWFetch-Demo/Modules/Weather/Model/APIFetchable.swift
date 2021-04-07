@@ -15,7 +15,7 @@ extension APIFetchable {
     
     static var baseURL: URL { URL(string: "https://api.openweathermap.org/data/")! }
     
-    static var urlStartPath: String? { "2.5" }
+    static var startURLPath: String? { "2.5" }
 
     static var appID: String { "9807c81866d8e03e6e1025de688b1e0e" }
     
