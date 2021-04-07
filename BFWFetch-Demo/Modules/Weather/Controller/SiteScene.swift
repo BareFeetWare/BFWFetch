@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct SiteScene {
-    let site: Site
+    var viewModel: ViewModel
 }
     
 extension SiteScene: View {
@@ -18,51 +18,51 @@ extension SiteScene: View {
             Section(header: Text("City")) {
                 LeftDetailCell(
                     text: Text("Name:"),
-                    detailText: Text(site.name)
+                    detailText: Text(viewModel.name)
                 )
             }
             Section(header: Text("Overview")) {
                 LeftDetailCell(
                     text: Text("Summary:"),
-                    detailText: site.summary.map { Text($0) }
+                    detailText: viewModel.summary.map { Text($0) }
                 )
                 LeftDetailCell(
                     text: Text("Description:"),
-                    detailText: site.description.map { Text($0) }
+                    detailText: viewModel.description.map { Text($0) }
                 )
             }
             Section(header: Text("Temperature")) {
                 LeftDetailCell(
                     text: Text("Now:"),
-                    detailText: Text(site.temperatureString)
+                    detailText: Text(viewModel.temperatureString)
                 )
                 LeftDetailCell(
                     text: Text("Minimum:"),
-                    detailText: Text(site.minimumTemperatureString)
+                    detailText: Text(viewModel.minimumTemperatureString)
                 )
                 LeftDetailCell(
                     text: Text("Maximum:"),
-                    detailText: Text(site.maximumTemperatureString)
+                    detailText: Text(viewModel.maximumTemperatureString)
                 )
             }
             Section(header: Text("Pressure & Humidity")) {
                 LeftDetailCell(
                     text: Text("Pressure:"),
-                    detailText: Text(site.pressureString)
+                    detailText: Text(viewModel.pressureString)
                 )
                 LeftDetailCell(
                     text: Text("Humidity:"),
-                    detailText: Text(site.humidityString)
+                    detailText: Text(viewModel.humidityString)
                 )
             }
             Section(header: Text("Wind")) {
                 LeftDetailCell(
                     text: Text("Speed:"),
-                    detailText: Text(site.windSpeedString)
+                    detailText: Text(viewModel.windSpeedString)
                 )
                 LeftDetailCell(
                     text: Text("Direction:"),
-                    detailText: Text(site.windDirectionString)
+                    detailText: Text(viewModel.windDirectionString)
                 )
             }
         }
@@ -72,8 +72,10 @@ extension SiteScene: View {
 struct SiteScene_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            SiteScene(site: .cloudySydney)
-                .navigationBarTitleDisplayMode(.inline)
+            SiteScene(
+                viewModel: .init(site: .cloudySydney, system: .metric)
+            )
+            .navigationBarTitleDisplayMode(.inline)
         }
     }
 }

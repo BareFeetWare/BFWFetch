@@ -7,23 +7,42 @@
 
 import Foundation
 
-/**
- A model object is Fetchable if it can be fetched for a URL. Decodable types are automatically Fetchable.
- */
+/// A model object is Fetchable if it can be fetched for a URL. Decodable types are automatically Fetchable.
 public protocol Fetchable {
     
-    associatedtype FetchedType
+    // Required. No default values:
+    
+    /// The type of the object in the response.
+    associatedtype Fetched
+    
+    /// The parameter keys, to be used in the request.
     associatedtype Key: FetchKey
     
+    /// The base URL for the request. Typically `URL("https://host/common_path/")!`
     static var baseURL: URL { get }
+    
+    // Can override. Default values:
+    
+    /// End point first path component. Defaults to `nil`.
     static var urlStartPath: String? { get }
-    /// End point last path component. Defaults to lowercase of FetchedType.
+    
+    /// End point last path component. Defaults to lowercase of `Fetched` type.
     static var urlEndPath: String? { get }
-    static var defaultKeyValues: [Key : FetchValue] { get }
+    
+    /// Defaults to `.get`. Can also be `.post`.
     static var httpMethod: Fetch.HTTPMethod { get }
+    
+    /// Defaults to `.form` when `httpMethod` = `.get` and `.json` when `httpMethod` = `.post`.
     static var encoding: Fetch.Encoding { get }
+    
+    /// Defaults to nil.
     static var headers: [String: String]? { get }
+    
+    /// Defaults to `JSONDecoder` with `dateDecodingStrategy` = `.iso8601`. Can change to `.sqlDate` or `.tTimezone` or `.timezone` or custom.
     static var decoder: JSONDecoder { get }
+    
+    /// Default key values, such as an API key or authorization. Defaults to empty.
+    static var defaultKeyValues: [Key : FetchValue] { get }
     
 }
 
@@ -62,7 +81,7 @@ extension Fetchable {
             .filter { !$0.key.isInURLPath }
             .reduce(into: [:]) { result, tuple in
                 result[tuple.key.apiString] = tuple.value.apiString
-        }
+            }
         let keyPathsComponents = mergedKeyValues
             .filter { $0.key.isInURLPath }
             .map { [$0.key.apiString, $0.value.apiString] }

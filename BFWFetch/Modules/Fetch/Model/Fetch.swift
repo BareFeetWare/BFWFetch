@@ -23,12 +23,10 @@ public extension Fetch {
         case form
     }
     
-    enum HTTPMethod {
-        case get, post
+    enum HTTPMethod: String {
         
-        var rawValue: String {
-            String(describing: self).uppercased()
-        }
+        case get = "GET"
+        case post = "POST"
         
         var defaultEncoding: Encoding {
             switch self {

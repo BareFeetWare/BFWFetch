@@ -12,7 +12,7 @@ struct RootScene: View {
     var body: some View {
         NavigationView {
             List {
-                NavigationLink("Open Weather", destination: SitesScene())
+                NavigationLink("Open Weather", destination: OpenWeatherScene())
             }
             .navigationTitle("BFWFetch Demo")
         }

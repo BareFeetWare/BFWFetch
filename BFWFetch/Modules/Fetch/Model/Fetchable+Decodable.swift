@@ -9,13 +9,13 @@
 import Foundation
 import Combine
 
-public extension Fetchable where FetchedType: Decodable {
+public extension Fetchable where Fetched: Decodable {
     
     private static func decodedPublisher(
         request: URLRequest
-    ) -> AnyPublisher<FetchedType, Error> {
+    ) -> AnyPublisher<Fetched, Error> {
         dataPublisher(request: request)
-            .decode(type: FetchedType.self, decoder: decoder)
+            .decode(type: Fetched.self, decoder: decoder)
             .mapError {
                 debugPrint("decoded(): error: \($0) for request: \(request)")
                 return $0
@@ -25,7 +25,7 @@ public extension Fetchable where FetchedType: Decodable {
     
     private static func publisher(
         request: URLRequest
-    ) -> AnyPublisher<FetchedType, Error> {
+    ) -> AnyPublisher<Fetched, Error> {
         decodedPublisher(request: request)
             /*
             .tryMap {
@@ -36,9 +36,9 @@ public extension Fetchable where FetchedType: Decodable {
                 return $0.data
             }
             */
-            .tryCatch { error -> AnyPublisher<FetchedType, Error> in
+            .tryCatch { error -> AnyPublisher<Fetched, Error> in
                 guard error as? Fetch.Error == .noData,
-                      let empty = [] as? FetchedType
+                      let empty = [] as? Fetched
                 else { throw error }
                 return Just(empty)
                     .mapError { _ -> Fetch.Error in }
@@ -49,20 +49,20 @@ public extension Fetchable where FetchedType: Decodable {
     
     static func publisher(
         keyValues: [Key: FetchValue?]? = nil
-    ) -> AnyPublisher<FetchedType, Error> {
+    ) -> AnyPublisher<Fetched, Error> {
         do {
             return try publisher(
                 request: request(keyValues: keyValues)
             )
         } catch {
-            return Fail<FetchedType, Error>(error: error)
+            return Fail<Fetched, Error>(error: error)
                 .eraseToAnyPublisher()
         }
     }
     
     static func resultPublisher(
         keyValues: [Key: FetchValue?]? = nil
-    ) -> AnyPublisher<Result<FetchedType, Error>, Never> {
+    ) -> AnyPublisher<Result<Fetched, Error>, Never> {
         publisher(
             keyValues: keyValues
         )
