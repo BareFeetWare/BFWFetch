@@ -24,10 +24,10 @@ public protocol Fetchable {
     // Can override. Default values:
     
     /// End point first path component. Defaults to `nil`.
-    static var urlStartPath: String? { get }
+    static var startURLPath: String? { get }
     
     /// End point last path component. Defaults to lowercase of `Fetched` type.
-    static var urlEndPath: String? { get }
+    static var endURLPath: String? { get }
     
     /// Defaults to `.get`. Can also be `.post`.
     static var httpMethod: Fetch.HTTPMethod { get }
@@ -51,19 +51,19 @@ public extension Fetchable {
     static var httpMethod: Fetch.HTTPMethod { .get }
     static var encoding: Fetch.Encoding { httpMethod.defaultEncoding }
     static var headers: [String: String]? { nil }
-    static var defaultURLStartPath: String? { nil }
+    static var defaultStartURLPath: String? { nil }
     
-    static var defaultURLEndPath: String {
+    static var defaultEndURLPath: String {
         String(describing: self).lowercased()
     }
     
-    static var urlStartPath: String? {
-        defaultURLStartPath
+    static var startURLPath: String? {
+        defaultStartURLPath
     }
     
     /// Last path component of request URL. Defaults to self as a String, lowercased.
-    static var urlEndPath: String? {
-        defaultURLEndPath
+    static var endURLPath: String? {
+        defaultEndURLPath
     }
     
     static var defaultKeyValues: [Key: FetchValue] { [:] }
@@ -86,7 +86,7 @@ extension Fetchable {
             .filter { $0.key.isInURLPath }
             .map { [$0.key.apiString, $0.value.apiString] }
             .flatMap { $0 }
-        let urlPathComponents = [urlStartPath].compactMap { $0 } + keyPathsComponents + [urlEndPath].compactMap { $0 }
+        let urlPathComponents = [startURLPath].compactMap { $0 } + keyPathsComponents + [endURLPath].compactMap { $0 }
         return try URLRequest(
             baseURL: baseURL,
             urlPathComponents: urlPathComponents,
