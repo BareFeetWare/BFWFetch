@@ -17,9 +17,9 @@ extension API {
 extension API.Group: Fetchable, APIFetchable {
     
     enum Key: String, FetchKey {
+        case appID
         case siteIDs = "id"
         case system = "units"
-        case appID
     }
     
     typealias Fetched = API.ArrayWrapper<Site>

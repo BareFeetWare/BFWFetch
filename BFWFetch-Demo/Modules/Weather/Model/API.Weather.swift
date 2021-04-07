@@ -17,9 +17,9 @@ extension API {
 extension API.Weather: Fetchable, APIFetchable {
         
     enum Key: String, FetchKey {
+        case appID
         case site = "q"
         case system = "units"
-        case appID
     }
     
     typealias Fetched = Site
@@ -35,8 +35,10 @@ extension API.Weather {
         publisher(
             keyValues: [
                 .appID: appID,
-                .site: [city, countryCode].compactMap { $0 }.joined(separator: ","),
-                .system: system,
+                .site: [city, countryCode]
+                    .compactMap { $0 }
+                    .joined(separator: ","),
+                .system: system
             ]
         )
     }
