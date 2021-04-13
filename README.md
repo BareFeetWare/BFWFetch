@@ -16,7 +16,7 @@ Fetchable takes care of all the inner workings. Fetchable provides a Combine pub
 
 ## Example: Open Weather
 
-According to the [Open Weather API docs](https://medium.com/r/?url=https%3A%2F%2Fopenweathermap.org%2Fcurrent), to fetch weather data for a city, we need to provide:
+According to the [Open Weather API docs](https://openweathermap.org/current), to fetch weather data for a city, we need to provide:
 1. Base URL: https://api.openweathermap.org/data/2.5
 2. End URL path: weather
 3. Parameter keys: `appID`, `q` (the site's city and country code) , `units`.
