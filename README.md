@@ -8,6 +8,7 @@ The `Fetchable` protocol provides a simple and flexible way to fetch data from A
 Read more detail about Fetchable in the [Better Programming publication on Medium](https://medium.com/p/4ddf8710d1a0/).
 
 A `Fetchable` type must provide:
+
 1. A `baseURL`
 2. The fetch parameter keys as an `enum Key: FetchKey`.
 3. The `Fetched` type expected in the response.
@@ -17,6 +18,7 @@ Fetchable takes care of all the inner workings. Fetchable provides a Combine pub
 ## Example: Open Weather
 
 According to the [Open Weather API docs](https://openweathermap.org/current), to fetch weather data for a city, we need to provide:
+
 1. Base URL: https://api.openweathermap.org/data/2.5
 2. End URL path: weather
 3. Parameter keys: `appID`, `q` (the site's city and country code) , `units`.
@@ -24,6 +26,7 @@ According to the [Open Weather API docs](https://openweathermap.org/current), to
 The API will respond with a JSON payload containing a `Site`.
 
 For example, we might call the API with these values for each parameter key:
+
 - `appID` = `1234567890abcdef`
 - `q` = `Sydney, AU` (for Sydney, Australia)
 - `units` = `metric`
