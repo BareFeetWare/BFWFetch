@@ -14,7 +14,7 @@ public extension Fetchable where Fetched: Decodable {
     private static func decodedPublisher(
         request: URLRequest
     ) -> AnyPublisher<Fetched, Error> {
-        dataPublisher(request: request)
+        request.dataPublisher()
             .decode(type: Fetched.self, decoder: decoder)
             .mapError {
                 debugPrint("decoded(): error: \($0) for request: \(request)")
@@ -58,17 +58,6 @@ public extension Fetchable where Fetched: Decodable {
             return Fail<Fetched, Error>(error: error)
                 .eraseToAnyPublisher()
         }
-    }
-    
-    static func resultPublisher(
-        keyValues: [Key: FetchValue?]? = nil
-    ) -> AnyPublisher<Result<Fetched, Error>, Never> {
-        publisher(
-            keyValues: keyValues
-        )
-        .map { Result.success($0) }
-        .catch { Just(Result.failure($0)) }
-        .eraseToAnyPublisher()
     }
     
 }

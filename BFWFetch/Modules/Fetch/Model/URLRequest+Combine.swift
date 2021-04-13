@@ -1,5 +1,5 @@
 //
-//  Fetchable+Combine.swift
+//  URLRequest+Combine.swift
 //  BFWFetch
 //
 //  Created by Tom Brodhurst-Hill on 31/3/21.
@@ -9,33 +9,31 @@
 import Foundation
 import Combine
 
-extension Fetchable {
+public extension URLRequest {
     
-    static func dataPublisher(
-        request: URLRequest
-    ) -> AnyPublisher<Data, Error> {
-        debugPrint("request = \(request), \(request.httpBody.map { String(data: $0, encoding: .utf8)?.prefix(400) ?? "" } ?? "")")
-        return URLSession.shared.dataTaskPublisher(for: request)
+    func dataPublisher() -> AnyPublisher<Data, Error> {
+        // debugPrint("request = \(self), \(httpBody.map { String(data: $0, encoding: .utf8)?.prefix(400) ?? "" } ?? "")")
+        return URLSession.shared.dataTaskPublisher(for: self)
             .tryMap { output in
                 guard let response = output.response as? HTTPURLResponse
                 else { throw Fetch.Error.statusCodeMissing }
                 guard response.statusCode == 200
                 else {
-                    debugPrint("request = \(request), response.statusCode = \(response.statusCode)")
-                    debugPrint("output.data = \(String(data: output.data, encoding: .utf8)?.prefix(400) ?? "?")")
+                    // debugPrint("request = \(self), response.statusCode = \(response.statusCode)")
+                    // debugPrint("output.data = \(String(data: output.data, encoding: .utf8)?.prefix(400) ?? "?")")
                     if response.statusCode == 204 {
                         throw Fetch.Error.noData
                     } else if response.statusCode == 401,
                               let outputString = String(data: output.data, encoding: .utf8),
                               outputString.lowercased().contains("token has expired")
                     {
-                        debugPrint("token expired for request.url: \(request.url?.absoluteString ?? "nil")")
+                        debugPrint("token expired for request.url: \(url?.absoluteString ?? "nil")")
                         throw Fetch.Error.tokenExpired
                     } else {
                         throw Fetch.Error.statusCode(response.statusCode)
                     }
                 }
-                debugPrint("output.data = \(String(data: output.data, encoding: .utf8)?.prefix(400) ?? "?")")
+                // debugPrint("output.data = \(String(data: output.data, encoding: .utf8)?.prefix(400) ?? "?")")
                 return output.data
             }
             /*
