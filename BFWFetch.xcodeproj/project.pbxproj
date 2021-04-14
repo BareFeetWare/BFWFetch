@@ -74,6 +74,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		E21575F32625CA9900EEA3B6 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		E29168C722A2973D005D638E /* BFWFetch-Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "BFWFetch-Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E29168C922A2973D005D638E /* BFWFetchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BFWFetchApp.swift; sourceTree = "<group>"; };
 		E29168D022A29740005D638E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -264,6 +265,7 @@
 		E2A55E8321AAD3A500812DC6 = {
 			isa = PBXGroup;
 			children = (
+				E21575F32625CA9900EEA3B6 /* README.md */,
 				E2A55E8F21AAD3A500812DC6 /* BFWFetch */,
 				E29168C822A2973D005D638E /* BFWFetch-Demo */,
 				E2A55E8E21AAD3A500812DC6 /* Products */,
