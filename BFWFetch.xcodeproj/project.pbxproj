@@ -46,7 +46,7 @@
 		E2D001B9261C341E00318FD0 /* System+FetchValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D001B8261C341E00318FD0 /* System+FetchValue.swift */; };
 		E2D001BB261C360600318FD0 /* SiteScene.ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D001BA261C360600318FD0 /* SiteScene.ViewModel.swift */; };
 		E2D001BD261D2A0900318FD0 /* APIFetchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D001BC261D2A0900318FD0 /* APIFetchable.swift */; };
-		E2E0429D262572C000E05C68 /* AnyPublisher+Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E0429C262572C000E05C68 /* AnyPublisher+Result.swift */; };
+		E2E0429D262572C000E05C68 /* Publisher+Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E0429C262572C000E05C68 /* Publisher+Result.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -115,7 +115,7 @@
 		E2D001B8261C341E00318FD0 /* System+FetchValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "System+FetchValue.swift"; sourceTree = "<group>"; };
 		E2D001BA261C360600318FD0 /* SiteScene.ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteScene.ViewModel.swift; sourceTree = "<group>"; };
 		E2D001BC261D2A0900318FD0 /* APIFetchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIFetchable.swift; sourceTree = "<group>"; };
-		E2E0429C262572C000E05C68 /* AnyPublisher+Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AnyPublisher+Result.swift"; sourceTree = "<group>"; };
+		E2E0429C262572C000E05C68 /* Publisher+Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+Result.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -206,7 +206,6 @@
 		E29168F722A2AF42005D638E /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				E2E0429C262572C000E05C68 /* AnyPublisher+Result.swift */,
 				E29F619D2610442900947455 /* DateFormatter+Fetch.swift */,
 				E2A55EAF21AAD48D00812DC6 /* Fetch.swift */,
 				E2A55EAE21AAD48D00812DC6 /* Fetchable.swift */,
@@ -214,6 +213,7 @@
 				E29F619526102F6B00947455 /* FetchKey.swift */,
 				E29F619726102FA300947455 /* FetchValue.swift */,
 				E29F61992610431400947455 /* JSONDecoder+Fetch.swift */,
+				E2E0429C262572C000E05C68 /* Publisher+Result.swift */,
 				E29F619F2610448000947455 /* String+SnakeCase.swift */,
 				E29F61AE2613D42300947455 /* URLRequest+Combine.swift */,
 				E29F61A226104BB900947455 /* URLRequest+Fetch.swift */,
@@ -474,7 +474,7 @@
 				E29F619826102FA300947455 /* FetchValue.swift in Sources */,
 				E29F61A526104BB900947455 /* URLRequest+Fetch.swift in Sources */,
 				E2A55EBF21AAD8E200812DC6 /* URLComponents+queryItems.swift in Sources */,
-				E2E0429D262572C000E05C68 /* AnyPublisher+Result.swift in Sources */,
+				E2E0429D262572C000E05C68 /* Publisher+Result.swift in Sources */,
 				E29F61AF2613D42300947455 /* URLRequest+Combine.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
