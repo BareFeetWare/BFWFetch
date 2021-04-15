@@ -66,7 +66,7 @@ To initiate the actual fetch from the API, we just ask our Fetchable type for a 
 ```Swift
 Weather.publisher(
     keyValues: [
-        .apiID: "1234567890abcdef",
+        .appID: "1234567890abcdef",
         .site: "Sydney,AU",
         .system: .metric
     ]
@@ -90,7 +90,7 @@ extension Weather {
     ) {
         publisher(
             keyValues: [
-                .apiID: "1234567890abcdef",
+                .appID: "1234567890abcdef",
                 .site: [city, countryCode]
                     .compactMap { $0 }
                     .joined(separator: ","),
