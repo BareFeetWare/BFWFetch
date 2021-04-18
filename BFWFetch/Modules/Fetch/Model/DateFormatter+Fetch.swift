@@ -9,30 +9,18 @@ import Foundation
 
 public extension DateFormatter {
     
-    static let sqlDateTime: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        return formatter
-    }()
+    convenience init(dateFormat: String) {
+        self.init()
+        self.dateFormat = dateFormat
+    }
     
-    static let sqlDate: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
-        return formatter
-    }()
-    
+    /// Format like: 2021-03-13 03:03:37.123+00:00
+    static let fractionTimezone = DateFormatter(dateFormat: "yyyy-MM-dd HH:mm:ss.SZZZ")
+    static let sqlDateTime = DateFormatter(dateFormat: "yyyy-MM-dd HH:mm:ss")
+    static let sqlDate = DateFormatter(dateFormat: "yyyy-MM-dd")
     /// Format like: 2021-03-13T03:03:37.123+0000
-    static let tTimezone: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-        return formatter
-    }()
-    
+    static let tFractionTimezone = DateFormatter(dateFormat: "yyyy-MM-dd'T'HH:mm:ss.SZ")
     /// Format like: 2021-03-13 03:03:37+00:00
-    static let timezone: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd HH:mm:ssZZZ"
-        return formatter
-    }()
+    static let timezone = DateFormatter(dateFormat: "yyyy-MM-dd HH:mm:ssZZZ")
     
 }

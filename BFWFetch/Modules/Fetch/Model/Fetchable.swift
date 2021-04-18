@@ -67,7 +67,7 @@ public extension Fetchable {
     }
     
     static var defaultKeyValues: [Key: FetchValue] { [:] }
-    static var decoder: JSONDecoder { .default }
+    static var decoder: JSONDecoder { .init(dateDecodingStrategy: .iso8601) }
     
 }
 
