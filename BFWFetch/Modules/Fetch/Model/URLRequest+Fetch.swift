@@ -26,6 +26,7 @@ extension URLRequest {
         self.init(url: queryURL)
         self.httpMethod = httpMethod.rawValue
         self.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        self.addValue("application/json", forHTTPHeaderField: "Accept")
         headers?.keys.forEach { key in
             self.addValue(headers![key]!, forHTTPHeaderField: key)
         }
