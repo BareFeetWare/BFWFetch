@@ -15,7 +15,7 @@ extension API {
 }
 
 extension API.Weather: Fetchable, APIFetchable {
-        
+    
     enum Key: String, FetchKey {
         case appID
         case site = "q"
