@@ -15,17 +15,14 @@ public extension URLRequest {
         // debugPrint("request = \(self), \(httpBody.map { String(data: $0, encoding: .utf8)?.prefix(400) ?? "" } ?? "")")
         return URLSession.shared.dataTaskPublisher(for: self)
             .tryMap { output in
+                // debugPrint("output.data = \(String(data: output.data, encoding: .utf8)?.prefix(400) ?? "?")")
                 guard let response = output.response as? HTTPURLResponse
                 else { throw Fetch.Error.statusCodeMissing }
-                guard response.statusCode == 200
+                guard response.statusCode < 400
                 else {
-                    // debugPrint("request = \(self), response.statusCode = \(response.statusCode)")
-                    // debugPrint("output.data = \(String(data: output.data, encoding: .utf8)?.prefix(400) ?? "?")")
-                    if response.statusCode == 204 {
-                        throw Fetch.Error.noData
-                    } else if response.statusCode == 401,
-                              let outputString = String(data: output.data, encoding: .utf8),
-                              outputString.lowercased().contains("token has expired")
+                    if response.statusCode == 401,
+                       let outputString = String(data: output.data, encoding: .utf8),
+                       outputString.lowercased().contains("token has expired")
                     {
                         debugPrint("token expired for request.url: \(url?.absoluteString ?? "nil")")
                         throw Fetch.Error.tokenExpired
@@ -33,7 +30,6 @@ public extension URLRequest {
                         throw Fetch.Error.statusCode(response.statusCode)
                     }
                 }
-                // debugPrint("output.data = \(String(data: output.data, encoding: .utf8)?.prefix(400) ?? "?")")
                 return output.data
             }
             /*
