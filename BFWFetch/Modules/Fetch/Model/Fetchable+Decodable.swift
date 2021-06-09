@@ -36,14 +36,6 @@ public extension Fetchable where Fetched: Decodable {
                 return $0.data
             }
             */
-            .tryCatch { error -> AnyPublisher<Fetched, Error> in
-                guard error as? Fetch.Error == .noData,
-                      let empty = [] as? Fetched
-                else { throw error }
-                return Just(empty)
-                    .mapError { _ -> Fetch.Error in }
-                    .eraseToAnyPublisher()
-            }
             .eraseToAnyPublisher()
     }
     

@@ -10,7 +10,6 @@ public enum Fetch {}
 public extension Fetch {
     
     enum Error: Swift.Error, Equatable {
-        case noData
         case statusCodeMissing
         case statusCode(Int)
         case tokenExpired
