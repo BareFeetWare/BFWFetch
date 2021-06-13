@@ -15,6 +15,9 @@ public protocol Fetchable {
     /// The type of the object in the response.
     associatedtype Fetched
     
+    /// The type of the failure object in the response.
+    associatedtype FetchedFailure
+    
     /// The parameter keys, to be used in the request.
     associatedtype Key: FetchKey
     

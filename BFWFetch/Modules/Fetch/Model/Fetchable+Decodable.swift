@@ -9,17 +9,26 @@
 import Foundation
 import Combine
 
-public extension Fetchable where Fetched: Decodable {
+public extension Fetchable where Fetched: Decodable, FetchedFailure: Decodable {
     
     private static func decodedPublisher(
         request: URLRequest
     ) -> AnyPublisher<Fetched, Error> {
-        request.dataPublisher()
-            .decode(type: Fetched.self, decoder: decoder)
-            .mapError {
-                debugPrint("decoded(): error: \($0) for request: \(request)")
-                return $0
+        URLSession.shared.dataTaskPublisher(for: request)
+            .eraseToAnyPublisher()
+            .tryMap { (data: Data, response: URLResponse) in
+                guard let httpResponse = response as? HTTPURLResponse
+                else { throw Fetch.Error.notHTTPURLResponse }
+                let statusCode = httpResponse.statusCode
+                guard statusCode < 400
+                else {
+                    // TODO: Allow different decoder for FetchedFailure?
+                    let failurePayload = try decoder.decode(FetchedFailure.self, from: data)
+                    throw Fetch.Error.httpResponse(httpResponse, payload: failurePayload)
+                }
+                return data
             }
+            .decode(type: Fetched.self, decoder: decoder)
             .eraseToAnyPublisher()
     }
     

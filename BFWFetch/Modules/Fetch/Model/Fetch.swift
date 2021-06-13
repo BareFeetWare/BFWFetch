@@ -5,15 +5,15 @@
 //  Copyright © 2018 BareFeetWare. All rights reserved.
 //
 
+import Foundation
+
 public enum Fetch {}
 
 public extension Fetch {
     
-    enum Error: Swift.Error, Equatable {
-        case statusCodeMissing
-        case statusCode(Int)
-        case tokenExpired
-        case tokenMissing
+    enum Error: Swift.Error {
+        case notHTTPURLResponse
+        case httpResponse(_ httpResponse: HTTPURLResponse, payload: Any)
         case url
     }
     
