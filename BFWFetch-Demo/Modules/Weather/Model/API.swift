@@ -31,19 +31,13 @@ extension API.Response {
                 return "code = \(code)\n\(message)"
             }
         }
-        
     }
     
-    static func specificError(error: Swift.Error) -> Swift.Error {
-        let specificError: Swift.Error
-        if case let .httpResponse(_, payload) = error as? Fetch.Error,
-           let failure = payload as? API.Request.Weather.FetchedFailure
-        {
-            specificError = API.Response.Error.statusCode(code: failure.code, message: failure.message)
-        } else {
-            specificError = error
-        }
-        return specificError
+    static func specificError(_ error: Swift.Error) -> Swift.Error {
+        guard case let .httpResponse(_, payload) = error as? Fetch.Error,
+              let failure = payload as? API.Request.Weather.FetchedFailure
+        else { return error }
+        return API.Response.Error.statusCode(code: failure.code, message: failure.message)
     }
     
     struct ArrayWrapper<T: Decodable> {
