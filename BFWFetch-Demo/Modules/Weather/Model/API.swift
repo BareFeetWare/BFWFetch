@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import BFWFetch
 
 /// Domain name scope for all types specific to API requests and responses.
 enum API {
@@ -19,6 +20,30 @@ extension API.Response {
     struct Failure {
         let code: Int
         let message: String
+    }
+    
+    enum Error: LocalizedError {
+        case statusCode(code: Int, message: String)
+        
+        var errorDescription: String? {
+            switch self {
+            case .statusCode(let code, let message):
+                return "code = \(code)\n\(message)"
+            }
+        }
+        
+    }
+    
+    static func specificError(error: Swift.Error) -> Swift.Error {
+        let specificError: Swift.Error
+        if case let .httpResponse(_, payload) = error as? Fetch.Error,
+           let failure = payload as? API.Request.Weather.FetchedFailure
+        {
+            specificError = API.Response.Error.statusCode(code: failure.code, message: failure.message)
+        } else {
+            specificError = error
+        }
+        return specificError
     }
     
     struct ArrayWrapper<T: Decodable> {

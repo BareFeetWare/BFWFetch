@@ -25,11 +25,11 @@ extension GroupScene {
 extension GroupScene.ViewModel {
     func fetch() {
         API.Request.Group.publisher(siteIDs: siteIDs, system: system)
+            .mapError(API.Response.specificError)
             .receive(on: DispatchQueue.main)
             .sink(
                 receiveCompletion: { completion in
                     switch completion {
-                    // TODO: Show error
                     case .failure(let error):
                         self.error = error
                         self.isPresentedAlert = true
