@@ -19,12 +19,13 @@ public extension Fetchable where Fetched: Decodable, FetchedFailure: Decodable {
             .tryMap { (data: Data, response: URLResponse) in
                 guard let httpResponse = response as? HTTPURLResponse
                 else { throw Fetch.Error.notHTTPURLResponse }
-                let statusCode = httpResponse.statusCode
-                guard statusCode < 400
+                guard httpResponse.statusCode < 400
                 else {
                     // TODO: Allow different decoder for FetchedFailure?
-                    let failurePayload = try decoder.decode(FetchedFailure.self, from: data)
-                    throw Fetch.Error.httpResponse(httpResponse, payload: failurePayload)
+                    throw Fetch.Error.httpResponse(
+                        httpResponse,
+                        payload: try decoder.decode(FetchedFailure.self, from: data)
+                    )
                 }
                 return data
             }
