@@ -11,10 +11,21 @@ public enum Fetch {}
 
 public extension Fetch {
     
-    enum Error: Swift.Error {
+    enum Error: LocalizedError {
         case notHTTPURLResponse
         case httpResponse(_ httpResponse: HTTPURLResponse, payload: Any)
         case url
+        
+        public var errorDescription: String? {
+            switch self {
+            case .notHTTPURLResponse:
+                return "Not an HTTP URL response"
+            case .httpResponse(let response, payload: let payload):
+                return "Status code: \(response.statusCode). \(payload)"
+            case .url:
+                return "Could not construct URL"
+            }
+        }
     }
     
     enum Encoding {
