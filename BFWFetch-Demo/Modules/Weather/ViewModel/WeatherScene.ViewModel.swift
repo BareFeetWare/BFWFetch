@@ -33,7 +33,7 @@ extension WeatherScene.ViewModel {
         guard !city.isEmpty
         else { return }
         isInProgressFetch = true
-        API.Weather.publisher(
+        API.Request.Weather.publisher(
             city: city,
             countryCode: countryCode,
             system: system

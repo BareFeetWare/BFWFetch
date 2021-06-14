@@ -9,7 +9,7 @@
 import Foundation
 
 extension Site {
-    static let cloudySydney = Site(
+    static let cloudySydney: Self = .init(
         id: 1,
         name: "Sydney",
         time: 0,

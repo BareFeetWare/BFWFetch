@@ -8,17 +8,34 @@
 
 import Foundation
 
-/// Domain name scope for all types specific to fetching from the API.
-enum API {}
+/// Domain name scope for all types specific to API requests and responses.
+enum API {
+    enum Request {}
+    enum Response {}
+}
 
-extension API {
+extension API.Response {
+    
+    struct Failure {
+        let code: Int
+        let message: String
+    }
+    
     struct ArrayWrapper<T: Decodable> {
         let count: Int
         let array: Array<T>
     }
+    
 }
 
-extension API.ArrayWrapper: Decodable {
+extension API.Response.Failure: Decodable {
+    enum CodingKeys: String, CodingKey {
+        case code = "cod"
+        case message
+    }
+}
+
+extension API.Response.ArrayWrapper: Decodable {
     enum CodingKeys: String, CodingKey {
         case count = "cnt"
         case array = "list"

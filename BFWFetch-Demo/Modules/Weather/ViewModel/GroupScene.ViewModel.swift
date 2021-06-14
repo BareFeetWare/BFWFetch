@@ -24,7 +24,7 @@ extension GroupScene {
 
 extension GroupScene.ViewModel {
     func fetch() {
-        API.Group.publisher(siteIDs: siteIDs, system: system)
+        API.Request.Group.publisher(siteIDs: siteIDs, system: system)
             .receive(on: DispatchQueue.main)
             .sink(
                 receiveCompletion: { completion in
