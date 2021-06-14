@@ -37,8 +37,8 @@ extension GroupScene.ViewModel {
                         break
                     }
                     self.isInProgressFetch = false
-                }
-                , receiveValue: { wrapper in
+                },
+                receiveValue: { wrapper in
                     let sites = wrapper.array
                     self.sites = sites
                     self.isActiveLinkedScene = true
