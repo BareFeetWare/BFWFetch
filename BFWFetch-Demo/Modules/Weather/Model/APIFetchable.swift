@@ -9,7 +9,9 @@
 import Foundation
 import BFWFetch
 
-protocol APIFetchable: Fetchable {}
+protocol APIFetchable: Fetchable {
+    associatedtype FetchedFailure = API.Response.Failure
+}
 
 extension APIFetchable {
     

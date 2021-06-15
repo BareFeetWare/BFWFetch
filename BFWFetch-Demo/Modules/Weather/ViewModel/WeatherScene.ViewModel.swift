@@ -8,6 +8,7 @@
 
 import Foundation
 import Combine
+import BFWFetch
 
 extension WeatherScene {
     class ViewModel: ObservableObject {
@@ -33,11 +34,12 @@ extension WeatherScene.ViewModel {
         guard !city.isEmpty
         else { return }
         isInProgressFetch = true
-        API.Weather.publisher(
+        API.Request.Weather.publisher(
             city: city,
             countryCode: countryCode,
             system: system
         )
+        .mapError(API.Response.specificError)
         .receive(on: DispatchQueue.main)
         .sink(
             receiveCompletion: { completion in

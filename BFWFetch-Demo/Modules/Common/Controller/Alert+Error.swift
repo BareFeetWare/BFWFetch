@@ -12,15 +12,19 @@ extension Alert {
     init(error: Error?) {
         self.init(
             title: Text("Error"),
-            message: error.map { Text(String(describing: $0)) }
+            message: error.map { Text($0.localizedDescription) }
         )
     }
 }
 
 struct Alert_Error_Previews: PreviewProvider {
     
-    private enum Error: Swift.Error {
+    private enum Error: LocalizedError {
         case test
+        
+        var errorDescription: String? {
+            "This is just a test error."
+        }
     }
     
     static var previews: some View {

@@ -24,12 +24,12 @@ extension GroupScene {
 
 extension GroupScene.ViewModel {
     func fetch() {
-        API.Group.publisher(siteIDs: siteIDs, system: system)
+        API.Request.Group.publisher(siteIDs: siteIDs, system: system)
+            .mapError(API.Response.specificError)
             .receive(on: DispatchQueue.main)
             .sink(
                 receiveCompletion: { completion in
                     switch completion {
-                    // TODO: Show error
                     case .failure(let error):
                         self.error = error
                         self.isPresentedAlert = true
@@ -37,8 +37,8 @@ extension GroupScene.ViewModel {
                         break
                     }
                     self.isInProgressFetch = false
-                }
-                , receiveValue: { wrapper in
+                },
+                receiveValue: { wrapper in
                     let sites = wrapper.array
                     self.sites = sites
                     self.isActiveLinkedScene = true
