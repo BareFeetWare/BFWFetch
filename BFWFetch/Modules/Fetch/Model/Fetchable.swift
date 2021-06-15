@@ -38,9 +38,6 @@ public protocol Fetchable {
     /// Defaults to `.form` when `httpMethod` = `.get` and `.json` when `httpMethod` = `.post`.
     static var encoding: Fetch.Encoding { get }
     
-    /// Defaults to nil.
-    static var headers: [String: String]? { get }
-    
     /// Defaults to `JSONDecoder` with `dateDecodingStrategy` = `.iso8601`. Can change to `.sqlDate` or `.tTimezone` or `.timezone` or custom.
     static var decoder: JSONDecoder { get }
     
@@ -76,7 +73,10 @@ public extension Fetchable {
 
 extension Fetchable {
     
-    static func request(keyValues: [Key: FetchValue?]? = nil) throws -> URLRequest {
+    static func request(
+        keyValues: [Key: FetchValue?]? = nil,
+        headers: [String : String]? = nil
+    ) throws -> URLRequest {
         let nonNilKeyValues = keyValues?.compactMapValues { $0 } ?? [:]
         let mergedKeyValues = defaultKeyValues
             .merging(nonNilKeyValues) { $1 }

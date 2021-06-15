@@ -50,11 +50,16 @@ public extension Fetchable where Fetched: Decodable, FetchedFailure: Decodable {
     }
     
     static func publisher(
-        keyValues: [Key: FetchValue?]? = nil
+        keyValues: [Key: FetchValue?]? = nil,
+        // TODO: Use an enum for header keys
+        headers: [String: String]? = nil
     ) -> AnyPublisher<Fetched, Error> {
         do {
             return try publisher(
-                request: request(keyValues: keyValues)
+                request: request(
+                    keyValues: keyValues,
+                    headers: headers
+                )
             )
         } catch {
             return Fail<Fetched, Error>(error: error)
