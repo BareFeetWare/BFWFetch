@@ -79,8 +79,8 @@ public extension Fetchable {
 extension Fetchable {
     
     static func request(
-        keyValues: [Key: FetchValue?]? = nil,
-        headers: [String : String]? = nil
+        headers: [String : String]? = nil,
+        keyValues: [Key: FetchValue?]? = nil
     ) throws -> URLRequest {
         let nonNilKeyValues = keyValues?.compactMapValues { $0 } ?? [:]
         let mergedKeyValues = defaultKeyValues

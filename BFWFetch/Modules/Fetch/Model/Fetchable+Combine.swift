@@ -12,15 +12,15 @@ import Combine
 public extension Fetchable {
     
     static func publisher(
-        keyValues: [Key: FetchValue?]? = nil,
+        headers: [String: String]? = nil,
+        keyValues: [Key: FetchValue?]? = nil
         // TODO: Maybe use an enum for header keys
-        headers: [String: String]? = nil
     ) -> AnyPublisher<Fetched, Error> {
         do {
             return try publisher(
                 request: request(
-                    keyValues: keyValues,
-                    headers: headers
+                    headers: headers,
+                    keyValues: keyValues
                 )
             )
         } catch {
