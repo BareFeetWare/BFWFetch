@@ -38,15 +38,17 @@ public protocol Fetchable {
     /// Defaults to `.form` when `httpMethod` = `.get` and `.json` when `httpMethod` = `.post`.
     static var encoding: Fetch.Encoding { get }
     
-    /// Defaults to nil.
-    static var headers: [String: String]? { get }
-    
     /// Defaults to `JSONDecoder` with `dateDecodingStrategy` = `.iso8601`. Can change to `.sqlDate` or `.tTimezone` or `.timezone` or custom.
     static var decoder: JSONDecoder { get }
     
     /// Default key values, such as an API key or authorization. Defaults to empty.
     static var defaultKeyValues: [Key : FetchValue] { get }
     
+    // TODO: Perhaps make these functions of Fetched and fetchedFailure, rather than Fetchable.
+    static func fetched(data: Data) throws -> Fetched
+
+    static func fetchedFailure(data: Data) throws -> FetchedFailure
+
 }
 
 public extension Fetchable {
@@ -76,7 +78,10 @@ public extension Fetchable {
 
 extension Fetchable {
     
-    static func request(keyValues: [Key: FetchValue?]? = nil) throws -> URLRequest {
+    static func request(
+        headers: [String : String]? = nil,
+        keyValues: [Key: FetchValue?]? = nil
+    ) throws -> URLRequest {
         let nonNilKeyValues = keyValues?.compactMapValues { $0 } ?? [:]
         let mergedKeyValues = defaultKeyValues
             .merging(nonNilKeyValues) { $1 }

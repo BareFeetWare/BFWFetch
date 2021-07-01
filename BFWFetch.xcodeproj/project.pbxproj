@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E25AB8CB268D58AB008A179D /* Fetchable+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25AB8CA268D58AB008A179D /* Fetchable+Combine.swift */; };
 		E29168CA22A2973D005D638E /* BFWFetchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29168C922A2973D005D638E /* BFWFetchApp.swift */; };
 		E29168D122A29740005D638E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E29168D022A29740005D638E /* Assets.xcassets */; };
 		E29168E022A298B1005D638E /* SitesScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29168DF22A298B1005D638E /* SitesScene.swift */; };
@@ -74,6 +75,7 @@
 
 /* Begin PBXFileReference section */
 		E21575F32625CA9900EEA3B6 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		E25AB8CA268D58AB008A179D /* Fetchable+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Fetchable+Combine.swift"; sourceTree = "<group>"; };
 		E29168C722A2973D005D638E /* BFWFetch-Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "BFWFetch-Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E29168C922A2973D005D638E /* BFWFetchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BFWFetchApp.swift; sourceTree = "<group>"; };
 		E29168D022A29740005D638E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -208,6 +210,7 @@
 				E29F619D2610442900947455 /* DateFormatter+Fetch.swift */,
 				E2A55EAF21AAD48D00812DC6 /* Fetch.swift */,
 				E2A55EAE21AAD48D00812DC6 /* Fetchable.swift */,
+				E25AB8CA268D58AB008A179D /* Fetchable+Combine.swift */,
 				E29168F822A2AF9C005D638E /* Fetchable+Decodable.swift */,
 				E29F619526102F6B00947455 /* FetchKey.swift */,
 				E29F619726102FA300947455 /* FetchValue.swift */,
@@ -461,6 +464,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E25AB8CB268D58AB008A179D /* Fetchable+Combine.swift in Sources */,
 				E29F619626102F6B00947455 /* FetchKey.swift in Sources */,
 				E29F61A02610448000947455 /* String+SnakeCase.swift in Sources */,
 				E29F61A426104BB900947455 /* URL+PathComponents.swift in Sources */,

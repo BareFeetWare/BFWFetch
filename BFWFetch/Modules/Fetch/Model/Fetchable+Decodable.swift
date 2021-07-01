@@ -7,59 +7,16 @@
 //
 
 import Foundation
-import Combine
 
-public extension Fetchable where Fetched: Decodable, FetchedFailure: Decodable {
-    
-    private static func decodedPublisher(
-        request: URLRequest
-    ) -> AnyPublisher<Fetched, Error> {
-        URLSession.shared.dataTaskPublisher(for: request)
-            .eraseToAnyPublisher()
-            .tryMap { (data: Data, response: URLResponse) in
-                guard let httpResponse = response as? HTTPURLResponse
-                else { throw Fetch.Error.notHTTPURLResponse }
-                guard httpResponse.statusCode < 400
-                else {
-                    // TODO: Allow different decoder for FetchedFailure?
-                    throw Fetch.Error.httpResponse(
-                        httpResponse,
-                        payload: try decoder.decode(FetchedFailure.self, from: data)
-                    )
-                }
-                return data
-            }
-            .decode(type: Fetched.self, decoder: decoder)
-            .eraseToAnyPublisher()
+public extension Fetchable where Fetched: Decodable {
+    static func fetched(data: Data) throws -> Fetched {
+        try decoder.decode(Fetched.self, from: data)
     }
-    
-    private static func publisher(
-        request: URLRequest
-    ) -> AnyPublisher<Fetched, Error> {
-        decodedPublisher(request: request)
-            /*
-            .tryMap {
-                guard !Root.shared.testing.isFakeFetchError
-                else {
-                    throw Fetch.Error.failure(.fake)
-                }
-                return $0.data
-            }
-            */
-            .eraseToAnyPublisher()
+}
+
+public extension Fetchable where FetchedFailure: Decodable {
+    static func fetchedFailure(data: Data) throws -> FetchedFailure {
+        // TODO: Allow for different decoder for FetchedFailure vs Fetched.
+        try decoder.decode(FetchedFailure.self, from: data)
     }
-    
-    static func publisher(
-        keyValues: [Key: FetchValue?]? = nil
-    ) -> AnyPublisher<Fetched, Error> {
-        do {
-            return try publisher(
-                request: request(keyValues: keyValues)
-            )
-        } catch {
-            return Fail<Fetched, Error>(error: error)
-                .eraseToAnyPublisher()
-        }
-    }
-    
 }

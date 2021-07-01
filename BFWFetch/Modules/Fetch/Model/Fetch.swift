@@ -12,12 +12,15 @@ public enum Fetch {}
 public extension Fetch {
     
     enum Error: LocalizedError {
+        case noToken
         case notHTTPURLResponse
         case httpResponse(_ httpResponse: HTTPURLResponse, payload: Any)
         case url
         
         public var errorDescription: String? {
             switch self {
+            case .noToken:
+                return "No authorization token"
             case .notHTTPURLResponse:
                 return "Not an HTTP URL response"
             case .httpResponse(let response, payload: let payload):
