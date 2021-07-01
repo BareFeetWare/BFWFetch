@@ -44,6 +44,11 @@ public protocol Fetchable {
     /// Default key values, such as an API key or authorization. Defaults to empty.
     static var defaultKeyValues: [Key : FetchValue] { get }
     
+    // TODO: Perhaps make these functions of Fetched and fetchedFailure, rather than Fetchable.
+    static func fetched(data: Data) throws -> Fetched
+
+    static func fetchedFailure(data: Data) throws -> FetchedFailure
+
 }
 
 public extension Fetchable {
