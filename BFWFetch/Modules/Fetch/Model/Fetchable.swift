@@ -88,7 +88,7 @@ extension Fetchable {
         let queryItemsDictionary = mergedKeyValues
             .filter { !$0.key.isInURLPath }
             .reduce(into: [:]) { result, tuple in
-                result[tuple.key.apiString] = tuple.value.apiString
+                result[tuple.key.apiString] = tuple.value
             }
         let keyPathsComponents = mergedKeyValues
             .filter { $0.key.isInURLPath }

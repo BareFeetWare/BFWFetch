@@ -15,6 +15,7 @@ public protocol FetchValue {
 extension Int: FetchValue {}
 extension String: FetchValue {}
 extension Bool: FetchValue {}
+extension Array: FetchValue {}
 
 extension FetchValue {
     public var apiString: String { String(describing: self) }
