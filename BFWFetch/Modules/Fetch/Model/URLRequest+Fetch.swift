@@ -11,15 +11,17 @@ extension URLRequest {
     
     init(
         url: URL,
-        queryItemsDictionary: [String: String]? = nil,
+        queryItemsDictionary: [String: Any]? = nil,
         headers: [String: String]? = nil,
         httpMethod: Fetch.HTTPMethod,
         encoding: Fetch.Encoding
-    ) throws
-    {
+    ) throws {
         let queryURL: URL
         if let queryItemsDictionary = queryItemsDictionary, encoding == .form {
-            queryURL = try url.addingQuery(dictionary: queryItemsDictionary)
+            queryURL = try url.addingQuery(
+                dictionary: queryItemsDictionary
+                    .mapValues { String(describing: $0) }
+            )
         } else {
             queryURL = url
         }
@@ -44,7 +46,7 @@ extension URLRequest {
     init(
         baseURL: URL,
         urlPathComponents: [String],
-        queryItemsDictionary: [String: String]? = nil,
+        queryItemsDictionary: [String: Any]? = nil,
         headers: [String: String]? = nil,
         httpMethod: Fetch.HTTPMethod,
         encoding: Fetch.Encoding
