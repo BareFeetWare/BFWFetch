@@ -39,10 +39,9 @@ private extension Fetchable {
         URLSession.shared.dataTaskPublisher(for: request)
             .eraseToAnyPublisher()
             .tryMap { (data: Data, response: URLResponse) in
-                guard let httpResponse = response as? HTTPURLResponse
-                else { throw Fetch.Error.notHTTPURLResponse }
-                guard httpResponse.statusCode < 400
-                else {
+                if let httpResponse = response as? HTTPURLResponse,
+                   httpResponse.statusCode >= 400
+                {
                     // TODO: Allow different decoder for FetchedFailure?
                     throw Fetch.Error.httpResponse(
                         httpResponse,
