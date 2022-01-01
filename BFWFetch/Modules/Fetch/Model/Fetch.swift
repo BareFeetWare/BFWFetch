@@ -38,11 +38,13 @@ public extension Fetch {
         case get = "GET"
         case post = "POST"
         case delete = "DELETE"
-        
+        case patch = "PATCH"
+        case put = "PUT"
+
         var defaultEncoding: Encoding {
             switch self {
             case .get: return .form
-            case .post, .delete: return .json
+            default: return .json
             }
         }
     }
