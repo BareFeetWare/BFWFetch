@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 extension GroupScene {
     class ViewModel: ObservableObject {
@@ -18,32 +17,22 @@ extension GroupScene {
         @Published var isInProgressFetch = false
         @Published var isPresentedAlert = false
         var error: Error?
-        private var subscribers = Set<AnyCancellable>()
     }
 }
 
 extension GroupScene.ViewModel {
     func fetch() {
-        API.Request.Group.publisher(siteIDs: siteIDs, system: system)
-            .mapError(API.Response.specificError)
-            .receive(on: DispatchQueue.main)
-            .sink(
-                receiveCompletion: { completion in
-                    switch completion {
-                    case .failure(let error):
-                        self.error = error
-                        self.isPresentedAlert = true
-                    case .finished:
-                        break
-                    }
-                    self.isInProgressFetch = false
-                },
-                receiveValue: { wrapper in
-                    let sites = wrapper.array
-                    self.sites = sites
-                    self.isActiveLinkedScene = true
-                }
-            )
-            .store(in: &subscribers)
+        Task {
+            do {
+                let wrapper = try await API.Request.Group.fetched(siteIDs: siteIDs, system: system)
+                let sites = wrapper.array
+                self.sites = sites
+                self.isActiveLinkedScene = true
+            } catch {
+                self.error = API.Response.specificError(error)
+                self.isPresentedAlert = true
+            }
+            self.isInProgressFetch = false
+        }
     }
 }

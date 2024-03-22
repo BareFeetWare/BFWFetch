@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 import BFWFetch
 
 extension WeatherScene {
@@ -20,7 +19,6 @@ extension WeatherScene {
         @Published var isInProgressFetch = false
         @Published var isPresentedAlert = false
         var error: Error?
-        private var subscribers = Set<AnyCancellable>()
     }
 }
 
@@ -34,29 +32,19 @@ extension WeatherScene.ViewModel {
         guard !city.isEmpty
         else { return }
         isInProgressFetch = true
-        API.Request.Weather.publisher(
-            city: city,
-            countryCode: countryCode,
-            system: system
-        )
-        .mapError(API.Response.specificError)
-        .receive(on: DispatchQueue.main)
-        .sink(
-            receiveCompletion: { completion in
-                self.isInProgressFetch = false
-                switch completion {
-                case .failure(let error):
-                    self.error = error
-                    self.isPresentedAlert = true
-                case .finished:
-                    break
-                }
-            },
-            receiveValue: { site in
-                self.site = site
+        Task {
+            do {
+                self.site = try await API.Request.Weather.fetched(
+                    city: city,
+                    countryCode: countryCode,
+                    system: system
+                )
                 self.isActiveLinkedScene = true
+            } catch {
+                self.error = API.Response.specificError(error)
+                self.isPresentedAlert = true
             }
-        )
-        .store(in: &subscribers)
+            self.isInProgressFetch = false
+        }
     }
 }

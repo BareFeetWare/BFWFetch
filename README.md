@@ -1,11 +1,13 @@
 #  BFWFetch
 Simple and Robust API Calls, using the Fetchable protocol
 
+Note: BFWFetch now uses async/await. For the Combine version, check out the older feature/combine branch.
+
 ## Introduction
 
 The `Fetchable` protocol provides a simple and flexible way to fetch data from API calls.
 
-Read more detail about Fetchable in the [Better Programming publication on Medium](https://medium.com/p/4ddf8710d1a0/).
+Read more detail about Fetchable (for Combine) in the [Better Programming publication on Medium](https://medium.com/p/4ddf8710d1a0/).
 
 A `Fetchable` type must provide:
 
@@ -13,7 +15,7 @@ A `Fetchable` type must provide:
 2. The fetch parameter keys as an `enum Key: FetchKey`.
 3. The `Fetched` type expected in the response.
 
-Fetchable takes care of all the inner workings. Fetchable provides a Combine publisher, which we can observe to update our model and UI.
+Fetchable takes care of all the inner workings. Fetchable uses async/await, which we can use to update our model and UI.
 
 ## Example: Open Weather
 
@@ -61,10 +63,10 @@ Fetchable takes care of mapping the keys to request parameters, creating the URL
 
 ## Fetching
 
-To initiate the actual fetch from the API, we just ask our Fetchable type for a publisher:
+To initiate the actual fetch from the API, we just ask our Fetchable type for the fetched result:
 
 ```Swift
-Weather.publisher(
+try await Weather.fetched(
     keyValues: [
         .appID: "1234567890abcdef",
         .site: "Sydney,AU",
@@ -73,22 +75,20 @@ Weather.publisher(
 )
 ```
 
-Since the keys are cases of an enum, the compiler forces us to enter the keys correctly, and lists them in the code completion popup menu (when we type the leading period).
+Since the keys are cases of an enum, the compiler forces us to enter the keys correctly, and lists them in the code completion popup menu (when we type the leading dot).
 
 ## Custom Function
 
 We would typically expose the keys as parameters in a custom Swift function, such as:
 
 ```Swift
-import Combine
-
 extension Weather {
-    static func publisher(
+    static func fetched(
         city: String,
         countryCode: String?,
         system: System
-    ) {
-        publisher(
+    ) async throws -> Fetched {
+        try await fetched(
             keyValues: [
                 .appID: "1234567890abcdef",
                 .site: [city, countryCode]
@@ -122,23 +122,16 @@ extension WeatherScene {
         @Published var countryCode: String = ""
         @Published var system: System = .metric
         @Published var site: Site?
-        private var subscribers = Set<AnyCancellable>()
     }
 }
 
 extension WeatherScene.ViewModel {
     func fetch() {
-        Weather.publisher(
+        self.site = try await Weather.publisher(
             city: city,
             countryCode: countryCode,
             system: system
         )
-        .receive(on: DispatchQueue.main)
-        .sink(
-            receiveCompletion: { _ in },
-            receiveValue: { self.site = $0 }
-        )
-        .store(in: &subscribers)
     }
 }
 ```

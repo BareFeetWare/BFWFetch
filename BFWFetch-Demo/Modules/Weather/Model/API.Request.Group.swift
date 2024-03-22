@@ -8,7 +8,6 @@
 
 import Foundation
 import BFWFetch
-import Combine
 
 extension API.Request {
     struct Group {}
@@ -27,11 +26,11 @@ extension API.Request.Group: APIFetchable {
 }
 
 extension API.Request.Group {
-    static func publisher(
+    static func fetched(
         siteIDs: String,
         system: System
-    ) -> AnyPublisher<Fetched, Error> {
-        publisher(
+    ) async throws -> Fetched {
+        try await fetched(
             keyValues: [
                 .appID: appID,
                 .siteIDs: siteIDs,

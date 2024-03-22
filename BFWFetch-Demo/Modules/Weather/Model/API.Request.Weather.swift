@@ -8,7 +8,6 @@
 
 import Foundation
 import BFWFetch
-import Combine
 
 extension API.Request {
     struct Weather {}
@@ -27,12 +26,12 @@ extension API.Request.Weather: APIFetchable {
 }
 
 extension API.Request.Weather {
-    static func publisher(
+    static func fetched(
         city: String,
         countryCode: String?,
         system: System
-    ) -> AnyPublisher<Fetched, Error> {
-        publisher(
+    ) async throws -> Fetched {
+        try await fetched(
             keyValues: [
                 .appID: appID,
                 .site: [city, countryCode]
