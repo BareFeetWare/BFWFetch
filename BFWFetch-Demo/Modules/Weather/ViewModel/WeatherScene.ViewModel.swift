@@ -28,6 +28,7 @@ extension WeatherScene.ViewModel {
         site.map { SiteScene.ViewModel(site: $0, system: system) }
     }
     
+    @MainActor
     func fetch() {
         guard !city.isEmpty
         else { return }

@@ -21,6 +21,8 @@ extension GroupScene {
 }
 
 extension GroupScene.ViewModel {
+    
+    @MainActor
     func fetch() {
         Task {
             do {
