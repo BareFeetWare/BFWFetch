@@ -8,29 +8,25 @@
 
 import SwiftUI
 
-struct WeatherScene {
-    @StateObject var viewModel = ViewModel()
-}
-
 extension WeatherScene : View {
     var body: some View {
         List {
             HStack {
                 Text("City:")
                 Spacer()
-                TextField("City", text: $viewModel.city)
+                TextField("City", text: $city)
                     .frame(width: 200)
             }
             HStack {
                 Text("Country Code:")
                 Spacer()
-                TextField("Country Code", text: $viewModel.countryCode)
+                TextField("Country Code", text: $countryCode)
                     .frame(width: 200)
             }
             HStack {
                 Text("Unit System:")
                 Spacer()
-                Picker("Unit System", selection: $viewModel.system) {
+                Picker("Unit System", selection: $system) {
                     ForEach(System.allCases) { system in
                         Text(system.title)
                     }
@@ -39,18 +35,16 @@ extension WeatherScene : View {
                 .frame(width: 200)
             }
             AsyncNavigationLink(
-                destination: viewModel.siteScene,
-                isActive: $viewModel.isActiveLinkedScene,
-                isInProgress: $viewModel.isInProgressFetch,
-                action: viewModel.fetch
+                destination: siteScene,
+                isActive: $isActiveLinkedScene,
+                isInProgress: $isInProgressFetch,
+                action: onTapFetch
             ) {
                 Text("Fetch Weather")
             }
         }
         .textFieldStyle(RoundedBorderTextFieldStyle())
-        .alert(isPresented: $viewModel.isPresentedAlert) {
-            Alert(error: viewModel.error)
-        }
+        .alert(error: $presentedError)
         .navigationTitle("API Weather")
     }
 }

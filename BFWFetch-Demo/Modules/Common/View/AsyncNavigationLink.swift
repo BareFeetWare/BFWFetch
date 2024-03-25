@@ -5,6 +5,8 @@
 //  Copyright © 2021 BareFeetWare. All rights reserved.
 //
 
+// Extracted from BFWViews: https://bitbucket.org/barefeetware/bfwviews/
+
 import SwiftUI
 
 /**

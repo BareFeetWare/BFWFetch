@@ -10,9 +10,11 @@ import SwiftUI
 
 struct SiteScene {
     let list: Plan.List
+    let title: String
     
     init(site: Site, system: System) {
         self.list = .init(site: site, system: system)
+        self.title = site.name
     }
 }
 

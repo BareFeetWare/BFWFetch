@@ -11,6 +11,8 @@ import SwiftUI
 extension SiteScene: View {
     var body: some View {
         list
+            .navigationTitle(title)
+            .navigationBarTitleDisplayMode(.inline)
     }
 }
 

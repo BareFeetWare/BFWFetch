@@ -1,5 +1,5 @@
 //
-//  SitesScene.swift
+//  SitesScene+View.swift
 //  BFWFetch-Demo
 //
 //  Created by Tom Brodhurst-Hill on 1/6/19.
@@ -8,22 +8,13 @@
 
 import SwiftUI
 
-struct SitesScene {
-    let sites: [Site]
-    let system: System
-}
-
 extension SitesScene: View {
     var body: some View {
         List(sites) { site in
             NavigationLink(
                 destination: SiteScene(site: site, system: system)
             ) {
-                HStack {
-                    Text(site.name)
-                    Spacer()
-                    Text(site.temperatureString(system: system))
-                }
+                DetailRow(site: site, system: system)
             }
         }
         .navigationTitle("Open Weather")

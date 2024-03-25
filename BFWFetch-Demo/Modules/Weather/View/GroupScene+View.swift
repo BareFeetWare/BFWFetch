@@ -1,5 +1,5 @@
 //
-//  GroupScene.swift
+//  GroupScene+View.swift
 //  BFWFetch-Demo
 //
 //  Created by Tom Brodhurst-Hill on 5/4/21.
@@ -8,23 +8,19 @@
 
 import SwiftUI
 
-struct GroupScene {
-    @StateObject var viewModel = ViewModel()
-}
-
-extension GroupScene : View {
+extension GroupScene: View {
     var body: some View {
         List {
             HStack {
                 Text("Site IDs:")
                 Spacer()
-                TextField("Site IDs", text: $viewModel.siteIDs)
+                TextField("Site IDs", text: $siteIDs)
                     .frame(width: 200)
             }
             HStack {
                 Text("Unit System:")
                 Spacer()
-                Picker("Unit System", selection: $viewModel.system) {
+                Picker("Unit System", selection: $system) {
                     ForEach(System.allCases) { system in
                         Text(system.title)
                     }
@@ -33,18 +29,16 @@ extension GroupScene : View {
                 .frame(width: 200)
             }
             AsyncNavigationLink(
-                destination: viewModel.sites.map { SitesScene(sites: $0, system: viewModel.system) },
-                isActive: $viewModel.isActiveLinkedScene,
-                isInProgress: $viewModel.isInProgressFetch,
-                action: viewModel.fetch
+                destination: sitesScene,
+                isActive: $isActiveLinkedScene,
+                isInProgress: $isInProgressFetch,
+                action: onTapFetch
             ) {
                 Text("API Weather")
             }
         }
         .textFieldStyle(RoundedBorderTextFieldStyle())
-        .alert(isPresented: $viewModel.isPresentedAlert) {
-            Alert(error: viewModel.error)
-        }
+        .alert(error: $presentedError)
         .navigationTitle("Fetch Group")
     }
 }
