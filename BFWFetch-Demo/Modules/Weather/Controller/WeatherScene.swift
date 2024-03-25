@@ -39,9 +39,7 @@ extension WeatherScene : View {
                 .frame(width: 200)
             }
             AsyncNavigationLink(
-                destination: viewModel.siteViewModel.map {
-                    SiteScene(viewModel: $0)
-                },
+                destination: viewModel.siteScene,
                 isActive: $viewModel.isActiveLinkedScene,
                 isInProgress: $viewModel.isInProgressFetch,
                 action: viewModel.fetch

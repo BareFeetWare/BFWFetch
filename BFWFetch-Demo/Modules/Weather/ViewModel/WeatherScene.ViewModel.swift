@@ -24,8 +24,8 @@ extension WeatherScene {
 
 extension WeatherScene.ViewModel {
     
-    var siteViewModel: SiteScene.ViewModel? {
-        site.map { SiteScene.ViewModel(site: $0, system: system) }
+    var siteScene: SiteScene? {
+        site.map { SiteScene(site: $0, system: system) }
     }
     
     @MainActor

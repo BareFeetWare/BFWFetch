@@ -9,15 +9,15 @@
 import SwiftUI
 
 struct SitesScene {
-    var sites: [Site]
-    var system: System
+    let sites: [Site]
+    let system: System
 }
 
 extension SitesScene: View {
     var body: some View {
         List(sites) { site in
             NavigationLink(
-                destination: SiteScene(viewModel: .init(site: site, system: system))
+                destination: SiteScene(site: site, system: system)
             ) {
                 HStack {
                     Text(site.name)
