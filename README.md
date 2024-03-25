@@ -116,22 +116,23 @@ extension System: FetchValue {}
 We would call that function from our view model, such as:
 
 ```Swift
-extension WeatherScene {
-    class ViewModel: ObservableObject {
-        @Published var city: String = ""
-        @Published var countryCode: String = ""
-        @Published var system: System = .metric
-        @Published var site: Site?
-    }
+struct WeatherScene {
+    @State var city: String = "Sydney"
+    @State var countryCode: String = "AU"
+    @State var system: System = .metric
+    @State var site: Site?
 }
 
-extension WeatherScene.ViewModel {
-    func fetch() {
-        self.site = try await Weather.publisher(
-            city: city,
-            countryCode: countryCode,
-            system: system
-        )
+private extension WeatherScene {
+
+    func fetch() async {
+        ...
+            self.site = try await API.Request.Weather.fetched(
+                city: city,
+                countryCode: countryCode,
+                system: system
+            )
+        ...
     }
 }
 ```
