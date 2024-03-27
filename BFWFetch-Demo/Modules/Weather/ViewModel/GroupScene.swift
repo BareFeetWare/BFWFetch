@@ -34,7 +34,7 @@ private extension GroupScene {
     
     func fetch() async {
         do {
-            let wrapper = try await API.Request.Group.fetched(siteIDs: siteIDs, system: system)
+            let wrapper = try await API.Request.Group.response(siteIDs: siteIDs, system: system)
             let sites = wrapper.array
             self.sites = sites
             self.isActiveLinkedScene = true

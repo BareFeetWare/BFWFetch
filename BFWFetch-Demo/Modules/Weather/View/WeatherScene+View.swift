@@ -42,6 +42,7 @@ extension WeatherScene : View {
             ) {
                 Text("Fetch Weather")
             }
+            .disabled(isDisabledFetch)
         }
         .textFieldStyle(RoundedBorderTextFieldStyle())
         .alert(error: $presentedError)

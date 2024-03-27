@@ -21,6 +21,10 @@ struct WeatherScene {
 
 extension WeatherScene {
     
+    var isDisabledFetch: Bool {
+        city.isEmpty
+    }
+    
     var siteScene: SiteScene? {
         site.map { SiteScene(site: $0, system: system) }
     }
@@ -35,11 +39,11 @@ extension WeatherScene {
 private extension WeatherScene {
 
     func fetch() async {
-        guard !city.isEmpty
-        else { return }
-        isInProgressFetch = true
         do {
-            self.site = try await API.Request.Weather.fetched(
+            guard !city.isEmpty
+            else { return }
+            isInProgressFetch = true
+            self.site = try await API.Request.Weather.response(
                 city: city,
                 countryCode: countryCode,
                 system: system

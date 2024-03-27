@@ -9,6 +9,8 @@ import Foundation
 
 public enum Fetch {}
 
+// MARK: - Types
+
 public extension Fetch {
     
     enum Error: LocalizedError {
@@ -40,13 +42,43 @@ public extension Fetch {
         case delete = "DELETE"
         case patch = "PATCH"
         case put = "PUT"
-
+        
         var defaultEncoding: Encoding {
             switch self {
             case .get: return .form
             default: return .json
             }
         }
+    }
+    
+}
+
+// MARK: - Functions
+
+public extension Fetch {
+    
+    static func data(request: URLRequest) async throws -> Data {
+        debugPrint("request = \(request)")
+        let (data, response) = try await URLSession.shared.data(for: request)
+        if let httpResponse = response as? HTTPURLResponse,
+           httpResponse.statusCode >= 400
+        {
+            throw Fetch.Error.httpResponse(
+                httpResponse,
+                payload: data
+            )
+        }
+        return data
+    }
+    
+    static func response<Response: Decodable>(
+        request: URLRequest,
+        decoder: JSONDecoder = JSONDecoder()
+    ) async throws -> Response {
+        let data = try await data(request: request)
+        let response = try decoder.decode(Response.self, from: data)
+        // TODO: Allow different decoder for Failure?
+        return response
     }
     
 }

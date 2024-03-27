@@ -17,6 +17,7 @@ extension URLRequest {
         encoding: Fetch.Encoding
     ) throws {
         let queryURL: URL
+        // TODO: Maybe use URLQueryItem.
         if let queryItemsDictionary = queryItemsDictionary, encoding == .form {
             queryURL = try url.addingQuery(
                 dictionary: queryItemsDictionary
@@ -45,14 +46,14 @@ extension URLRequest {
     
     init(
         baseURL: URL,
-        urlPathComponents: [String],
+        path: String?,
         queryItemsDictionary: [String: Any]? = nil,
         headers: [String: String]? = nil,
         httpMethod: Fetch.HTTPMethod,
         encoding: Fetch.Encoding
     ) throws {
         try self.init(
-            url: baseURL.appendingPathComponents(urlPathComponents),
+            url: baseURL.appendingPathComponent(path ?? ""),
             queryItemsDictionary: queryItemsDictionary,
             headers: headers,
             httpMethod: httpMethod,

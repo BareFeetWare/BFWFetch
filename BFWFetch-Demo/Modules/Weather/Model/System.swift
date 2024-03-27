@@ -15,8 +15,12 @@ enum System: CaseIterable, Identifiable {
     
     var id: Self { self }
     
+    var name: String {
+        String(describing: self)
+    }
+    
     var title: String {
-        String(describing: self).capitalized
+        name.capitalized
     }
     
     var speedUnit: String {

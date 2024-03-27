@@ -15,30 +15,27 @@ extension API.Request {
 
 extension API.Request.Weather: APIFetchable {
     
-    enum Key: String, FetchKey {
-        case appID
-        case site = "q"
-        case system = "units"
-    }
-    
-    typealias Fetched = Site
+    typealias Response = Site
     
 }
 
 extension API.Request.Weather {
-    static func fetched(
+    
+    static func response(
         city: String,
         countryCode: String?,
         system: System
-    ) async throws -> Fetched {
-        try await fetched(
-            keyValues: [
-                .appID: appID,
-                .site: [city, countryCode]
+    ) async throws -> Response {
+        try await response(
+            path: "weather",
+            queryItemsDictionary: [
+                "appID": appID,
+                "q": [city, countryCode]
                     .compactMap { $0 }
                     .joined(separator: ","),
-                .system: system
+                "units": system.name
             ]
         )
     }
+    
 }

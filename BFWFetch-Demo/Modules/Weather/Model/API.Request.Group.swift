@@ -15,26 +15,21 @@ extension API.Request {
 
 extension API.Request.Group: APIFetchable {
     
-    enum Key: String, FetchKey {
-        case appID
-        case siteIDs = "id"
-        case system = "units"
-    }
-    
-    typealias Fetched = API.Response.ArrayWrapper<Site>
+    typealias Response = API.Response.ArrayWrapper<Site>
     
 }
 
 extension API.Request.Group {
-    static func fetched(
+    static func response(
         siteIDs: String,
         system: System
-    ) async throws -> Fetched {
-        try await fetched(
-            keyValues: [
-                .appID: appID,
-                .siteIDs: siteIDs,
-                .system: system
+    ) async throws -> Response {
+        try await response(
+            path: "group",
+            queryItemsDictionary: [
+                "appID": appID,
+                "id": siteIDs,
+                "units": system.name
             ]
         )
     }

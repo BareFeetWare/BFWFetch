@@ -8,15 +8,18 @@
 
 import Foundation
 
-public extension Fetchable where Fetched: Decodable {
-    static func fetched(data: Data) throws -> Fetched {
-        try decoder.decode(Fetched.self, from: data)
+public extension Fetchable where Response: Decodable {
+    
+    static func response(
+        path: String?,
+        queryItemsDictionary: [String: String]? = nil
+    ) async throws -> Response {
+        try await Fetch.response(
+            request: request(
+                path: path,
+                queryItemsDictionary: queryItemsDictionary
+            )
+        )
     }
-}
-
-public extension Fetchable where FetchedFailure: Decodable {
-    static func fetchedFailure(data: Data) throws -> FetchedFailure {
-        // TODO: Allow for different decoder for FetchedFailure vs Fetched.
-        try decoder.decode(FetchedFailure.self, from: data)
-    }
+    
 }
