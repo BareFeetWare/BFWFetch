@@ -20,39 +20,54 @@ public protocol Fetchable {
     
     // Can override. Default values:
     
+    /// Path appended to the base URL.
+    static var urlPath: String? { get }
+    
     /// Defaults to `.get`. Can also be `.post`.
     static var httpMethod: Fetch.HTTPMethod { get }
-    
-    /// Defaults to `.form` when `httpMethod` = `.get` and `.json` when `httpMethod` = `.post`.
-    static var encoding: Fetch.Encoding { get }
     
     /// Defaults to `JSONDecoder` with `dateDecodingStrategy` = `.iso8601`. Can change to `.sqlDate` or `.tTimezone` or `.timezone` or custom.
     static var decoder: JSONDecoder { get }
     
+    /// Value for Authorization header.
+    static var authorization: Fetch.Authorization? { get }
+    
 }
 
 public extension Fetchable {
     
-    static var httpMethod: Fetch.HTTPMethod { .get }
-    static var encoding: Fetch.Encoding { httpMethod.defaultEncoding }
-    static var headers: [String: String]? { nil }
     static var decoder: JSONDecoder { .init(dateDecodingStrategy: .iso8601) }
+    static var authorization: Fetch.Authorization? { nil }
     
-}
-
-public extension Fetchable {
+    static var authorizationHeaders: [String: String]? {
+        guard let authorization,
+              let authorizationValue = switch authorization {
+              case .token: Fetch.token.map({ "Bearer \($0)" })
+              case .custom(let value): value
+              }
+        else { return nil }
+        return ["Authorization": authorizationValue]
+    }
     
-    static func request(
-        path: String?,
-        queryItemsDictionary: [String: String]? = nil
-    ) throws -> URLRequest {
-        try URLRequest(
-            baseURL: baseURL,
-            path: path,
-            queryItemsDictionary: queryItemsDictionary,
+    static var headers: [String: String]? {
+        authorizationHeaders
+    }
+    
+    static var request: URLRequest {
+        URLRequest(
+            url: baseURL,
+            path: urlPath,
             headers: headers,
-            httpMethod: httpMethod,
-            encoding: encoding
+            httpMethod: httpMethod
         )
     }
+    
+}
+
+public extension Fetchable where Response: Decodable {
+    
+    static func response(request: URLRequest) async throws -> Response {
+        try await Fetch.response(request: request)
+    }
+    
 }

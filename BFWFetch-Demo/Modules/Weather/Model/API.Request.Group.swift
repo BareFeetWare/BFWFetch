@@ -25,12 +25,14 @@ extension API.Request.Group {
         system: System
     ) async throws -> Response {
         try await response(
-            path: "group",
-            queryItemsDictionary: [
-                "appID": appID,
-                "id": siteIDs,
-                "units": system.name
-            ]
+            request: request.encoding(
+                .form,
+                variables: [
+                    "appID": appID,
+                    "id": siteIDs,
+                    "units": system.name
+                ]
+            )
         )
     }
 }

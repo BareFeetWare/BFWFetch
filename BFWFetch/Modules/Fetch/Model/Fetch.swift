@@ -31,24 +31,28 @@ public extension Fetch {
     }
     
     enum Encoding {
-        case json
         case form
+        case json
+        case graphQL(query: String)
+        
+        public init(graphQLResource resource: String) throws {
+            let query = try Bundle.main.contents(resource: resource)
+            self = .graphQL(query: query)
+        }
+        
     }
     
     enum HTTPMethod: String {
-        
         case get = "GET"
         case post = "POST"
         case delete = "DELETE"
         case patch = "PATCH"
         case put = "PUT"
-        
-        var defaultEncoding: Encoding {
-            switch self {
-            case .get: return .form
-            default: return .json
-            }
-        }
+    }
+    
+    enum Authorization {
+        case token
+        case custom(String)
     }
     
 }
@@ -79,6 +83,14 @@ public extension Fetch {
         let response = try decoder.decode(Response.self, from: data)
         // TODO: Allow different decoder for Failure?
         return response
+    }
+    
+    static var token: String? = UserDefaults.standard.string(
+        forKey: "token"
+    ) {
+        didSet {
+            UserDefaults.standard.setValue(token, forKey: "token")
+        }
     }
     
 }

@@ -27,14 +27,16 @@ extension API.Request.Weather {
         system: System
     ) async throws -> Response {
         try await response(
-            path: "weather",
-            queryItemsDictionary: [
-                "appID": appID,
-                "q": [city, countryCode]
-                    .compactMap { $0 }
-                    .joined(separator: ","),
-                "units": system.name
-            ]
+            request: request.encoding(
+                .form,
+                variables: [
+                    "appID": appID,
+                    "q": [city, countryCode]
+                        .compactMap { $0 }
+                        .joined(separator: ","),
+                    "units": system.name
+                ]
+            )
         )
     }
     

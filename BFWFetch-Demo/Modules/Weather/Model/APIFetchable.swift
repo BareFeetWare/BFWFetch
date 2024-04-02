@@ -19,4 +19,8 @@ extension APIFetchable {
     
     static var appID: String { "9807c81866d8e03e6e1025de688b1e0e" }
     
+    static var urlPath: String? { String(describing: self).lowercased() }
+    
+    static var httpMethod: Fetch.HTTPMethod { .get }
+    
 }
