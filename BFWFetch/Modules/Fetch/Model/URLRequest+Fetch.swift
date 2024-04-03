@@ -72,6 +72,13 @@ public extension URLRequest {
         return newRequest
     }
     
+    func addingPath(_ path: String?) -> URLRequest {
+        guard let url, let path else { return self }
+        var newRequest = self
+        newRequest.url = url.appendingPathComponent(path)
+        return newRequest
+    }
+    
     init(
         url: URL,
         path: String?,

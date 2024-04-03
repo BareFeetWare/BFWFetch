@@ -80,9 +80,14 @@ public extension Fetch {
         decoder: JSONDecoder = JSONDecoder()
     ) async throws -> Response {
         let data = try await data(request: request)
-        let response = try decoder.decode(Response.self, from: data)
-        // TODO: Allow different decoder for Failure?
-        return response
+        do {
+            let response = try decoder.decode(Response.self, from: data)
+            // TODO: Allow different decoder for Failure?
+            return response
+        } catch {
+            debugPrint("decode error = \(error)")
+            throw error
+        }
     }
     
     static var token: String? = UserDefaults.standard.string(
