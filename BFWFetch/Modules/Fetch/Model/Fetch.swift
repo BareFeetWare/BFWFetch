@@ -57,44 +57,19 @@ public extension Fetch {
     
 }
 
-// MARK: - Functions
+// TODO: Move elsewhere:
+
+// MARK: - Token
 
 public extension Fetch {
     
-    static func data(request: URLRequest) async throws -> Data {
-        debugPrint("request = \(request)")
-        let (data, response) = try await URLSession.shared.data(for: request)
-        if let httpResponse = response as? HTTPURLResponse,
-           httpResponse.statusCode >= 400
-        {
-            throw Fetch.Error.httpResponse(
-                httpResponse,
-                payload: data
-            )
-        }
-        return data
-    }
-    
-    static func response<Response: Decodable>(
-        request: URLRequest,
-        decoder: JSONDecoder = JSONDecoder()
-    ) async throws -> Response {
-        let data = try await data(request: request)
-        do {
-            let response = try decoder.decode(Response.self, from: data)
-            // TODO: Allow different decoder for Failure?
-            return response
-        } catch {
-            debugPrint("decode error = \(error)")
-            throw error
-        }
-    }
+    private static let tokenKey = "token"
     
     static var token: String? = UserDefaults.standard.string(
-        forKey: "token"
+        forKey: tokenKey
     ) {
         didSet {
-            UserDefaults.standard.setValue(token, forKey: "token")
+            UserDefaults.standard.setValue(token, forKey: tokenKey)
         }
     }
     

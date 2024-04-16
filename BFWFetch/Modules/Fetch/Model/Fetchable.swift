@@ -63,11 +63,3 @@ public extension Fetchable {
     }
     
 }
-
-public extension Fetchable where Response: Decodable {
-    
-    static func response(request: URLRequest) async throws -> Response {
-        try await Fetch.response(request: request)
-    }
-    
-}

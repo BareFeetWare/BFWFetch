@@ -13,6 +13,17 @@ public extension URLRequest {
         case missingURL
     }
     
+    init(
+        url: URL,
+        path: String?,
+        headers: [String: String]? = nil,
+        httpMethod: Fetch.HTTPMethod
+    ) {
+        self = URLRequest(url: url.appendingPathComponent(path ?? ""))
+            .addingHeaders(headers)
+        self.httpMethod = httpMethod.rawValue
+    }
+    
     func encoding(
         _ encoding: Fetch.Encoding,
         variables: [String: Encodable]?
@@ -77,22 +88,6 @@ public extension URLRequest {
         var newRequest = self
         newRequest.url = url.appendingPathComponent(path)
         return newRequest
-    }
-    
-    init(
-        url: URL,
-        path: String?,
-        headers: [String: String]? = nil,
-        httpMethod: Fetch.HTTPMethod
-    ) {
-        self = URLRequest(url: url.appendingPathComponent(path ?? ""))
-            .addingHeaders(headers)
-        self.httpMethod = httpMethod.rawValue
-    }
-    
-    // TODO: Perhaps use this instead of Response type?
-    func response<Response: Decodable>() async throws -> Response {
-        try await Fetch.response(request: self)
     }
     
     // TODO: Consolidate with Fetch.Authorization.headers(environment)

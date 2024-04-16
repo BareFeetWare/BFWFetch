@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		E216D01D2BB4F8C000BB5385 /* Bundle+Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E216D01C2BB4F8C000BB5385 /* Bundle+Resource.swift */; };
+		E24ADC5F2BCE0DAB008779F5 /* URLRequest+Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24ADC5E2BCE0DAB008779F5 /* URLRequest+Response.swift */; };
 		E25BA50E2BAD21E000A4494D /* Plan.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25BA50D2BAD21E000A4494D /* Plan.swift */; };
 		E25BA5112BB10DDC00A4494D /* Plan.Cell+DetailRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25BA5102BB10DDC00A4494D /* Plan.Cell+DetailRow.swift */; };
 		E25BA5132BB1488D00A4494D /* Alert+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25BA5122BB1488D00A4494D /* Alert+Error.swift */; };
@@ -75,6 +76,7 @@
 /* Begin PBXFileReference section */
 		E21575F32625CA9900EEA3B6 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		E216D01C2BB4F8C000BB5385 /* Bundle+Resource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bundle+Resource.swift"; sourceTree = "<group>"; };
+		E24ADC5E2BCE0DAB008779F5 /* URLRequest+Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequest+Response.swift"; sourceTree = "<group>"; };
 		E25BA50D2BAD21E000A4494D /* Plan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plan.swift; sourceTree = "<group>"; };
 		E25BA5102BB10DDC00A4494D /* Plan.Cell+DetailRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Plan.Cell+DetailRow.swift"; sourceTree = "<group>"; };
 		E25BA5122BB1488D00A4494D /* Alert+Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Alert+Error.swift"; sourceTree = "<group>"; };
@@ -212,6 +214,7 @@
 				E29F61992610431400947455 /* JSONDecoder+Date.swift */,
 				E29F619F2610448000947455 /* String+SnakeCase.swift */,
 				E29F61A226104BB900947455 /* URLRequest+Fetch.swift */,
+				E24ADC5E2BCE0DAB008779F5 /* URLRequest+Response.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -462,6 +465,7 @@
 				E29F619E2610442900947455 /* DateFormatter+Fetch.swift in Sources */,
 				E216D01D2BB4F8C000BB5385 /* Bundle+Resource.swift in Sources */,
 				E2A55EB521AAD48E00812DC6 /* Fetch.swift in Sources */,
+				E24ADC5F2BCE0DAB008779F5 /* URLRequest+Response.swift in Sources */,
 				E2A55EC021AAD8E200812DC6 /* URLRequest+parameters.swift in Sources */,
 				E2A55EB421AAD48E00812DC6 /* Fetchable.swift in Sources */,
 				E29F61A526104BB900947455 /* URLRequest+Fetch.swift in Sources */,
