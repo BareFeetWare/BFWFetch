@@ -15,15 +15,17 @@ public extension Fetch {
     
     enum Error: LocalizedError {
         case noToken
-        case httpResponse(_ httpResponse: HTTPURLResponse, payload: Any)
+        case httpResponse(_ httpResponse: HTTPURLResponse, data: Data)
         case url
         
         public var errorDescription: String? {
             switch self {
             case .noToken:
                 return "No authorization token"
-            case .httpResponse(let response, payload: let payload):
-                return "Status code: \(response.statusCode). \(payload)"
+            case .httpResponse(let response, data: let data):
+                return "Status code: \(response.statusCode), data: \(String(data: data, encoding: .utf8) ?? String(describing: data))"
+//            case .parsedResponse(let response, failure: let Failure):
+//                return "Status code: \(response.statusCode), data: \(String(data: data, encoding: .utf8) ?? String(describing: data))"
             case .url:
                 return "Could not construct URL"
             }

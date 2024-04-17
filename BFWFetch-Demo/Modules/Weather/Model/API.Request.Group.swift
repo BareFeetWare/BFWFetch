@@ -24,8 +24,8 @@ extension API.Request.Group {
         siteIDs: String,
         system: System
     ) async throws -> Response {
-        try await response(
-            request: request.encoding(
+        try await request
+            .encoding(
                 .form,
                 variables: [
                     "appID": appID,
@@ -33,6 +33,7 @@ extension API.Request.Group {
                     "units": system.name
                 ]
             )
-        )
+            .apiResponse()
     }
+    
 }

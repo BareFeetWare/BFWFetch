@@ -18,12 +18,12 @@ enum API {
 extension API.Response {
     
     struct Failure {
-        let code: Int
+        let code: String
         let message: String
     }
     
     enum Error: LocalizedError {
-        case statusCode(code: Int, message: String)
+        case statusCode(code: String, message: String)
         
         var errorDescription: String? {
             switch self {
@@ -31,13 +31,6 @@ extension API.Response {
                 return "code = \(code)\n\(message)"
             }
         }
-    }
-    
-    static func specificError(_ error: Swift.Error) -> Swift.Error {
-        guard case let .httpResponse(_, payload) = error as? Fetch.Error,
-              let failure = payload as? API.Request.Weather.FetchedFailure
-        else { return error }
-        return API.Response.Error.statusCode(code: failure.code, message: failure.message)
     }
     
     struct ArrayWrapper<T: Decodable> {

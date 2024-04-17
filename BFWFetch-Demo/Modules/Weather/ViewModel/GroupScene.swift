@@ -39,7 +39,7 @@ private extension GroupScene {
             self.sites = sites
             self.isActiveLinkedScene = true
         } catch {
-            self.presentedError = API.Response.specificError(error)
+            self.presentedError = error
         }
         self.isInProgressFetch = false
     }

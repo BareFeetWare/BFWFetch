@@ -50,7 +50,7 @@ private extension WeatherScene {
             )
             self.isActiveLinkedScene = true
         } catch {
-            self.presentedError = API.Response.specificError(error)
+            self.presentedError = error
         }
         self.isInProgressFetch = false
     }

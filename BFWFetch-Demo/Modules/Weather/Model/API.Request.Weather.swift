@@ -26,8 +26,8 @@ extension API.Request.Weather {
         countryCode: String?,
         system: System
     ) async throws -> Response {
-        try await response(
-            request: request.encoding(
+        try await request
+            .encoding(
                 .form,
                 variables: [
                     "appID": appID,
@@ -37,7 +37,7 @@ extension API.Request.Weather {
                     "units": system.name
                 ]
             )
-        )
+            .apiResponse()
     }
     
 }

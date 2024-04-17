@@ -18,7 +18,7 @@ public extension URLRequest {
         {
             throw Fetch.Error.httpResponse(
                 httpResponse,
-                payload: data
+                data: data
             )
         }
         return data
@@ -30,7 +30,6 @@ public extension URLRequest {
         let data = try await responseData()
         do {
             let response = try decoder.decode(Response.self, from: data)
-            // TODO: Allow different decoder for Failure?
             return response
         } catch {
             debugPrint("decode error = \(error)")
@@ -38,19 +37,14 @@ public extension URLRequest {
         }
     }
     
-    func response<Response: Decodable, Failure: Decodable>(
-        decoder: JSONDecoder = JSONDecoder(),
-        failure: Failure
+    func response<Response: Decodable>(
+        mappedError: @escaping (Swift.Error) -> Swift.Error
     ) async throws -> Response {
         do {
-            return try await response(decoder: decoder)
-        } catch Fetch.Error.httpResponse(let response, payload: let payload) {
-            guard let data = payload as? Data
-            else {
-                throw Fetch.Error.httpResponse(response, payload: payload)
-            }
-            let failure = try decoder.decode(Failure.self, from: data)
-            throw Fetch.Error.httpResponse(response, payload: failure)
+            return try await response()
+        } catch  {
+            throw mappedError(error)
         }
     }
+    
 }
