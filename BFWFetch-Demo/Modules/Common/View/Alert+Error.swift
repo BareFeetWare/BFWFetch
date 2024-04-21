@@ -23,10 +23,46 @@ public extension Alert {
         self.init(
             title: Text("Error"),
             message: error.map {
-                Text($0.localizedDescription)
+                Text($0.message)
             }
         )
     }
+}
+
+private extension Error {
+    
+    var message: String {
+        (self as? DecodingError)?.debugDescription
+        ?? localizedDescription
+    }
+    
+}
+
+private extension DecodingError {
+    
+    var context: Context? {
+        switch self {
+        case let .typeMismatch(_, context):
+            context
+        case let .valueNotFound(_, context):
+            context
+        case let .keyNotFound(_, context):
+            context
+        case let .dataCorrupted(context):
+            context
+        @unknown default:
+            nil
+        }
+    }
+    
+    var debugDescription: String? {
+        guard let context else { return nil }
+        let codingPath = context.codingPath.map { $0.stringValue }
+        let labeledCodingPath = "codingPath: " + codingPath.joined(separator: ".")
+        return [labeledCodingPath, context.debugDescription]
+            .joined(separator: "\n")
+    }
+    
 }
 
 private extension Binding where Value == Optional<Error> {

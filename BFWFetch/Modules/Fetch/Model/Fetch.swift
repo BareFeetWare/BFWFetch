@@ -24,8 +24,6 @@ public extension Fetch {
                 return "No authorization token"
             case .httpResponse(let response, data: let data):
                 return "Status code: \(response.statusCode), data: \(String(data: data, encoding: .utf8) ?? String(describing: data))"
-//            case .parsedResponse(let response, failure: let Failure):
-//                return "Status code: \(response.statusCode), data: \(String(data: data, encoding: .utf8) ?? String(describing: data))"
             case .url:
                 return "Could not construct URL"
             }
