@@ -23,4 +23,13 @@ public extension DateFormatter {
     /// Format like: 2021-03-13 03:03:37+00:00
     static let timezone = DateFormatter(dateFormat: "yyyy-MM-dd HH:mm:ssZZZ")
     
+    static var dateTimeISO8601: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.calendar = .init(identifier: .iso8601)
+        formatter.locale = .current
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        formatter.timeZone = .current
+        return formatter
+    }
+    
 }

@@ -24,30 +24,47 @@ public extension URLRequest {
         self.httpMethod = httpMethod.rawValue
     }
     
+    init(
+        url: URL,
+        path: String?,
+        headers: [Fetch.Header],
+        httpMethod: Fetch.HTTPMethod
+    ) {
+        self.init(
+            url: url,
+            path: path,
+            headers: headers.reduce(into: [:]) { dictionary, header in
+                dictionary[header.key] = header.value
+            },
+            httpMethod: httpMethod
+        )
+    }
+    
     func encoding(
         _ encoding: Fetch.Encoding,
-        variables: [String: Encodable]?
+        variables: [String: Encodable?]?
     ) throws -> Self {
         var newRequest = self
+        let nonNilVariables = variables?.compactMapValues { $0 }.nilIfEmpty
         switch encoding {
         case .form:
             guard let url else { throw Self.Error.missingURL }
-            if let variables {
+            if let nonNilVariables {
                 // TODO: Maybe use URLQueryItem.
                 newRequest.url = try url.addingQuery(
-                    dictionary: variables
+                    dictionary: nonNilVariables
                         .mapValues { String(describing: $0) }
                 )
             }
         case .json:
-            if let variables {
+            if let nonNilVariables {
                 newRequest.httpBody = try JSONSerialization.data(
-                    withJSONObject: variables,
+                    withJSONObject: nonNilVariables,
                     options: .prettyPrinted
                 )
             }
         case .graphQL(let query):
-            let graphQL = Fetch.GraphQL(query: query, variables: variables)
+            let graphQL = Fetch.GraphQL(query: query, variables: nonNilVariables)
             let jsonData = try JSONEncoder.api.encode(graphQL)
             newRequest.httpBody = jsonData
         }
@@ -56,6 +73,7 @@ public extension URLRequest {
             break
         case .json, .graphQL:
             newRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            // TODO: Probably remove:
             newRequest.addValue("application/json", forHTTPHeaderField: "Accept")
         }
         return newRequest
@@ -161,4 +179,17 @@ private extension Data {
         appendedData.append(data)
         return appendedData
     }
+}
+
+private protocol Emptyable {
+    var isEmpty: Bool { get }
+    static var empty: Self { get }
+}
+
+private extension Emptyable {
+    var nilIfEmpty: Self? { isEmpty ? nil : self }
+}
+
+extension Dictionary: Emptyable {
+    static var empty: Dictionary<Key, Value> { [:] }
 }

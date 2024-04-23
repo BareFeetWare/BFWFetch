@@ -33,6 +33,8 @@ public extension URLRequest {
             return response
         } catch {
             debugPrint("decode error = \(error)")
+            debugPrint("type = \(Response.self)")
+            debugPrint("data = " + (String(data: data, encoding: .utf8) ?? "\(data)"))
             throw error
         }
     }

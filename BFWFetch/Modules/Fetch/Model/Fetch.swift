@@ -50,6 +50,16 @@ public extension Fetch {
         case put = "PUT"
     }
     
+    struct Header {
+        let key: String
+        let value: String
+        
+        var dictionary: [String: String] { [key: value] }
+        
+        public static let acceptJSON = Self.init(key: "Accept", value: "application/json")
+        public static let contentJSON = Self.init(key: "Content-Type", value: "application/json")
+    }
+    
     enum Authorization {
         case token
         case custom(String)
