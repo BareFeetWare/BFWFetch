@@ -18,6 +18,8 @@ public extension DateFormatter {
     static let fractionTimezone = DateFormatter(dateFormat: "yyyy-MM-dd HH:mm:ss.SZZZ")
     static let sqlDateTime = DateFormatter(dateFormat: "yyyy-MM-dd HH:mm:ss")
     static let sqlDate = DateFormatter(dateFormat: "yyyy-MM-dd")
+    /// Format like: 2021-03-13T03:03:37Z
+    static let tTimezone = DateFormatter(dateFormat: "yyyy-MM-dd'T'HH:mm:ssZ")
     /// Format like: 2021-03-13T03:03:37.123+0000
     static let tFractionTimezone = DateFormatter(dateFormat: "yyyy-MM-dd'T'HH:mm:ss.SZ")
     /// Format like: 2021-03-13 03:03:37+00:00
