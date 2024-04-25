@@ -58,7 +58,21 @@ public extension Fetch {
         
         public static let acceptJSON = Self.init(key: "Accept", value: "application/json")
         public static let contentJSON = Self.init(key: "Content-Type", value: "application/json")
+        
+        public static func authorization(_ value: String) -> Self {
+            .init(key: "Authorization", value: value)
+        }
+        
+        public static func authorization(basicToken: String) -> Self {
+            .authorization("Basic \(basicToken)")
+        }
+
+        public static func authorization(bearerToken: String) -> Self {
+            .authorization("Bearer \(bearerToken)")
+        }
     }
+    
+    // TODO: Consolidate Authorization and Header.authorization.
     
     enum Authorization {
         case token
