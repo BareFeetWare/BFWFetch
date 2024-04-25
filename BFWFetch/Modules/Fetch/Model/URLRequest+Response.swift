@@ -24,6 +24,8 @@ public extension URLRequest {
         return data
     }
     
+    // TODO: Remove?
+    
     func response<Response: Decodable>(
         decoder: JSONDecoder = JSONDecoder()
     ) async throws -> Response {

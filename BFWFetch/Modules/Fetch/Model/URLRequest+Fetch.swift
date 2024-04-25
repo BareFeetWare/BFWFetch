@@ -108,6 +108,12 @@ public extension URLRequest {
         return newRequest
     }
     
+    func withHTTPMethod(_ method: Fetch.HTTPMethod) -> Self {
+        var newRequest = self
+        newRequest.httpMethod = method.rawValue
+        return newRequest
+    }
+    
     // TODO: Consolidate with Fetch.Authorization.headers(environment)
     func withToken(_ tokenString: String) -> URLRequest {
         var request = self
