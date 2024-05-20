@@ -11,6 +11,7 @@ public extension URLRequest {
     
     enum Error: LocalizedError {
         case missingURL
+        case missingToken
     }
     
     init(
