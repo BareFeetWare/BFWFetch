@@ -24,7 +24,7 @@ public extension URLRequest {
         return data
     }
     
-    // TODO: Remove?
+    // TODO: Make all decoding calls pass through here for the debugPrint logs.
     
     func response<Response: Decodable>(
         decoder: JSONDecoder = JSONDecoder()

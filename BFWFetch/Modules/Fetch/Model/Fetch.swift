@@ -13,10 +13,13 @@ public enum Fetch {}
 
 public extension Fetch {
     
+    // TODO: Consolidate with URLRequest.Error, and perhaps separate request from response errors.
+    
     enum Error: LocalizedError {
         case noToken
         case httpResponse(_ httpResponse: HTTPURLResponse, data: Data)
         case url
+        case emptyResponse
         
         public var errorDescription: String? {
             switch self {
@@ -26,9 +29,13 @@ public extension Fetch {
                 return "Status code: \(response.statusCode), data: \(String(data: data, encoding: .utf8) ?? String(describing: data))"
             case .url:
                 return "Could not construct URL"
+            case .emptyResponse:
+                return "API returned an empty response."
             }
         }
     }
+    
+    // TODO: Make it more obvious that GraphQL is a specific use of JSON.
     
     enum Encoding {
         case form
