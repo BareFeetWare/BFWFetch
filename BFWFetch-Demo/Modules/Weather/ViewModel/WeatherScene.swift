@@ -43,11 +43,12 @@ private extension WeatherScene {
             guard !city.isEmpty
             else { return }
             isInProgressFetch = true
-            self.site = try await API.Request.Weather.response(
+            let request = try API.Request.Weather.request(
                 city: city,
                 countryCode: countryCode,
                 system: system
             )
+            site = try await Site(request: request)
             self.isActiveLinkedScene = true
         } catch {
             self.presentedError = error

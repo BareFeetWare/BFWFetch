@@ -24,31 +24,4 @@ public extension URLRequest {
         return data
     }
     
-    // TODO: Make all decoding calls pass through here for the debugPrint logs.
-    
-    func response<Response: Decodable>(
-        decoder: JSONDecoder = JSONDecoder()
-    ) async throws -> Response {
-        let data = try await responseData()
-        do {
-            let response = try decoder.decode(Response.self, from: data)
-            return response
-        } catch {
-            debugPrint("decode error = \(error)")
-            debugPrint("type = \(Response.self)")
-            debugPrint("data = " + (String(data: data, encoding: .utf8) ?? "\(data)"))
-            throw error
-        }
-    }
-    
-    func response<Response: Decodable>(
-        mappedError: @escaping (Swift.Error) -> Swift.Error
-    ) async throws -> Response {
-        do {
-            return try await response()
-        } catch  {
-            throw mappedError(error)
-        }
-    }
-    
 }

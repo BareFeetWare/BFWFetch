@@ -13,7 +13,9 @@ extension URL {
         guard var components = URLComponents(url: self, resolvingAgainstBaseURL: false)
             else { throw Fetch.Error.url }
         if !dictionary.isEmpty {
-            components.queryItemsDictionary = dictionary
+            components.queryItemsDictionary = (components.queryItemsDictionary ?? [:])
+                .merging(dictionary, uniquingKeysWith: { $1
+            })
         }
         guard let queryURL = components.url
             else { throw Fetch.Error.url }

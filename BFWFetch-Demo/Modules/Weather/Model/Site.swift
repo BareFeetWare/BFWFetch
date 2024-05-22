@@ -98,3 +98,5 @@ extension Site.Wind: Decodable {
         case degrees = "deg"
     }
 }
+
+extension Site: APIDecoderProvider {}

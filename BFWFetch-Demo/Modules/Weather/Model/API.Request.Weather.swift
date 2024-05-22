@@ -7,37 +7,29 @@
 //
 
 import Foundation
-import BFWFetch
 
 extension API.Request {
     struct Weather {}
 }
 
-extension API.Request.Weather: APIFetchable {
-    
-    typealias Response = Site
-    
-}
-
 extension API.Request.Weather {
     
-    static func response(
+    static func request(
         city: String,
         countryCode: String?,
         system: System
-    ) async throws -> Response {
-        try await request
+    ) throws -> URLRequest {
+        try API.Request.baseRequest()
+            .addingPath("weather")
             .encoding(
                 .form,
                 variables: [
-                    "appID": appID,
                     "q": [city, countryCode]
                         .compactMap { $0 }
                         .joined(separator: ","),
                     "units": system.name
                 ]
             )
-            .apiResponse()
     }
     
 }

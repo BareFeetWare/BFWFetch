@@ -7,49 +7,6 @@
 //
 
 import Foundation
-import BFWFetch
 
 /// Domain name scope for all types specific to API requests and responses.
-enum API {
-    enum Request {}
-    enum Response {}
-}
-
-extension API.Response {
-    
-    struct Failure {
-        let code: String
-        let message: String
-    }
-    
-    enum Error: LocalizedError {
-        case statusCode(code: String, message: String)
-        
-        var errorDescription: String? {
-            switch self {
-            case .statusCode(let code, let message):
-                return "code = \(code)\n\(message)"
-            }
-        }
-    }
-    
-    struct ArrayWrapper<T: Decodable> {
-        let count: Int
-        let array: Array<T>
-    }
-    
-}
-
-extension API.Response.Failure: Decodable {
-    enum CodingKeys: String, CodingKey {
-        case code = "cod"
-        case message
-    }
-}
-
-extension API.Response.ArrayWrapper: Decodable {
-    enum CodingKeys: String, CodingKey {
-        case count = "cnt"
-        case array = "list"
-    }
-}
+enum API {}

@@ -7,33 +7,28 @@
 //
 
 import Foundation
-import BFWFetch
 
 extension API.Request {
     struct Group {}
 }
 
-extension API.Request.Group: APIFetchable {
+extension API.Request.Group {
     
     typealias Response = API.Response.ArrayWrapper<Site>
     
-}
-
-extension API.Request.Group {
-    static func response(
+    static func request(
         siteIDs: String,
         system: System
-    ) async throws -> Response {
-        try await request
+    ) throws -> URLRequest {
+        try API.Request.baseRequest()
+            .addingPath("group")
             .encoding(
                 .form,
                 variables: [
-                    "appID": appID,
                     "id": siteIDs,
                     "units": system.name
                 ]
             )
-            .apiResponse()
     }
     
 }
