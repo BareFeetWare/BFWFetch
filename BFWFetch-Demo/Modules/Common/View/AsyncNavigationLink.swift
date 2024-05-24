@@ -46,6 +46,46 @@ public struct AsyncNavigationLink<Destination: View, Label: View, Tag: Hashable>
     
 }
 
+extension AsyncNavigationLink {
+    
+    public init(
+        _ title: String,
+        tag: Tag,
+        selection: Binding<Tag?>? = nil,
+        destination: @escaping () async throws -> Destination
+    ) where Label == Text {
+        self.tag = tag
+        self.externalSelectionBinding = selection
+        self.destination = destination
+        self.label = { Text(title) }
+    }
+    
+}
+
+extension AsyncNavigationLink where Label == Text, Tag == String {
+    
+    public init(
+        _ title: String,
+        destination: @escaping () async throws -> Destination
+    ) {
+        self.tag = UUID().uuidString
+        self.externalSelectionBinding = nil
+        self.destination = destination
+        self.label = { Text(title) }
+    }
+    
+    public init(
+        destination: @escaping () async throws -> Destination,
+        label: @escaping () -> Label
+    ) {
+        self.tag = UUID().uuidString
+        self.externalSelectionBinding = nil
+        self.destination = destination
+        self.label = label
+    }
+    
+}
+
 private extension AsyncNavigationLink {
     
     /// Used by the view
@@ -109,24 +149,28 @@ extension AsyncNavigationLink: View {
         NavigationLink(tag: tag, selection: $activeSelection) {
             activeDestination
         } label: {
-            label()
-                .frame(maxWidth: .infinity, alignment: .leading)
-            // Note: .contentShape(Rectangle()) is required to extend the tappable area across the whole cell width.
-                .contentShape(Rectangle())
-                .onTapGesture { onTap() }
-                .onChange(of: selection) { onChange(selection: $0) }
-                .overlay(
-                    Group {
-                        if isInProgress {
-                            ProgressView()
-                                .progressViewStyle(.circular)
-                        }
-                    },
-                    alignment: .trailing
-                )
-                .onAppear { onAppear() }
-                .alert(error: $error)
+            labelView
         }
+    }
+    
+    var labelView: some View {
+        label()
+            .frame(maxWidth: .infinity, alignment: .leading)
+        // Note: .contentShape(Rectangle()) is required to extend the tappable area across the whole cell width.
+            .contentShape(Rectangle())
+            .onTapGesture { onTap() }
+            .onChange(of: selection) { onChange(selection: $0) }
+            .overlay(
+                Group {
+                    if isInProgress {
+                        ProgressView()
+                            .progressViewStyle(.circular)
+                    }
+                },
+                alignment: .trailing
+            )
+            .onAppear { onAppear() }
+            .alert(error: $error)
     }
 }
 
@@ -161,15 +205,11 @@ public struct AsyncNavigationLink_Previews: PreviewProvider {
                         },
                         label: { Text("Async 2") }
                     )
-                    AsyncNavigationLink(
-                        tag: "3",
-                        destination: {
-                            try await asyncDestination(
-                                title: "Async Destination 3"
-                            )
-                        },
-                        label: { Text("Async 3") }
-                    )
+                    AsyncNavigationLink("Async 3") {
+                        try await asyncDestination(
+                            title: "Async Destination 3"
+                        )
+                    }
                 }
                 Section {
                     Button("Activate 1") {

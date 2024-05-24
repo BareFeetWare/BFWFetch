@@ -11,39 +11,17 @@ import SwiftUI
 struct GroupScene {
     @State var siteIDs: String = "4163971,2147714,2174003"
     @State var system: System = .metric
-    @State var sites: [Site]?
-    @State var isActiveLinkedScene = false
-    @State var isInProgressFetch = false
-    @State var presentedError: Error?
 }
 
 extension GroupScene {
     
-    var sitesScene: SitesScene? {
-        sites.map { SitesScene(sites: $0, system: system) }
+    func sitesScene() async throws -> SitesScene {
+        let request = try API.Request.Group
+            .request(siteIDs: siteIDs, system: system)
+        let wrapper = try await API.Request.Group
+            .Response(request: request)
+        let sites = wrapper.array
+        return SitesScene(sites: sites, system: system)
     }
     
-    func onTapFetch() {
-        Task {
-            await fetch()
-        }
-    }
-}
-
-private extension GroupScene {
-    
-    func fetch() async {
-        do {
-            let request = try API.Request.Group
-                .request(siteIDs: siteIDs, system: system)
-            let wrapper = try await API.Request.Group
-                .Response(request: request)
-            let sites = wrapper.array
-            self.sites = sites
-            self.isActiveLinkedScene = true
-        } catch {
-            self.presentedError = error
-        }
-        self.isInProgressFetch = false
-    }
 }

@@ -34,18 +34,12 @@ extension WeatherScene : View {
                 .pickerStyle(SegmentedPickerStyle())
                 .frame(width: 200)
             }
-            AsyncNavigationLink(
-                destination: siteScene,
-                isActive: $isActiveLinkedScene,
-                isInProgress: $isInProgressFetch,
-                action: onTapFetch
-            ) {
-                Text("Fetch Weather")
+            AsyncNavigationLink("Fetch Weather") {
+                try await siteScene()
             }
             .disabled(isDisabledFetch)
         }
         .textFieldStyle(RoundedBorderTextFieldStyle())
-        .alert(error: $presentedError)
         .navigationTitle("API Weather")
     }
 }

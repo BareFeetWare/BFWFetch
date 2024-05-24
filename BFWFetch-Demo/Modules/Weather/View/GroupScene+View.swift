@@ -28,17 +28,11 @@ extension GroupScene: View {
                 .pickerStyle(SegmentedPickerStyle())
                 .frame(width: 200)
             }
-            AsyncNavigationLink(
-                destination: sitesScene,
-                isActive: $isActiveLinkedScene,
-                isInProgress: $isInProgressFetch,
-                action: onTapFetch
-            ) {
-                Text("API Weather")
+            AsyncNavigationLink("API Weather") {
+                try await sitesScene()
             }
         }
         .textFieldStyle(RoundedBorderTextFieldStyle())
-        .alert(error: $presentedError)
         .navigationTitle("Fetch Group")
     }
 }
