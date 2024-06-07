@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension URL {
+public extension URL {
     
     func addingQuery(dictionary: [String: String]) throws -> URL {
         guard var components = URLComponents(url: self, resolvingAgainstBaseURL: false)

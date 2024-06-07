@@ -71,6 +71,7 @@ public extension Fetch {
         
         public static let acceptJSON = Self.init(key: "Accept", value: "application/json")
         public static let contentJSON = Self.init(key: "Content-Type", value: "application/json")
+        public static let contentURLEncoded = Self.init(key: "Content-Type", value: "application/x-www-form-urlencoded")
         
         public static func authorization(_ value: String) -> Self {
             .init(key: "Authorization", value: value)
