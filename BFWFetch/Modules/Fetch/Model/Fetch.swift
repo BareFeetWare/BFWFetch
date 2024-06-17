@@ -37,14 +37,20 @@ public extension Fetch {
     
     // TODO: Make it more obvious that GraphQL is a specific use of JSON.
     
-    enum Encoding {
-        case form
-        case json
-        case graphQL(query: String)
+    enum Form {
+        case urlPath
+        case httpBody(encoding: Encoding)
+        
+        public enum Encoding {
+            case url
+            case multipartForm(fileURL: URL)
+            case json
+            case graphQL(query: String)
+        }
         
         public init(graphQLResource resource: String) throws {
             let query = try Bundle.main.contents(resource: resource)
-            self = .graphQL(query: query)
+            self = .httpBody(encoding: .graphQL(query: query))
         }
         
     }
@@ -73,6 +79,10 @@ public extension Fetch {
         public static let contentJSON = Self.init(key: "Content-Type", value: "application/json")
         public static let contentURLEncoded = Self.init(key: "Content-Type", value: "application/x-www-form-urlencoded")
         
+        public static func contentMultipartForm(boundary: String) -> Self {
+            .init(key: "Content-Type", value: "multipart/form-data; boundary=\(boundary)")
+        }
+        
         public static func authorization(_ value: String) -> Self {
             .init(key: "Authorization", value: value)
         }
@@ -80,7 +90,7 @@ public extension Fetch {
         public static func authorization(basicToken: String) -> Self {
             .authorization("Basic \(basicToken)")
         }
-
+        
         public static func authorization(bearerToken: String) -> Self {
             .authorization("Bearer \(bearerToken)")
         }
@@ -93,6 +103,14 @@ public extension Fetch {
         case custom(String)
     }
     
+}
+
+extension Array where Element == Fetch.Header {
+    var dictionary: [String: String] {
+        self.reduce(into: [:]) { dictionary, header in
+            dictionary[header.key] = header.value
+        }
+    }
 }
 
 // TODO: Move elsewhere:

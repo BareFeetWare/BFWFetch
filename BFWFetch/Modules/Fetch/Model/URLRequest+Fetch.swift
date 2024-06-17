@@ -41,14 +41,14 @@ public extension URLRequest {
         )
     }
     
-    func encoding(
-        _ encoding: Fetch.Encoding,
+    func form(
+        _ form: Fetch.Form,
         variables: [String: Encodable?]?
     ) throws -> Self {
         var newRequest = self
         let nonNilVariables = variables?.compactMapValues { $0 }.nilIfEmpty
-        switch encoding {
-        case .form:
+        switch form {
+        case .urlPath:
             guard let url else { throw Self.Error.missingURL }
             if let nonNilVariables {
                 // TODO: Maybe use URLQueryItem.
@@ -57,49 +57,63 @@ public extension URLRequest {
                         .mapValues { String(describing: $0) }
                 )
             }
-        case .json:
-            if let nonNilVariables {
-                newRequest.httpBody = try JSONSerialization.data(
-                    withJSONObject: nonNilVariables,
-                    options: .prettyPrinted
+        case .httpBody(let encoding):
+            switch encoding {
+            case .url:
+                newRequest.addHeaders([.contentURLEncoded])
+                if let nonNilVariables {
+                    let variablesString = nonNilVariables
+                        .map { "\($0.key)=\($0.value)" }
+                        .joined(separator: "&")
+                    newRequest.httpBody = variablesString.data(using: .utf8)
+                }
+            case .multipartForm(let fileURL):
+                let boundary = UUID().uuidString
+                newRequest.addHeaders([.contentMultipartForm(boundary: boundary)])
+                newRequest.httpBody = try Data.formBody(
+                    fileURL: fileURL,
+                    // TODO: Allow for non image.
+                    mimeType: "image/jpeg",
+                    boundary: boundary
                 )
+            case .json:
+                newRequest.addHeaders([.acceptJSON])
+                if let nonNilVariables {
+                    newRequest.httpBody = try JSONSerialization.data(
+                        withJSONObject: nonNilVariables,
+                        options: .prettyPrinted
+                    )
+                }
+            case .graphQL(let query):
+                newRequest.addHeaders([.acceptJSON])
+                let graphQL = Fetch.GraphQL(query: query, variables: nonNilVariables)
+                let jsonData = try JSONEncoder.api.encode(graphQL)
+                newRequest.httpBody = jsonData
             }
-        case .graphQL(let query):
-            let graphQL = Fetch.GraphQL(query: query, variables: nonNilVariables)
-            let jsonData = try JSONEncoder.api.encode(graphQL)
-            newRequest.httpBody = jsonData
-        }
-        switch encoding {
-        case .form:
-            break
-        case .json, .graphQL:
-            newRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
-            // TODO: Probably remove:
-            newRequest.addValue("application/json", forHTTPHeaderField: "Accept")
         }
         return newRequest
+    }
+    
+    mutating func addHeaders(_ headers: [String: String]?) {
+        guard let headers
+        else { return }
+        headers.keys.forEach { key in
+            addValue(headers[key]!, forHTTPHeaderField: key)
+        }
+    }
+    
+    mutating func addHeaders(_ headers: [Fetch.Header]?) {
+        addHeaders(headers?.dictionary)
     }
     
     func addingHeaders(_ headers: [String: String]?) -> Self {
-        guard let headers else { return self }
         var newRequest = self
-        headers.keys.forEach { key in
-            newRequest.addValue(headers[key]!, forHTTPHeaderField: key)
-        }
+        newRequest.addHeaders(headers)
         return newRequest
     }
     
-    func addingMultipartForm(fileURL: URL) throws -> Self {
-        var newRequest = self
-        let boundary = UUID().uuidString
-        let contentType = "multipart/form-data; boundary=\(boundary)"
-        newRequest.appendHeaderFields(["Content-Type": contentType])
-        newRequest.httpBody = try Data.formBody(
-            fileURL: fileURL,
-            mimeType: "image/jpeg",
-            boundary: boundary
-        )
-        return newRequest
+    func addingHeaders(_ headers: [Fetch.Header]?) -> Self {
+        addingHeaders(headers?.dictionary)
     }
     
     func addingPath(_ path: String?) -> URLRequest {
@@ -124,13 +138,13 @@ public extension URLRequest {
 }
 
 private extension JSONEncoder {
-   static var api: JSONEncoder {
-       let jsonEncoder = JSONEncoder()
-       // Enable pretty if/when required:
-       //jsonEncoder.outputFormatting = .prettyPrinted
-       jsonEncoder.dateEncodingStrategy = .iso8601
-       return jsonEncoder
-   }
+    static var api: JSONEncoder {
+        let jsonEncoder = JSONEncoder()
+        // Enable pretty if/when required:
+        //jsonEncoder.outputFormatting = .prettyPrinted
+        jsonEncoder.dateEncodingStrategy = .iso8601
+        return jsonEncoder
+    }
 }
 
 private extension Data {
