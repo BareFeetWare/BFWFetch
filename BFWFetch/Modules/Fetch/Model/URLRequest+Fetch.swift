@@ -77,7 +77,7 @@ public extension URLRequest {
                     boundary: boundary
                 )
             case .json:
-                newRequest.addHeaders([.acceptJSON])
+                newRequest.addHeaders([.contentJSON])
                 if let nonNilVariables {
                     newRequest.httpBody = try JSONSerialization.data(
                         withJSONObject: nonNilVariables,
@@ -85,7 +85,7 @@ public extension URLRequest {
                     )
                 }
             case .graphQL(let query):
-                newRequest.addHeaders([.acceptJSON])
+                newRequest.addHeaders([.contentJSON])
                 let graphQL = Fetch.GraphQL(query: query, variables: nonNilVariables)
                 let jsonData = try JSONEncoder.api.encode(graphQL)
                 newRequest.httpBody = jsonData
