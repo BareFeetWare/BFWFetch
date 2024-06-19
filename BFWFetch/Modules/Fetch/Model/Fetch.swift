@@ -19,18 +19,21 @@ public extension Fetch {
         case noToken
         case httpResponse(_ httpResponse: HTTPURLResponse, data: Data)
         case url
+        case urlEncoding
         case emptyResponse
         
         public var errorDescription: String? {
             switch self {
             case .noToken:
-                return "No authorization token"
+                "No authorization token"
             case .httpResponse(let response, data: let data):
-                return "Status code: \(response.statusCode), data: \(String(data: data, encoding: .utf8) ?? String(describing: data))"
+                "Status code: \(response.statusCode), data: \(String(data: data, encoding: .utf8) ?? String(describing: data))"
             case .url:
-                return "Could not construct URL"
+                "Could not construct URL"
+            case .urlEncoding:
+                "Could not encode variables in URL format"
             case .emptyResponse:
-                return "API returned an empty response."
+                "API returned an empty response."
             }
         }
     }
