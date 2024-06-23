@@ -9,6 +9,16 @@ import Foundation
 
 public extension DateFormatter {
     
+    convenience init(dateStyle: Style) {
+        self.init()
+        self.dateStyle = dateStyle
+    }
+    
+    convenience init(dateFormat: String) {
+        self.init()
+        self.dateFormat = dateFormat
+    }
+    
     static var dateTimeISO8601: DateFormatter {
         let formatter = DateFormatter()
         formatter.calendar = .init(identifier: .iso8601)
@@ -18,11 +28,7 @@ public extension DateFormatter {
         return formatter
     }
     
-    static let dayMonthYear: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .short
-        return formatter
-    }()
+    static let short = DateFormatter(dateStyle: .short)
     
     static let hour: DateFormatter = {
         let formatter = DateFormatter()
@@ -30,15 +36,14 @@ public extension DateFormatter {
         return formatter
     }()
     
-    static let long: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .long
-        return formatter
-    }()
+    static let long = DateFormatter(dateStyle: .long)
     
-    static let medium: DateFormatter = {
+    static let medium = DateFormatter(dateStyle: .medium)
+    
+    static let relativeDay: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
+        formatter.doesRelativeDateFormatting = true
         return formatter
     }()
     
@@ -51,11 +56,6 @@ public extension DateFormatter {
     }()
     
     // MARK: - Using dateFormat: String
-    
-    convenience init(dateFormat: String) {
-        self.init()
-        self.dateFormat = dateFormat
-    }
     
     static let api = DateFormatter(dateFormat: "yyyy-MM-dd'T'HH:mm:ss")
     
@@ -89,10 +89,26 @@ public extension DateFormatter {
     /// Format like: 2021-03-13T03:03:37Z
     static let tTimezone = DateFormatter(dateFormat: "yyyy-MM-dd'T'HH:mm:ssZ")
     
+    static let weekday = DateFormatter(dateFormat: "EEE")
+    
     static let weekdayInitial = DateFormatter(dateFormat: "EEEEE")
     
     static let weekdayMonthYear = DateFormatter(dateFormat: "EEE, d MMM yyyy")
     
     static let year = DateFormatter(dateFormat: "yyyy")
     
+}
+
+public extension DateFormatter {
+    
+    static func relativeOrWeekdayString(date: Date) -> String {
+        let medium = DateFormatter(dateStyle: .medium)
+        let relative = medium.copy() as! DateFormatter
+        relative.doesRelativeDateFormatting = true
+        let relativeString = relative.string(from: date)
+        let mediumString = medium.string(from: date)
+        return relativeString == mediumString
+        ? DateFormatter(dateFormat: "EEEE").string(from: date)
+        : relativeString
+    }
 }
