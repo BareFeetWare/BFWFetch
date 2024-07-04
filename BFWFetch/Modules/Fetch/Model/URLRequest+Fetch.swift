@@ -12,6 +12,10 @@ public extension URLRequest {
     enum Error: LocalizedError {
         case missingURL
         case missingToken
+        
+        public var errorDescription: String? {
+            String(describing: self)
+        }
     }
     
     init(
