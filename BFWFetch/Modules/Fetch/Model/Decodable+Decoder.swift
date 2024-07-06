@@ -18,6 +18,7 @@ public extension Decodable {
         do {
             let data = try await request.responseData()
             do {
+                try? data.writeJSONToTemporaryFile()
                 let response = try decoder.decode(Self.self, from: data)
                 self = response
             } catch {
@@ -29,6 +30,22 @@ public extension Decodable {
         } catch {
             throw mappedError?(error) ?? error
         }
+    }
+    
+}
+
+private extension Data {
+    
+    func writeJSONToTemporaryFile() throws {
+        // Set to true for debugging.
+        let writesDataToFile = false
+        guard writesDataToFile else { return }
+        let jsonObject = try JSONSerialization.jsonObject(with: self, options: [])
+        let prettyJSONData = try JSONSerialization.data(withJSONObject: jsonObject, options: .prettyPrinted)
+        let fileName = DateFormatter.tFractionTimezone.string(from: Date())
+        let fileURL = FileManager.default.temporaryDirectory.appendingPathComponent(fileName).appendingPathExtension("json")
+        try prettyJSONData.write(to: fileURL, options: .atomicWrite)
+        debugPrint("wrote \(count) bytes to file URL: \(fileURL.absoluteString)")
     }
     
 }
