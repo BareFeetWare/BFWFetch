@@ -22,8 +22,8 @@ extension API.Request.Group {
     ) throws -> URLRequest {
         try API.Request.baseRequest()
             .addingPath("group")
-            .encoding(
-                .form,
+            .form(
+                .urlPath,
                 variables: [
                     "id": siteIDs,
                     "units": system.name

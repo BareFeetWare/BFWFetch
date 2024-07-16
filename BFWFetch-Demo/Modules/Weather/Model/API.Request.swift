@@ -21,8 +21,8 @@ extension API.Request {
             path: nil,
             httpMethod: .get
         )
-        .encoding(
-            .form,
+        .form(
+            .urlPath,
             variables: [
                 "appID": API.Request.appID,
             ]
