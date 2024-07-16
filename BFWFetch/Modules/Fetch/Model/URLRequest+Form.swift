@@ -1,59 +1,51 @@
 //
-//  URLRequest+Fetch.swift
+//  URLRequest+Form.swift
 //
-//  Created by Tom Brodhurst-Hill on 28/2/20.
-//  Copyright © 2020 BareFeetWare. All rights reserved.
+//  Created by Tom Brodhurst-Hill on 15/9/18.
+//  Copyright © 2018 BareFeetWare. All rights reserved.
 //
 
 import Foundation
 
+// MARK: - Types
+
 public extension URLRequest {
     
-    enum Error: LocalizedError {
-        case missingURL
-        case missingToken
+    enum Form {
+        case urlPath
+        case httpBody(encoding: Encoding)
         
-        public var errorDescription: String? {
-            String(describing: self)
+        public enum Encoding {
+            case url
+            case multipartForm(fileURL: URL)
+            case json
+            case graphQL(query: String)
         }
+        
+        public init(graphQLResource resource: String) throws {
+            let query = try Bundle.main.contents(resource: resource)
+            self = .httpBody(encoding: .graphQL(query: query))
+        }
+        
     }
     
-    init(
-        url: URL,
-        path: String?,
-        headers: [String: String]? = nil,
-        httpMethod: Fetch.HTTPMethod
-    ) {
-        self = URLRequest(url: url.appendingPathComponent(path ?? ""))
-            .addingHeaders(headers)
-        self.httpMethod = httpMethod.rawValue
-    }
-    
-    init(
-        url: URL,
-        path: String?,
-        headers: [Fetch.Header],
-        httpMethod: Fetch.HTTPMethod
-    ) {
-        self.init(
-            url: url,
-            path: path,
-            headers: headers.reduce(into: [:]) { dictionary, header in
-                dictionary[header.key] = header.value
-            },
-            httpMethod: httpMethod
-        )
-    }
-    
+}
+
+// MARK: - Modifiers
+
+public extension URLRequest {
+
     func form(
-        _ form: Fetch.Form,
+        _ form: Form,
         variables: [String: Encodable?]?
     ) throws -> Self {
         var newRequest = self
-        let nonNilVariables = variables?.compactMapValues { $0 }.nilIfEmpty
+        let nonNilVariables = variables?
+            .compactMapValues { $0 }
+            .nilIfEmpty
         switch form {
         case .urlPath:
-            guard let url else { throw Self.Error.missingURL }
+            guard let url else { throw Self.Error.url }
             if let nonNilVariables {
                 // TODO: Maybe use URLQueryItem.
                 newRequest.url = try url.addingQuery(
@@ -90,7 +82,7 @@ public extension URLRequest {
                 }
             case .graphQL(let query):
                 newRequest.addHeaders([.contentJSON])
-                let graphQL = Fetch.GraphQL(query: query, variables: nonNilVariables)
+                let graphQL = GraphQL(query: query, variables: nonNilVariables)
                 let jsonData = try JSONEncoder.api.encode(graphQL)
                 newRequest.httpBody = jsonData
             }
@@ -98,47 +90,6 @@ public extension URLRequest {
         return newRequest
     }
     
-    mutating func addHeaders(_ headers: [String: String]?) {
-        guard let headers
-        else { return }
-        headers.keys.forEach { key in
-            addValue(headers[key]!, forHTTPHeaderField: key)
-        }
-    }
-    
-    mutating func addHeaders(_ headers: [Fetch.Header]?) {
-        addHeaders(headers?.dictionary)
-    }
-    
-    func addingHeaders(_ headers: [String: String]?) -> Self {
-        var newRequest = self
-        newRequest.addHeaders(headers)
-        return newRequest
-    }
-    
-    func addingHeaders(_ headers: [Fetch.Header]?) -> Self {
-        addingHeaders(headers?.dictionary)
-    }
-    
-    func addingPath(_ path: String?) -> URLRequest {
-        guard let url, let path else { return self }
-        var newRequest = self
-        newRequest.url = url.appendingPathComponent(path)
-        return newRequest
-    }
-    
-    func withHTTPMethod(_ method: Fetch.HTTPMethod) -> Self {
-        var newRequest = self
-        newRequest.httpMethod = method.rawValue
-        return newRequest
-    }
-    
-    // TODO: Consolidate with Fetch.Authorization.headers(environment)
-    func withToken(_ tokenString: String) -> URLRequest {
-        var request = self
-        request.setValue("Bearer \(tokenString)", forHTTPHeaderField: "Authorization")
-        return request
-    }
 }
 
 private extension JSONEncoder {

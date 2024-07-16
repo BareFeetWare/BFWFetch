@@ -16,7 +16,7 @@ public extension URLRequest {
         if let httpResponse = response as? HTTPURLResponse,
            httpResponse.statusCode >= 400
         {
-            throw Fetch.Error.httpResponse(
+            throw Error.httpResponse(
                 httpResponse,
                 data: data
             )

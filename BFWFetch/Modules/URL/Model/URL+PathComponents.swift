@@ -11,14 +11,14 @@ public extension URL {
     
     func addingQuery(dictionary: [String: String]) throws -> URL {
         guard var components = URLComponents(url: self, resolvingAgainstBaseURL: false)
-            else { throw Fetch.Error.url }
+        else { throw URLRequest.Error.url }
         if !dictionary.isEmpty {
             components.queryItemsDictionary = (components.queryItemsDictionary ?? [:])
                 .merging(dictionary, uniquingKeysWith: { $1
             })
         }
         guard let queryURL = components.url
-            else { throw Fetch.Error.url }
+        else { throw URLRequest.Error.url }
         return queryURL
     }
     

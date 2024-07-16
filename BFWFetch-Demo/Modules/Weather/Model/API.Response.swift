@@ -69,7 +69,7 @@ extension API.Response.ArrayWrapper: APIDecoderProvider {}
 private extension Error {
     
     var tryAPI: Error {
-        guard case let .httpResponse(_, data: data) = self as? Fetch.Error
+        guard case let .httpResponse(_, data: data) = self as? URLRequest.Error
         else { return self }
         do {
             let failure = try JSONDecoder().decode(API.Response.Failure.self, from: data)

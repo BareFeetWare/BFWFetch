@@ -1,5 +1,5 @@
 //
-//  Fetch.GraphQL.swift
+//  GraphQL.swift
 //  BFWFetch
 //
 //  Created by Tom Brodhurst-Hill on 27/3/2024.
@@ -8,30 +8,27 @@
 
 import Foundation
 
-public extension Fetch {
+struct GraphQL {
+    let query: String
+    let variables: [String: Encodable]
     
-    struct GraphQL {
-        let query: String
-        let variables: [String: Encodable]
-        
-        public init(query: String, variables: [String: Encodable]?) {
-            self.query = query
-            self.variables = variables ?? [:]
-        }
-        
-        public init(
-            queryResource: String,
-            variables: [String: Encodable]?
-        ) throws {
-            self.init(
-                query: try Bundle.main.contents(resource: queryResource),
-                variables: variables
-            )
-        }
+    public init(query: String, variables: [String: Encodable]?) {
+        self.query = query
+        self.variables = variables ?? [:]
+    }
+    
+    public init(
+        queryResource: String,
+        variables: [String: Encodable]?
+    ) throws {
+        self.init(
+            query: try Bundle.main.contents(resource: queryResource),
+            variables: variables
+        )
     }
 }
 
-extension Fetch.GraphQL: Encodable {
+extension GraphQL: Encodable {
     
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
