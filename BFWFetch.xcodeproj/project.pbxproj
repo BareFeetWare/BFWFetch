@@ -49,6 +49,7 @@
 		E2D001B2261BCC5C00318FD0 /* System.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D001B1261BCC5C00318FD0 /* System.swift */; };
 		E2D001BB261C360600318FD0 /* SiteScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D001BA261C360600318FD0 /* SiteScene.swift */; };
 		E2D001BD261D2A0900318FD0 /* API.Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D001BC261D2A0900318FD0 /* API.Request.swift */; };
+		E2D829882C4DC44B00463E10 /* URLFetched.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D829872C4DC44600463E10 /* URLFetched.swift */; };
 		E2ED3DDA2BB3C29800D26896 /* GraphQL.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2ED3DD92BB3C29800D26896 /* GraphQL.swift */; };
 /* End PBXBuildFile section */
 
@@ -122,6 +123,7 @@
 		E2D001B1261BCC5C00318FD0 /* System.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = System.swift; sourceTree = "<group>"; };
 		E2D001BA261C360600318FD0 /* SiteScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteScene.swift; sourceTree = "<group>"; };
 		E2D001BC261D2A0900318FD0 /* API.Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.Request.swift; sourceTree = "<group>"; };
+		E2D829872C4DC44600463E10 /* URLFetched.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLFetched.swift; sourceTree = "<group>"; };
 		E2ED3DD92BB3C29800D26896 /* GraphQL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphQL.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -221,6 +223,7 @@
 				E2ED3DD92BB3C29800D26896 /* GraphQL.swift */,
 				E29F61992610431400947455 /* JSONDecoder+Date.swift */,
 				E29F619F2610448000947455 /* String+SnakeCase.swift */,
+				E2D829872C4DC44600463E10 /* URLFetched.swift */,
 				E2A55EAF21AAD48D00812DC6 /* URLRequest+Form.swift */,
 				E29F61A226104BB900947455 /* URLRequest+Modifiers.swift */,
 				E24ADC5E2BCE0DAB008779F5 /* URLRequest+Response.swift */,
@@ -483,6 +486,7 @@
 				E29F61A526104BB900947455 /* URLRequest+Modifiers.swift in Sources */,
 				E2ED3DDA2BB3C29800D26896 /* GraphQL.swift in Sources */,
 				E2A55EBF21AAD8E200812DC6 /* URLComponents+queryItems.swift in Sources */,
+				E2D829882C4DC44B00463E10 /* URLFetched.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

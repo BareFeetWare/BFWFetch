@@ -1,8 +1,9 @@
 //
 //  URLRequest+Modifiers.swift
+//  BFWFetch
+//  Source: http://bitbucket.org/barefeetware/bfwfetch/
 //
 //  Created by Tom Brodhurst-Hill on 28/2/20.
-//  Copyright © 2020 BareFeetWare. All rights reserved.
 //
 
 import Foundation
@@ -54,23 +55,17 @@ public extension URLRequest {
     
     enum Error: LocalizedError {
         case noToken
-        case httpResponse(_ httpResponse: HTTPURLResponse, data: Data)
         case url
         case urlEncoding
-        case emptyResponse
         
         public var errorDescription: String? {
             switch self {
             case .noToken:
                 "No authorization token"
-            case .httpResponse(let response, data: let data):
-                "Status code: \(response.statusCode), data: \(String(data: data, encoding: .utf8) ?? String(describing: data))"
             case .url:
                 "Could not construct URL"
             case .urlEncoding:
                 "Could not encode variables in URL format"
-            case .emptyResponse:
-                "API returned an empty response."
             }
         }
     }
@@ -131,6 +126,14 @@ public extension URLRequest {
         addingHeaders(headers?.dictionary)
     }
     
+    /// Replaces just the given header values, leaving other exitsing headers untouched.
+    func replacingHeaders(_ headers: [Header]) -> Self {
+        let newHeadersDictionary = allHTTPHeaderFields?.merging(headers.dictionary) { $1 }
+        var newRequest = self
+        newRequest.allHTTPHeaderFields = newHeadersDictionary
+        return newRequest
+    }
+    
     func addingPath(_ path: String?) -> URLRequest {
         guard let url, let path else { return self }
         var newRequest = self
@@ -138,9 +141,15 @@ public extension URLRequest {
         return newRequest
     }
     
-    func withHTTPMethod(_ method: HTTPMethod) -> Self {
+    func withHTTPMethod(_ httpMethod: HTTPMethod) -> Self {
         var newRequest = self
-        newRequest.httpMethod = method.rawValue
+        newRequest.httpMethod = httpMethod.rawValue
+        return newRequest
+    }
+    
+    func withHTTPBody(_ data: Data) -> Self {
+        var newRequest = self
+        newRequest.httpBody = data
         return newRequest
     }
     

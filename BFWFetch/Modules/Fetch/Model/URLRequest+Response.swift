@@ -1,27 +1,68 @@
 //
 //  URLRequest+Response.swift
 //  BFWFetch
+//  Source: http://bitbucket.org/barefeetware/bfwfetch/
 //
 //  Created by Tom Brodhurst-Hill on 16/4/2024.
-//  Copyright © 2024 BareFeetWare. All rights reserved.
 //
 
 import Foundation
 
 public extension URLRequest {
     
-    func responseData() async throws -> Data {
+    func urlFetched() async throws -> URLFetched {
         debugPrint("request = \(self)")
-        let (data, response) = try await URLSession.shared.data(for: self)
-        if let httpResponse = response as? HTTPURLResponse,
-           httpResponse.statusCode >= 400
-        {
-            throw Error.httpResponse(
-                httpResponse,
-                data: data
-            )
+        return try await URLFetched(URLSession.shared.data(for: self))
+    }
+    
+    func responseData() async throws -> Data {
+        try await urlFetched().responseData()
+    }
+    
+    func httpURLResponse() async throws -> HTTPURLResponse? {
+        try await urlFetched().httpURLResponse()
+    }
+    
+    func responseData(authorizingURLRequest: URLRequest) async throws -> Data {
+        do {
+            return try await responseData()
+        } catch {
+            if case let URLFetched.Error.httpURLResponse(httpURLResponse, _) = error,
+               httpURLResponse.statusCode == 401
+            {
+                return try await authorizingURLRequest
+                    .responseData()
+            } else {
+                throw error
+            }
         }
-        return data
+    }
+    
+    func responseData(newBearerToken: () async throws -> String) async throws -> Data {
+        try await responseData(
+            authorizingURLRequest: self.replacingHeaders(
+                [.authorization(bearerToken: newBearerToken())]
+            )
+        )
+    }
+    
+}
+
+public extension URLRequest {
+    
+    func decodedResponse<Response: Decodable>(
+        decoder: JSONDecoder = .init(),
+        type: Response.Type = Response.self
+    ) async throws -> Response {
+        try await decoder.decode(Response.self, from: responseData())
+    }
+    
+    func decodedResponse<Response: Decodable>(
+        decoder: JSONDecoder = .init(),
+        type: Response.Type = Response.self,
+        newBearerToken: () async throws -> String
+    ) async throws -> Response {
+        try await decoder.decode(Response.self, from: responseData(newBearerToken: newBearerToken))
     }
     
 }
