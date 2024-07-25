@@ -10,7 +10,7 @@ import Foundation
 
 public extension URL {
     
-    func appendingQuery(dictionary: [String: String]) throws -> URL {
+    func appendingQuery(dictionary: [String: String?]) throws -> URL {
         guard var urlComponents = URLComponents(url: self, resolvingAgainstBaseURL: false)
         else { throw URLRequest.Error.url }
         let queryItems = dictionary.map { URLQueryItem(name: $0.key, value: $0.value) }

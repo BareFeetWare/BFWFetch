@@ -153,6 +153,30 @@ public extension URLRequest {
         return newRequest
     }
     
+    func withHTTPBody<T: Encodable>(
+        jsonEncoded encodable: T,
+        encoder: JSONEncoder = .init()
+    ) throws -> Self {
+        try withHTTPBody(encoder.encode(encodable))
+            .addingHeaders([.contentJSON])
+    }
+    
+    func withHTTPBody(
+        urlEncoded dictionary: [String: String?]
+    ) throws -> Self {
+        let string = dictionary.compactMapValues { $0 }
+            .map { key, value in
+                let encodedKey = key.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? key
+                let encodedValue = value.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? value
+                return "\(encodedKey)=\(encodedValue)"
+            }
+            .joined(separator: "&")
+        guard let httpBody = string.data(using: .utf8)
+        else { throw Error.urlEncoding }
+        return withHTTPBody(httpBody)
+            .addingHeaders([.contentURLEncoded])
+    }
+    
 }
 
 private extension Array where Element == URLRequest.Header {
