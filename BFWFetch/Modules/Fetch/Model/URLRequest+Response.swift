@@ -27,7 +27,7 @@ public extension URLRequest {
         do {
             return try await responseData()
         } catch {
-            if case let URLFetched.Error.httpURLResponse(httpURLResponse, _) = error,
+            if case let URLResponse.Error.httpURLResponse(httpURLResponse, _) = error,
                httpURLResponse.statusCode == 401
             {
                 return try await authorizingURLRequest

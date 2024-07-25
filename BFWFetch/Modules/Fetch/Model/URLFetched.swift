@@ -12,21 +12,6 @@ import Foundation
 public struct URLFetched {
     let data: Data
     let urlResponse: URLResponse
-    
-    public enum Error: LocalizedError {
-        case httpURLResponse(_ httpURLResponse: HTTPURLResponse, data: Data)
-        case emptyResponse
-        
-        var localizedDescription: String {
-            switch self {
-            case .httpURLResponse(let response, data: let data):
-                "Status code: \(response.statusCode), data: \(String(data: data, encoding: .utf8) ?? String(describing: data))"
-            case .emptyResponse:
-                "API returned an empty response."
-            }
-        }
-    }
-    
 }
 
 public extension URLFetched {
@@ -43,7 +28,7 @@ public extension URLFetched {
         else { return nil }
         guard httpURLResponse.statusCode < 400
         else {
-            throw Error.httpURLResponse(
+            throw URLResponse.Error.httpURLResponse(
                 httpURLResponse,
                 data: data
             )

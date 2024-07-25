@@ -47,8 +47,7 @@ public extension URLRequest {
         case .urlPath:
             guard let url else { throw Self.Error.url }
             if let nonNilVariables {
-                // TODO: Maybe use URLQueryItem.
-                newRequest.url = try url.addingQuery(
+                newRequest.url = try url.appendingQuery(
                     dictionary: nonNilVariables
                         .mapValues { String(describing: $0) }
                 )
