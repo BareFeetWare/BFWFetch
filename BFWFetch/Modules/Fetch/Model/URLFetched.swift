@@ -28,6 +28,10 @@ public extension URLFetched {
         else { return nil }
         guard httpURLResponse.statusCode < 400
         else {
+            debugPrint("httpURLResponse.statusCode = \(httpURLResponse.statusCode)")
+            if let dataString = String(data: data, encoding: .utf8) {
+                debugPrint("Fetched data = \(dataString.prefix(200))")
+            }
             throw URLResponse.Error.httpURLResponse(
                 httpURLResponse,
                 data: data
