@@ -108,7 +108,7 @@ public extension URLRequest {
         guard let headers
         else { return }
         headers.keys.forEach { key in
-            addValue(headers[key]!, forHTTPHeaderField: key)
+            setValue(headers[key]!, forHTTPHeaderField: key)
         }
     }
     
