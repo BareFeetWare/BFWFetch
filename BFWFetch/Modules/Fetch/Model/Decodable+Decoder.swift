@@ -17,8 +17,11 @@ public extension Decodable {
     ) async throws {
         do {
             let data = try await request.responseData()
+            if let dataString = String(data: data, encoding: .utf8) {
+                debugPrint("responseData = \(dataString)")
+            }
+            try? data.writeJSONToTemporaryFile()
             do {
-                try? data.writeJSONToTemporaryFile()
                 let response = try decoder.decode(Self.self, from: data)
                 self = response
             } catch {

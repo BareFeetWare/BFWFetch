@@ -12,6 +12,11 @@ public extension URLRequest {
     
     func urlFetched() async throws -> URLFetched {
         debugPrint("request = \(self)")
+        if let httpBody,
+           let bodyString = String(data: httpBody, encoding: .utf8)
+        {
+            debugPrint("httpBody = \(bodyString.prefix(500))")
+        }
         return try await URLFetched(URLSession.shared.data(for: self))
     }
     
