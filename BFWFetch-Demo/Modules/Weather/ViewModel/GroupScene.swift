@@ -18,9 +18,8 @@ extension GroupScene {
     func sitesScene() async throws -> SitesScene {
         let request = try API.Request.Group
             .request(siteIDs: siteIDs, system: system)
-        let wrapper = try await API.Request.Group
-            .Response(request: request)
-        let sites = wrapper.array
+        let response: API.Request.Group.Response = try await request.decodedResponse()
+        let sites = response.array
         return SitesScene(sites: sites, system: system)
     }
     

@@ -26,7 +26,7 @@ extension WeatherScene {
             countryCode: countryCode,
             system: system
         )
-        let site = try await Site(request: request)
+        let site: Site = try await request.decodedResponse()
         return SiteScene(site: site, system: system)
     }
     

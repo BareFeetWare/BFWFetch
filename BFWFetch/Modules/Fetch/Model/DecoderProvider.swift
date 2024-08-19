@@ -22,14 +22,4 @@ public extension DecoderProvider {
         error
     }
     
-    init(
-        request: URLRequest
-    ) async throws {
-        try await self.init(
-            request: request,
-            decoder: Self.decoder,
-            mappedError: Self.mappedError
-        )
-    }
-    
 }

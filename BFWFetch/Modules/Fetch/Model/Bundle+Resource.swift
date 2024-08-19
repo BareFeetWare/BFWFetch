@@ -37,7 +37,7 @@ public extension Bundle {
             throw Error.missingResource
         }
         let request = URLRequest(url: url)
-        let response = try await T(request: request)
+        let response: T = try await request.decodedResponse()
         return response
     }
     

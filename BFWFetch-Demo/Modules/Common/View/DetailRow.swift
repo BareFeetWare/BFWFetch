@@ -13,6 +13,8 @@ struct DetailRow {
     let trailing: String?
 }
 
+// MARK: - Views
+
 extension DetailRow: View {
     var body: some View {
         HStack {
