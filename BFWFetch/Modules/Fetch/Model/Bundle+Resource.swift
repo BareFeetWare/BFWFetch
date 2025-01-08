@@ -41,4 +41,13 @@ public extension Bundle {
         return response
     }
     
+    func data(forResource resource: String, withExtension fileExtension: String? = nil) throws -> Data {
+        guard let url = url(forResource: resource, withExtension: fileExtension, subdirectory: nil)
+        else {
+            throw Error.missingResource
+        }
+        let data = try Data(contentsOf: url)
+        return data
+    }
+    
 }
