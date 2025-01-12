@@ -15,7 +15,7 @@ extension URLResponse {
         case expectedHTTPURLResponse
         case empty
         
-        var errorDescription: String {
+        public var errorDescription: String? {
             switch self {
             case .httpURLResponse(let response, data: let data):
                 "Status code: \(response.statusCode), data: \(String(data: data, encoding: .utf8) ?? String(describing: data))"
