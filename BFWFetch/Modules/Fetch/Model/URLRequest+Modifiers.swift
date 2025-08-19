@@ -82,7 +82,8 @@ public extension URLRequest {
         headers: [String: String]? = nil,
         httpMethod: HTTPMethod
     ) {
-        self = URLRequest(url: url.appendingPathComponent(path ?? ""))
+        let pathedURL = path.map(url.appendingPathComponent) ?? url
+        self = URLRequest(url: pathedURL)
             .addingHeaders(headers)
         self.httpMethod = httpMethod.rawValue
     }
