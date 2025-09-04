@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum CodableValue: Codable {
+public enum CodableValue {
     case string(String)
     case int(Int)
     case double(Double)
@@ -17,6 +17,9 @@ public enum CodableValue: Codable {
     case dictionary([String: Self])
     case null
     case unknown(String)
+}
+
+extension CodableValue: Codable {
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
@@ -38,7 +41,7 @@ public enum CodableValue: Codable {
             self = .unknown(String(describing: container))
         }
     }
-
+    
     public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         switch self {
@@ -60,6 +63,12 @@ public enum CodableValue: Codable {
             try container.encode(value)
         }
     }
+    
+}
+
+// MARK: - Functions
+
+extension CodableValue {
     
     /// No more sub nodes.
     public var singleValueString: String? {
@@ -89,8 +98,6 @@ public enum CodableValue: Codable {
         }
     }
     
-    // TODO: Allow for partial word in camel case:
-    
     public func string(key: String, fallbackToPartial: Bool = false) -> String? {
         guard case let .dictionary(dictionary) = self else { return nil }
         var valueString: String?
@@ -99,13 +106,16 @@ public enum CodableValue: Codable {
         }
         if valueString == nil, fallbackToPartial {
             let lowercaseKey = key.lowercased()
-            let matches = dictionary.compactMap { dictKey, value -> String? in
+            let matches = dictionary.compactMap { key, value -> String? in
                 guard case let .string(candidate) = value else { return nil }
-                let words = dictKey.lowercased().split(whereSeparator: { $0 == "_" || $0 == " " })
-                return words.map(String.init).contains(lowercaseKey) ? candidate : nil
+                let words = key.lowercased().split(whereSeparator: { $0 == "_" || $0 == " " })
+                return words.map(String.init).contains(lowercaseKey)
+                || key.camelCaseToWords().lowercased().split(separator: " ").map(String.init).contains(lowercaseKey)
+                ? candidate
+                : nil
             }
             if !matches.isEmpty {
-                valueString = "[" + matches.joined(separator: ", ") + "]"
+                valueString = matches.joined(separator: ", ")
             }
         }
         return valueString

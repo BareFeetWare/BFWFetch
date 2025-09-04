@@ -18,7 +18,21 @@ public extension String {
             .replacedRegex(pattern: normalPattern)?.lowercased() ?? self.lowercased()
     }
     
-    fileprivate func replacedRegex(pattern: String) -> String? {
+    func camelCaseToWords() -> String {
+        replacingOccurrences(
+            of: "([a-z])([A-Z])",
+            with: "$1 $2",
+            options: .regularExpression
+        )
+    }
+    
+}
+
+fileprivate extension String {
+    
+    // TODO: Perhaps update to not use NSRegularExpression.
+    
+    func replacedRegex(pattern: String) -> String? {
         let regex = try? NSRegularExpression(pattern: pattern, options: [])
         let range = NSRange(location: 0, length: count)
         return regex?.stringByReplacingMatches(in: self, options: [], range: range, withTemplate: "$1_$2")
