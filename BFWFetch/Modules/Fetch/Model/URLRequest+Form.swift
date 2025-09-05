@@ -34,57 +34,56 @@ public extension URLRequest {
 // MARK: - Modifiers
 
 public extension URLRequest {
-
+    
+    @available(*, deprecated, message: "Use `.httpBody(encoding:)` or `.appendingURLQuery()` instead.")
     func form(
         _ form: Form,
         variables: [String: Encodable?]?
     ) throws -> Self {
+        switch form {
+        case .urlPath:
+            return try appendingURLQuery(variables)
+        case .httpBody(let encoding):
+            return try httpBody(encoding: encoding, variables: variables)
+        }
+    }
+    
+    func httpBody(encoding: Form.Encoding, variables: [String: Encodable?]?) throws -> Self {
         var newRequest = self
         let nonNilVariables = variables?
             .compactMapValues { $0 }
             .nilIfEmpty
-        switch form {
-        case .urlPath:
-            guard let url else { throw Self.Error.url }
+        switch encoding {
+        case .url:
+            newRequest.addHeaders([.contentURLEncoded])
             if let nonNilVariables {
-                newRequest.url = try url.appendingQuery(
-                    dictionary: nonNilVariables
-                        .mapValues { String(describing: $0) }
+                let variablesString = nonNilVariables
+                    .map { "\($0.key)=\($0.value)" }
+                    .joined(separator: "&")
+                newRequest.httpBody = variablesString.data(using: .utf8)
+            }
+        case .multipartForm(let fileURL):
+            let boundary = UUID().uuidString
+            newRequest.addHeaders([.contentMultipartForm(boundary: boundary)])
+            newRequest.httpBody = try Data.formBody(
+                fileURL: fileURL,
+                // TODO: Allow for non image.
+                mimeType: "image/jpeg",
+                boundary: boundary
+            )
+        case .json:
+            newRequest.addHeaders([.contentJSON])
+            if let nonNilVariables {
+                newRequest.httpBody = try JSONSerialization.data(
+                    withJSONObject: nonNilVariables,
+                    options: .prettyPrinted
                 )
             }
-        case .httpBody(let encoding):
-            switch encoding {
-            case .url:
-                newRequest.addHeaders([.contentURLEncoded])
-                if let nonNilVariables {
-                    let variablesString = nonNilVariables
-                        .map { "\($0.key)=\($0.value)" }
-                        .joined(separator: "&")
-                    newRequest.httpBody = variablesString.data(using: .utf8)
-                }
-            case .multipartForm(let fileURL):
-                let boundary = UUID().uuidString
-                newRequest.addHeaders([.contentMultipartForm(boundary: boundary)])
-                newRequest.httpBody = try Data.formBody(
-                    fileURL: fileURL,
-                    // TODO: Allow for non image.
-                    mimeType: "image/jpeg",
-                    boundary: boundary
-                )
-            case .json:
-                newRequest.addHeaders([.contentJSON])
-                if let nonNilVariables {
-                    newRequest.httpBody = try JSONSerialization.data(
-                        withJSONObject: nonNilVariables,
-                        options: .prettyPrinted
-                    )
-                }
-            case .graphQL(let query):
-                newRequest.addHeaders([.contentJSON])
-                let graphQL = GraphQL(query: query, variables: nonNilVariables)
-                let jsonData = try JSONEncoder.api.encode(graphQL)
-                newRequest.httpBody = jsonData
-            }
+        case .graphQL(let query):
+            newRequest.addHeaders([.contentJSON])
+            let graphQL = GraphQL(query: query, variables: nonNilVariables)
+            let jsonData = try JSONEncoder.api.encode(graphQL)
+            newRequest.httpBody = jsonData
         }
         return newRequest
     }
@@ -154,17 +153,4 @@ private extension Data {
         appendedData.append(data)
         return appendedData
     }
-}
-
-private protocol Emptyable {
-    var isEmpty: Bool { get }
-    static var empty: Self { get }
-}
-
-private extension Emptyable {
-    var nilIfEmpty: Self? { isEmpty ? nil : self }
-}
-
-extension Dictionary: Emptyable {
-    static var empty: Dictionary<Key, Value> { [:] }
 }

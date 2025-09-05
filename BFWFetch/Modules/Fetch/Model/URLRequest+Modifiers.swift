@@ -72,7 +72,7 @@ public extension URLRequest {
     
 }
 
-// MARK: - Inits and Modifiers
+// MARK: - Convenience Inits
 
 public extension URLRequest {
     
@@ -103,8 +103,12 @@ public extension URLRequest {
             httpMethod: httpMethod
         )
     }
-    
-    
+}
+
+// MARK: - Instance Modifiers
+
+public extension URLRequest {
+
     mutating func addHeaders(_ headers: [String: String]?) {
         guard let headers
         else { return }
@@ -140,6 +144,17 @@ public extension URLRequest {
         var newRequest = self
         newRequest.url = url.appendingPathComponent(path)
         return newRequest
+    }
+    
+    func withURL(_ url: URL) -> Self {
+        var newRequest = self
+        newRequest.url = url
+        return newRequest
+    }
+    
+    func appendingURLQuery(_ dictionary: [String: Any?]?) throws -> Self {
+        guard let url else { throw Error.url }
+        return try withURL(url.appendingQuery(dictionary))
     }
     
     func withHTTPMethod(_ httpMethod: HTTPMethod) -> Self {

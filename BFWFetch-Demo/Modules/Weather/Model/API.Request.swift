@@ -17,15 +17,9 @@ extension API.Request {
     
     static func baseRequest() throws -> URLRequest {
         try URLRequest(
-            url: baseURL,
+            url: baseURL.appendingQuery(["appID": API.Request.appID]),
             path: nil,
             httpMethod: .get
-        )
-        .form(
-            .urlPath,
-            variables: [
-                "appID": API.Request.appID,
-            ]
         )
     }
     

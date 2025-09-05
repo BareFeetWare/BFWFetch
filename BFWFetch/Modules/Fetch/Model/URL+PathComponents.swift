@@ -10,7 +10,16 @@ import Foundation
 
 public extension URL {
     
-    func appendingQuery(dictionary: [String: String?]) throws -> URL {
+    func appendingQuery(_ dictionary: [String: Any?]?) throws -> URL {
+        guard let nonNilDictionary = dictionary?
+            .compactMapValues({ $0 })
+            .mapValues(String.init(describing:))
+            .nilIfEmpty
+        else { return self }
+        return try appendingQuery(nonNilDictionary)
+    }
+    
+    func appendingQuery(_ dictionary: [String: String]) throws -> URL {
         guard var urlComponents = URLComponents(url: self, resolvingAgainstBaseURL: false)
         else { throw URLRequest.Error.url }
         let queryItems = dictionary.map { URLQueryItem(name: $0.key, value: $0.value) }
@@ -25,8 +34,8 @@ public extension URL {
         return queryURL
     }
     
-    func appendingPathComponents(_ pathComponents: [String]) -> URL {
-        guard let lastPathComponent = pathComponents.last
+    func appendingPathComponents(_ pathComponents: [String]?) -> URL {
+        guard let pathComponents, let lastPathComponent = pathComponents.last
             else { return self }
         var url = self
         pathComponents.dropLast()

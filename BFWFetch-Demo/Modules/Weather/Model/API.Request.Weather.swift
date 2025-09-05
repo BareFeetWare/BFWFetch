@@ -21,9 +21,8 @@ extension API.Request.Weather {
     ) throws -> URLRequest {
         try API.Request.baseRequest()
             .addingPath("weather")
-            .form(
-                .urlPath,
-                variables: [
+            .appendingURLQuery(
+                [
                     "q": [city, countryCode]
                         .compactMap { $0 }
                         .joined(separator: ","),
