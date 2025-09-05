@@ -68,24 +68,24 @@ extension CodableValue: Codable {
 
 // MARK: - Functions
 
-extension CodableValue {
+public extension CodableValue {
     
     /// No more sub nodes.
-    public var singleValueString: String? {
+    var singleValueString: String? {
         switch self {
         case .string(let string): string
         case .int(let int): int.description
         case .double(let double): double.description
         case .bool(let bool): bool.description
         case .array, .dictionary: nil
-        case .null: "null"
-        case .unknown(let string): "Unknown(\(string))"
+        case .null: nil
+        case .unknown: nil
         }
     }
     
     // TODO: Consolidate above and below.
     
-    public var summary: String {
+    var summary: String {
         switch self {
         case .string(let string): string
         case .int(let int): int.description
@@ -98,13 +98,12 @@ extension CodableValue {
         }
     }
     
-    public func string(key: String, fallbackToPartial: Bool = false) -> String? {
+    func string(key: String, fallbackToPartial: Bool = false) -> String? {
         guard case let .dictionary(dictionary) = self else { return nil }
         var valueString: String?
-        if let value = dictionary[key], case let .string(match) = value {
-            valueString = match
-        }
-        if valueString == nil, fallbackToPartial {
+        if let value = dictionary[key], let singleValueString = value.singleValueString {
+            valueString = singleValueString
+        } else if fallbackToPartial {
             let lowercaseKey = key.lowercased()
             let matches = dictionary.compactMap { key, value -> String? in
                 guard case let .string(candidate) = value else { return nil }
@@ -121,12 +120,39 @@ extension CodableValue {
         return valueString
     }
     
-    public var name: String? {
+    var name: String? {
         string(key: "name", fallbackToPartial: true)
     }
     
-    public var id: String? {
+    var id: String? {
         string(key: "id", fallbackToPartial: true)
+    }
+    
+    /// Replaces any brace wrapped key with value.string(key: key). Such as "vehicles/{id}/drivers" -> "vehicles/123/drivers", if value.string(key: "id") = "123"
+    func inserted(into keysPlaceholder: String) -> String {
+        if #available(iOS 16, *) {
+            let regex = /\{([a-zA-Z0-9_]+)\}/
+            let matches = keysPlaceholder.matches(of: regex)
+            return matches.reversed().reduce(into: keysPlaceholder) { valuePath, match in
+                let key = String(match.1)
+                if let replacement = self.string(key: key) {
+                    valuePath.replaceSubrange(match.range, with: replacement)
+                }
+            }
+        } else {
+            let pattern = #"\{([a-zA-Z0-9_]+)\}"#
+            guard let regex = try? NSRegularExpression(pattern: pattern) else { return keysPlaceholder }
+            let matches = regex.matches(in: keysPlaceholder, range: NSRange(keysPlaceholder.startIndex..., in: keysPlaceholder))
+            return matches.reversed().reduce(into: keysPlaceholder) { valuePath, match in
+                guard match.numberOfRanges == 2,
+                      let range = Range(match.range(at: 0), in: keysPlaceholder),
+                      let keyRange = Range(match.range(at: 1), in: keysPlaceholder) else { return }
+                let key = String(keysPlaceholder[keyRange])
+                if let replacement = self.string(key: key) {
+                    valuePath.replaceSubrange(range, with: replacement)
+                }
+            }
+        }
     }
     
 }
