@@ -120,6 +120,23 @@ public extension CodableValue {
         return valueString
     }
     
+    func value(key: String) -> Self? {
+        guard case let .dictionary(dictionary) = self else { return nil }
+        return dictionary[key]
+    }
+    
+    func value(keyPath: String) -> Self? {
+        keyPath.split(separator: ".")
+            .map(String.init)
+            .reduce(Optional(self)) { parentValue, key in
+                parentValue?.value(key: key)
+            }
+    }
+    
+    func string(keyPath: String) -> String? {
+        value(keyPath: keyPath)?.singleValueString
+    }
+    
     var name: String? {
         string(key: "name", fallbackToPartial: true)
     }
