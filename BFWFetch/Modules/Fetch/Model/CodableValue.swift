@@ -19,6 +19,31 @@ public enum CodableValue {
     case unknown(String)
 }
 
+// MARK: - Types
+
+extension CodableValue {
+    
+    enum Error: LocalizedError {
+        case expectedArray
+        
+        var errorDescription: String? {
+            switch self {
+            case .expectedArray:
+                "Expected Array"
+            }
+        }
+        
+        var failureReason: String? {
+            switch self {
+            case .expectedArray:
+                "The value was not an array."
+            }
+        }
+    }
+}
+
+// MARK: - Protocols
+
 extension CodableValue: Codable {
     
     public init(from decoder: Decoder) throws {
@@ -143,6 +168,12 @@ public extension CodableValue {
     
     var id: String? {
         string(key: "id", fallbackToPartial: true)
+    }
+    
+    func arrayValues() throws -> [CodableValue] {
+        guard case let .array(values) = self
+        else { throw Error.expectedArray }
+        return values
     }
     
     /// Replaces any brace wrapped key with value.string(key: key). Such as "vehicles/{id}/drivers" -> "vehicles/123/drivers", if value.string(key: "id") = "123"
