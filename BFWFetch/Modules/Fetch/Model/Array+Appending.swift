@@ -1,5 +1,5 @@
 //
-//  Array+IfLet.swift
+//  Array+Appending.swift
 //  BFWFetch
 //
 //  Created by Tom Brodhurst-Hill on 4/9/2025.
@@ -9,6 +9,14 @@
 import Foundation
 
 public extension Array {
+    
+    func appending(_ element: Element) -> [Element] {
+        self + [element]
+    }
+    
+    func appending(_ elements: [Element]) -> [Element] {
+        self + elements
+    }
     
     func appendingIf(
         _ condition: Bool,
