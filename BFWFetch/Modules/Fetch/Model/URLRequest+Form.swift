@@ -44,13 +44,17 @@ public extension URLRequest {
         case .urlPath:
             return try appendingURLQuery(variables)
         case .httpBody(let encoding):
-            return try httpBody(encoding: encoding, variables: variables)
+            guard let dictionary = variables?
+                .compactMapValues({ $0 })
+                .nilIfEmpty
+            else { return self }
+            return try httpBody(encoding: encoding, value: CodableValue.init(dictionary: dictionary))
         }
     }
     
-    func httpBody(encoding: Form.Encoding, variables: [String: Encodable?]?) throws -> Self {
+    func httpBody(encoding: Form.Encoding, value: Encodable?) throws -> Self {
         var newRequest = self
-        let nonNilVariables = variables?
+        let nonNilVariables = (value as? [String: Encodable?])?
             .compactMapValues { $0 }
             .nilIfEmpty
         switch encoding {
@@ -72,15 +76,13 @@ public extension URLRequest {
                 boundary: boundary
             )
         case .json:
-            newRequest.addHeaders([.contentJSON])
-            if let nonNilVariables {
-                newRequest.httpBody = try JSONSerialization.data(
-                    withJSONObject: nonNilVariables,
-                    options: .prettyPrinted
-                )
+            if let value {
+                newRequest.addHeaders([.contentJSON])
+                newRequest.httpBody = try JSONEncoder().encode(value)
             }
         case .graphQL(let query):
             newRequest.addHeaders([.contentJSON])
+            // TODO: Pass on encodable value instead of dictionary.
             let graphQL = GraphQL(query: query, variables: nonNilVariables)
             let jsonData = try JSONEncoder.api.encode(graphQL)
             newRequest.httpBody = jsonData

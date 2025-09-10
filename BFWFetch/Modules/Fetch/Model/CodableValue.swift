@@ -28,8 +28,7 @@ extension CodableValue {
         
         var errorDescription: String? {
             switch self {
-            case .expectedArray:
-                "Expected Array"
+            case .expectedArray: "Expected Array"
             }
         }
         
@@ -42,7 +41,79 @@ extension CodableValue {
     }
 }
 
+// MARK: - Convenience Inits
+
+extension CodableValue {
+    
+    public init?(any: Any) {
+        switch any {
+        case let string as String:
+            self = .string(string)
+        case let int as Int:
+            self = .int(int)
+        case let double as Double:
+            self = .double(double)
+        case let bool as Bool:
+            self = .bool(bool)
+        case let array as [Any]:
+            self = .array(array.compactMap(Self.init(any:)))
+        case let dictionary as [String: Any]:
+            self = .dictionary(dictionary.compactMapValues(Self.init(any:)))
+        case Optional<Any>.none:
+            self = .null
+        default:
+            return nil
+        }
+    }
+    
+    public init(dictionary: [String: Any]) {
+        self = .dictionary(dictionary.compactMapValues(Self.init(any:)))
+    }
+}
+
 // MARK: - Protocols
+
+extension CodableValue: ExpressibleByStringLiteral {
+    public init(stringLiteral value: String) {
+        self = .string(value)
+    }
+}
+
+extension CodableValue: ExpressibleByIntegerLiteral {
+    public init(integerLiteral value: Int) {
+        self = .int(value)
+    }
+}
+
+extension CodableValue: ExpressibleByFloatLiteral {
+    public init(floatLiteral value: Double) {
+        self = .double(value)
+    }
+}
+
+extension CodableValue: ExpressibleByBooleanLiteral {
+    public init(booleanLiteral value: Bool) {
+        self = .bool(value)
+    }
+}
+
+extension CodableValue: ExpressibleByNilLiteral {
+    public init(nilLiteral: ()) {
+        self = .null
+    }
+}
+
+extension CodableValue: ExpressibleByArrayLiteral {
+    public init(arrayLiteral elements: CodableValue...) {
+        self = .array(elements)
+    }
+}
+
+extension CodableValue: ExpressibleByDictionaryLiteral {
+    public init(dictionaryLiteral elements: (String, CodableValue)...) {
+        self = .dictionary(Dictionary(uniqueKeysWithValues: elements))
+    }
+}
 
 extension CodableValue: Codable {
     
