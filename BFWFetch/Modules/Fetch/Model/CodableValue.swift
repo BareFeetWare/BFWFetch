@@ -24,18 +24,22 @@ public enum CodableValue {
 extension CodableValue {
     
     enum Error: LocalizedError {
-        case expectedArray
+        case expectedType(String)
+        case missingValueForKey(String)
         
         var errorDescription: String? {
             switch self {
-            case .expectedArray: "Expected Array"
+            case .expectedType(let type): "Expected \(type)"
+            case .missingValueForKey(let key): "Missing Value"
             }
         }
         
         var failureReason: String? {
             switch self {
-            case .expectedArray:
-                "The value was not an array."
+            case .expectedType(let type):
+                "The value was not the expected type: \(type)."
+            case .missingValueForKey(let key):
+                "The value was missing for the key: \(key)."
             }
         }
     }
@@ -216,21 +220,28 @@ public extension CodableValue {
         return valueString
     }
     
-    func value(key: String) -> Self? {
-        guard case let .dictionary(dictionary) = self else { return nil }
-        return dictionary[key]
+    func value(key: String) throws -> Self {
+        guard case let .dictionary(dictionary) = self
+        else { throw Error.expectedType("dictionary") }
+        guard let value = dictionary[key]
+        else { throw Error.missingValueForKey(key) }
+        return value
     }
     
-    func value(keyPath: String) -> Self? {
-        keyPath.split(separator: ".")
+    func value(keyPath: String) throws -> Self {
+        try keyPath.split(separator: ".")
             .map(String.init)
-            .reduce(Optional(self)) { parentValue, key in
-                parentValue?.value(key: key)
+            .reduce(self) { parentValue, key in
+                try parentValue.value(key: key)
             }
     }
     
-    func string(keyPath: String) -> String? {
-        value(keyPath: keyPath)?.singleValueString
+    func string(keyPath: String) throws -> String {
+        try value(keyPath: keyPath).string()
+    }
+    
+    func asString(keyPath: String) throws -> String? {
+        try value(keyPath: keyPath).singleValueString
     }
     
     var name: String? {
@@ -241,10 +252,28 @@ public extension CodableValue {
         string(key: "id", fallbackToPartial: true)
     }
     
-    func arrayValues() throws -> [CodableValue] {
-        guard case let .array(values) = self
-        else { throw Error.expectedArray }
-        return values
+    func array() throws -> [CodableValue] {
+        guard case let .array(array) = self
+        else { throw Error.expectedType("array") }
+        return array
+    }
+    
+    func dictionary() throws -> [String: CodableValue] {
+        guard case let .dictionary(dictionary) = self
+        else { throw Error.expectedType("dictionary") }
+        return dictionary
+    }
+    
+    func string() throws -> String {
+        guard case let .string(string) = self
+        else { throw Error.expectedType("string") }
+        return string
+    }
+    
+    func bool() throws -> Bool {
+        guard case let .bool(bool) = self
+        else { throw Error.expectedType("bool") }
+        return bool
     }
     
     /// Replaces any brace wrapped key with value.string(key: key). Such as "vehicles/{id}/drivers" -> "vehicles/123/drivers", if value.string(key: "id") = "123"
