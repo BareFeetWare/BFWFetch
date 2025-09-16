@@ -39,6 +39,25 @@ extension OAuth {
     
 }
 
+// MARK: - Convenience Inits
+
+public extension OAuth.Credential {
+    
+    init(
+        accessToken: String,
+        tokenType: String? = nil,
+        refreshToken: String? = nil,
+        idToken: String? = nil,
+    ) {
+        self.accessToken = accessToken
+        self.tokenType = tokenType
+        self.expiresTimeInterval = nil
+        self.refreshToken = refreshToken
+        self.idToken = idToken
+    }
+    
+}
+
 // MARK: - Functions
 
 public extension OAuth.Credential {

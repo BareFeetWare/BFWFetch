@@ -89,6 +89,11 @@ public extension URLRequest {
         return newRequest
     }
     
+    func withHTTPBody(graphQL: GraphQL) throws -> Self {
+        self
+            .addingHeaders([.contentJSON])
+            .withHTTPBody(try JSONEncoder.api.encode(graphQL))
+    }
 }
 
 private extension JSONEncoder {
