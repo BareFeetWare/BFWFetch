@@ -8,18 +8,18 @@
 
 import Foundation
 
-struct GraphQL {
-    let query: String
-    let variables: [String: Encodable]
+public struct GraphQL {
+    public let query: String
+    public let variables: Encodable?
+}
+
+// MARK: - Convenience Inits
+
+public extension GraphQL {
     
-    public init(query: String, variables: [String: Encodable]?) {
-        self.query = query
-        self.variables = variables ?? [:]
-    }
-    
-    public init(
+    init(
         queryResource: String,
-        variables: [String: Encodable]?
+        variables: Encodable?
     ) throws {
         self.init(
             query: try Bundle.main.contents(resource: queryResource),
@@ -28,37 +28,22 @@ struct GraphQL {
     }
 }
 
+// MARK: - Protocol Implementations
+
 extension GraphQL: Encodable {
     
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(query, forKey: .query)
-        
-        // Encode the variables dictionary manually
-        var variablesContainer = container.nestedContainer(keyedBy: DynamicCodingKey.self, forKey: .variables)
-        for (key, value) in variables {
-            try variablesContainer.encode(value, forKey: DynamicCodingKey(stringValue: key))
-        }
-    }
-    
-    private enum CodingKeys: String, CodingKey {
+    enum CodingKeys: String, CodingKey {
         case query
         case variables
     }
     
-    private struct DynamicCodingKey: CodingKey {
-        var stringValue: String
-        var intValue: Int?
-        
-        init(stringValue: String) {
-            self.stringValue = stringValue
-            self.intValue = nil
-        }
-        
-        init(intValue: Int) {
-            self.stringValue = "\(intValue)"
-            self.intValue = intValue
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(query, forKey: .query)
+        if let variables {
+            try variables.encode(to: container.superEncoder(forKey: .variables))
+        } else {
+            try container.encodeNil(forKey: .variables)
         }
     }
-    
 }

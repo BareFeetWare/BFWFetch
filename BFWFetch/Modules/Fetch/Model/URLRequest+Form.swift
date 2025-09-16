@@ -54,14 +54,14 @@ public extension URLRequest {
     
     func httpBody(encoding: Form.Encoding, value: Encodable?) throws -> Self {
         var newRequest = self
-        let nonNilVariables = (value as? [String: Encodable?])?
+        let nonNilDictionary = (value as? [String: Encodable?])?
             .compactMapValues { $0 }
             .nilIfEmpty
         switch encoding {
         case .url:
             newRequest.addHeaders([.contentURLEncoded])
-            if let nonNilVariables {
-                let variablesString = nonNilVariables
+            if let nonNilDictionary {
+                let variablesString = nonNilDictionary
                     .map { "\($0.key)=\($0.value)" }
                     .joined(separator: "&")
                 newRequest.httpBody = variablesString.data(using: .utf8)
@@ -82,8 +82,7 @@ public extension URLRequest {
             }
         case .graphQL(let query):
             newRequest.addHeaders([.contentJSON])
-            // TODO: Pass on encodable value instead of dictionary.
-            let graphQL = GraphQL(query: query, variables: nonNilVariables)
+            let graphQL = GraphQL(query: query, variables: value)
             let jsonData = try JSONEncoder.api.encode(graphQL)
             newRequest.httpBody = jsonData
         }
