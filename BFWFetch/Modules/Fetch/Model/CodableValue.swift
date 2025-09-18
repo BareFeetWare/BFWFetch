@@ -170,21 +170,6 @@ extension CodableValue: Codable {
 
 public extension CodableValue {
     
-    /// No more sub nodes.
-    var singleValueString: String? {
-        switch self {
-        case .string(let string): string
-        case .int(let int): int.description
-        case .double(let double): double.description
-        case .bool(let bool): bool.description
-        case .array, .dictionary: nil
-        case .null: nil
-        case .unknown: nil
-        }
-    }
-    
-    // TODO: Consolidate above and below.
-    
     var summary: String {
         switch self {
         case .string(let string): string
@@ -195,6 +180,16 @@ public extension CodableValue {
         case .dictionary(let dictionary): "[" + dictionary.keys.sorted().joined(separator: ", ") + "]"
         case .null: "null"
         case .unknown(let string): "Unknown(\(string))"
+        }
+    }
+    
+    /// No more sub nodes.
+    var singleValueString: String? {
+        switch self {
+        case .string, .int, .double, .bool:
+            return summary
+        case .array, .dictionary, .null, .unknown:
+            return nil
         }
     }
     
