@@ -29,8 +29,8 @@ extension CodableValue {
         
         var errorDescription: String? {
             switch self {
-            case .expectedType(let type): "Expected \(type)"
-            case .missingValueForKey(let key): "Missing Value"
+            case .expectedType: "Unexpected Type"
+            case .missingValueForKey: "Missing Value"
             }
         }
         
