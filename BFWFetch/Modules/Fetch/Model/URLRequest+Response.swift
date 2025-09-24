@@ -55,34 +55,18 @@ public extension URLRequest {
 
 public extension URLRequest {
     
+    @available(*, deprecated, message: "Use `Fetcher().fetched()` instead.")
     func decodedResponse<Response: Decodable>(
         decoder: JSONDecoder? = nil,
         type: Response.Type = Response.self,
         mappedError: ((Swift.Error) -> Swift.Error)? = nil
     ) async throws -> Response {
-        do {
-            let data = try await responseData()
-            if let dataString = String(data: data, encoding: .utf8) {
-                debugPrint("responseData = \(dataString)")
-            }
-            try? data.writeJSONToTemporaryFile()
-            do {
-                let decoder: JSONDecoder = decoder
-                ?? (Response.self as? DecoderProvider.Type)?.decoder
-                ?? .init()
-                let response = try decoder.decode(Response.self, from: data)
-                return response
-            } catch {
-                debugPrint("decode error = \(error)")
-                debugPrint("type = \(Self.self)")
-                debugPrint("data = " + (String(data: data, encoding: .utf8) ?? "\(data)").prefix(500))
-                throw error
-            }
-        } catch {
-            throw mappedError?(error)
-            ?? (Response.self as? DecoderProvider.Type)?.mappedError(error)
-            ?? error
-        }
+        try await Fetcher(
+            request: self,
+            decoder: decoder,
+            mappedError: mappedError
+        )
+        .fetched()
     }
     
     func decodedResponse<Response: Decodable>(
@@ -91,22 +75,6 @@ public extension URLRequest {
         newBearerToken: () async throws -> String
     ) async throws -> Response {
         try await decoder.decode(Response.self, from: responseData(newBearerToken: newBearerToken))
-    }
-    
-}
-
-private extension Data {
-    
-    func writeJSONToTemporaryFile() throws {
-        // Set to true for debugging.
-        let writesDataToFile = false
-        guard writesDataToFile else { return }
-        let jsonObject = try JSONSerialization.jsonObject(with: self, options: [])
-        let prettyJSONData = try JSONSerialization.data(withJSONObject: jsonObject, options: .prettyPrinted)
-        let fileName = DateFormatter.tFractionTimezone.string(from: Date())
-        let fileURL = FileManager.default.temporaryDirectory.appendingPathComponent(fileName).appendingPathExtension("json")
-        try prettyJSONData.write(to: fileURL, options: .atomicWrite)
-        debugPrint("wrote \(count) bytes to file URL: \(fileURL.absoluteString)")
     }
     
 }
