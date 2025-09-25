@@ -55,7 +55,7 @@ public extension URLRequest {
 
 public extension URLRequest {
     
-    @available(*, deprecated, message: "Use `Fetcher().fetched()` instead.")
+    //@available(*, deprecated, message: "Use `Fetcher().fetched()` instead.")
     func decodedResponse<Response: Decodable>(
         decoder: JSONDecoder? = nil,
         type: Response.Type = Response.self,

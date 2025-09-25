@@ -9,12 +9,25 @@
 
 import Foundation
 
-public struct Fetcher<Value: Decodable> {
+public struct Fetcher<Value> {
     public let request: URLRequest
-    public let decodedValue: (Data) async throws -> Value
+    public let decoded: (Data) async throws -> Value
+    
+    // TODO: Why is this init needed and not synthesized?
+    
+    // TODO: Why is the unwrap init called instead fo this one, with a trailing closure?
+    
+    public init(
+        request: URLRequest,
+        decoded: @escaping (Data) async throws -> Value
+    ) {
+        self.request = request
+        self.decoded = decoded
+    }
+    
 }
 
-public extension Fetcher {
+public extension Fetcher where Value: Decodable{
     
     init(
         request: URLRequest,
@@ -22,8 +35,8 @@ public extension Fetcher {
         mappedError: ((Swift.Error) -> Swift.Error)? = nil
     ) {
         self.request = request
-        self.decodedValue = { data in
-            try data.decodedValue(
+        self.decoded = { data in
+            try data.decoded(
                 decoder: decoder,
                 mappedError: mappedError
             )
@@ -37,8 +50,8 @@ public extension Fetcher {
         unwrap: @escaping (Wrapped) -> Value
     ) {
         self.request = request
-        self.decodedValue = { data in
-            let wrapped: Wrapped = try data.decodedValue(
+        self.decoded = { data in
+            let wrapped: Wrapped = try data.decoded(
                 decoder: decoder,
                 mappedError: mappedError
             )
@@ -51,14 +64,14 @@ public extension Fetcher {
     
     func fetched() async throws -> Value {
         let responseData = try await request.responseData()
-        return try await decodedValue(responseData)
+        return try await decoded(responseData)
     }
     
 }
 
 private extension Data {
     
-    func decodedValue<Value: Decodable>(
+    func decoded<Value: Decodable>(
         decoder: JSONDecoder? = nil,
         mappedError: ((Swift.Error) -> Swift.Error)? = nil
     ) throws -> Value {
