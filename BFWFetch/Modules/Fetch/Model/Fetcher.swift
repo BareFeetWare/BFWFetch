@@ -47,7 +47,7 @@ public extension Fetcher where Value: Decodable{
         request: URLRequest,
         decoder: JSONDecoder? = nil,
         mappedError: ((Swift.Error) -> Swift.Error)? = nil,
-        unwrap: @escaping (Wrapped) -> Value
+        unwrap: @escaping (Wrapped) throws -> Value
     ) {
         self.request = request
         self.decoded = { data in
@@ -55,7 +55,7 @@ public extension Fetcher where Value: Decodable{
                 decoder: decoder,
                 mappedError: mappedError
             )
-            return unwrap(wrapped)
+            return try unwrap(wrapped)
         }
     }
 }
@@ -67,6 +67,13 @@ public extension Fetcher {
         return try await decoded(responseData)
     }
     
+    func map<T>(transform: @escaping (Value) async throws -> T) -> Fetcher<T> {
+        .init(request: request) { data in
+            try await transform(
+                try decoded(data)
+            )
+        }
+    }
 }
 
 private extension Data {
