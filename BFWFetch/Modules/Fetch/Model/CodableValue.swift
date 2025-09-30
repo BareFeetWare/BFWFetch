@@ -39,7 +39,7 @@ extension CodableValue {
             case .expectedType(let type):
                 "The value was not the expected type: \(type)."
             case .missingValueForKey(let key):
-                "The value was missing for the key: \(key)."
+                "Missing value for key: \"\(key)\"."
             }
         }
     }
@@ -47,9 +47,13 @@ extension CodableValue {
 
 // MARK: - Convenience Inits
 
-extension CodableValue {
+public extension CodableValue {
     
-    public init?(any: Any) {
+    init(_ encodable: Encodable) throws {
+        self = try JSONDecoder().decode(Self.self, from: JSONEncoder().encode(encodable))
+    }
+    
+    init?(any: Any) {
         switch any {
         case let string as String:
             self = .string(string)
@@ -70,7 +74,7 @@ extension CodableValue {
         }
     }
     
-    public init(dictionary: [String: Any]) {
+    init(dictionary: [String: Any]) {
         self = .dictionary(dictionary.compactMapValues(Self.init(any:)))
     }
 }
@@ -269,6 +273,12 @@ public extension CodableValue {
         guard case let .bool(bool) = self
         else { throw Error.expectedType("bool") }
         return bool
+    }
+    
+    func int() throws -> Int {
+        guard case let .int(int) = self
+        else { throw Error.expectedType("int") }
+        return int
     }
     
     /// Replaces any brace wrapped key with value.string(key: key). Such as "vehicles/{id}/drivers" -> "vehicles/123/drivers", if value.string(key: "id") = "123"
