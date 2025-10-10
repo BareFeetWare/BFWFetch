@@ -14,7 +14,7 @@ public enum OAuth {}
 extension OAuth {
     
     public struct Credential: Decodable {
-        public let accessToken: String
+        public let accessToken: String?
         public let tokenType: String?
         public let expiresTimeInterval: TimeInterval?
         public var refreshToken: String?
@@ -44,7 +44,7 @@ extension OAuth {
 public extension OAuth.Credential {
     
     init(
-        accessToken: String,
+        accessToken: String? = nil,
         tokenType: String? = nil,
         refreshToken: String? = nil,
         idToken: String? = nil,
@@ -62,8 +62,8 @@ public extension OAuth.Credential {
 
 public extension OAuth.Credential {
     
-    var summary: String {
-        String(accessToken.prefix(50))
+    var summary: String? {
+        (accessToken ?? idToken).map { String($0.prefix(50)) }
     }
     
 }
