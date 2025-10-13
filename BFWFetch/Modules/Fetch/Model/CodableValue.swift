@@ -281,6 +281,16 @@ public extension CodableValue {
         return int
     }
     
+    func double() throws -> Double {
+        if case let .double(double) = self {
+            double
+        } else if case let .int(int) = self {
+            Double(int)
+        } else {
+            throw Error.expectedType("double")
+        }
+    }
+    
     /// Replaces any brace wrapped key with value.string(key: key). Such as "vehicles/{id}/drivers" -> "vehicles/123/drivers", if value.string(key: "id") = "123"
     func inserted(into keysPlaceholder: String) -> String {
         if #available(iOS 16, *) {
