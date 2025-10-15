@@ -87,7 +87,10 @@ private extension Data {
             if let dataString = String(data: data, encoding: .utf8) {
                 debugPrint("data = \(dataString)")
             }
-            try? data.writeJSONToTemporaryFile()
+#if DEBUG
+            // Enable if required for debugging.
+            // try? data.writeJSONToTemporaryFile()
+#endif
             do {
                 let decoder: JSONDecoder = decoder
                 ?? (Value.self as? DecoderProvider.Type)?.decoder
@@ -108,9 +111,6 @@ private extension Data {
     }
     
     func writeJSONToTemporaryFile() throws {
-        // Set to true for debugging.
-        let writesDataToFile = false
-        guard writesDataToFile else { return }
         let jsonObject = try JSONSerialization.jsonObject(with: self, options: [])
         let prettyJSONData = try JSONSerialization.data(withJSONObject: jsonObject, options: .prettyPrinted)
         let fileName = DateFormatter.tFractionTimezone.string(from: Date())
