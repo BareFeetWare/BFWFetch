@@ -11,17 +11,20 @@ import Foundation
 
 public struct Fetcher<Value> {
     public let request: URLRequest
+    public let refreshedAuthorizationValue: (() async throws -> String)?
     public let decoded: (Data) async throws -> Value
     
     // TODO: Why is this init needed and not synthesized?
     
-    // TODO: Why is the unwrap init called instead fo this one, with a trailing closure?
+    // TODO: Why is the unwrap init called instead of this one, with a trailing closure?
     
     public init(
         request: URLRequest,
+        refreshedAuthorizationValue: (() async throws -> String)? = nil,
         decoded: @escaping (Data) async throws -> Value
     ) {
         self.request = request
+        self.refreshedAuthorizationValue = refreshedAuthorizationValue
         self.decoded = decoded
     }
     
@@ -31,10 +34,12 @@ public extension Fetcher where Value: Decodable{
     
     init(
         request: URLRequest,
+        refreshedAuthorizationValue: (() async throws -> String)? = nil,
         decoder: JSONDecoder? = nil,
         mappedError: ((Swift.Error) -> Swift.Error)? = nil
     ) {
         self.request = request
+        self.refreshedAuthorizationValue = refreshedAuthorizationValue
         self.decoded = { data in
             try data.decoded(
                 decoder: decoder,
@@ -45,11 +50,13 @@ public extension Fetcher where Value: Decodable{
     
     init<Wrapped: Decodable>(
         request: URLRequest,
+        refreshedAuthorizationValue: (() async throws -> String)? = nil,
         decoder: JSONDecoder? = nil,
         mappedError: ((Swift.Error) -> Swift.Error)? = nil,
         unwrap: @escaping (Wrapped) throws -> Value
     ) {
         self.request = request
+        self.refreshedAuthorizationValue = refreshedAuthorizationValue
         self.decoded = { data in
             let wrapped: Wrapped = try data.decoded(
                 decoder: decoder,
@@ -63,7 +70,11 @@ public extension Fetcher where Value: Decodable{
 public extension Fetcher {
     
     func fetched() async throws -> Value {
-        let responseData = try await request.responseData()
+        let responseData = if let refreshedAuthorizationValue {
+            try await request.responseData(refreshedAuthorizationValue: refreshedAuthorizationValue)
+        } else {
+            try await request.responseData()
+        }
         return try await decoded(responseData)
     }
     
