@@ -48,6 +48,13 @@ public extension URLRequest {
             .authorization("Basic \(basicToken)")
         }
         
+        public static func authorization(
+            basicTokenUsername username: String,
+            password: String
+        ) -> Self {
+            .authorization(basicToken: Data((username + ":" + password).utf8).base64EncodedString())
+        }
+        
         public static func authorization(bearerToken: String) -> Self {
             .authorization("Bearer \(bearerToken)")
         }
