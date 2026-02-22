@@ -123,6 +123,31 @@ extension CodableValue: ExpressibleByDictionaryLiteral {
     }
 }
 
+extension CodableValue: Equatable {
+    public static func == (lhs: CodableValue, rhs: CodableValue) -> Bool {
+        switch (lhs, rhs) {
+        case (.string(let l), .string(let r)):
+            return l == r
+        case (.int(let l), .int(let r)):
+            return l == r
+        case (.double(let l), .double(let r)):
+            return l == r
+        case (.bool(let l), .bool(let r)):
+            return l == r
+        case (.null, .null):
+            return true
+        case (.array(let l), .array(let r)):
+            return l == r
+        case (.dictionary(let l), .dictionary(let r)):
+            return l == r
+        case (.unknown(let l), .unknown(let r)):
+            return l == r
+        default:
+            return false
+        }
+    }
+}
+
 extension CodableValue: Codable {
     
     public init(from decoder: Decoder) throws {
@@ -304,17 +329,64 @@ public extension CodableValue {
             }
         } else {
             let pattern = #"\{([a-zA-Z0-9_]+)\}"#
-            guard let regex = try? NSRegularExpression(pattern: pattern) else { return keysPlaceholder }
+            guard let regex = try? NSRegularExpression(pattern: pattern)
+            else { return keysPlaceholder }
             let matches = regex.matches(in: keysPlaceholder, range: NSRange(keysPlaceholder.startIndex..., in: keysPlaceholder))
             return matches.reversed().reduce(into: keysPlaceholder) { valuePath, match in
                 guard match.numberOfRanges == 2,
                       let range = Range(match.range(at: 0), in: keysPlaceholder),
-                      let keyRange = Range(match.range(at: 1), in: keysPlaceholder) else { return }
+                      let keyRange = Range(match.range(at: 1), in: keysPlaceholder)
+                else { return }
                 let key = String(keysPlaceholder[keyRange])
                 if let replacement = self.string(key: key) {
                     valuePath.replaceSubrange(range, with: replacement)
                 }
             }
+        }
+    }
+    
+    /// Returns a copy of self, removing any properties whose value is the same as those in the comparedValue.
+    func removingDuplicates(comparedValue: Self) throws -> Self {
+        switch (self, comparedValue) {
+        case (.dictionary(let selfDictionary), .dictionary(let comparedDictionary)):
+            // Recursively remove duplicates for nested structures
+            var filteredDictionary: [String: Self] = [:]
+            for (key, value) in selfDictionary {
+                if let comparedValue = comparedDictionary[key] {
+                    // If the key exists in compared, recursively remove duplicates
+                    let filteredValue = try value.removingDuplicates(comparedValue: comparedValue)
+                    // Only include if the result is not null (i.e., there are differences)
+                    if filteredValue != .null {
+                        filteredDictionary[key] = filteredValue
+                    }
+                } else {
+                    // Key doesn't exist in compared, so keep it
+                    filteredDictionary[key] = value
+                }
+            }
+            return .dictionary(filteredDictionary)
+            
+        case (.array(let selfArray), .array(let comparedArray)):
+            // For arrays, filter by index and compact the result
+            var filteredArray: [CodableValue] = []
+            for (index, value) in selfArray.enumerated() {
+                if index < comparedArray.count {
+                    // Compare with the element at the same index
+                    if value != comparedArray[index] {
+                        // Values are different, keep it
+                        filteredArray.append(value)
+                    }
+                    // If values are equal, skip (don't append)
+                } else {
+                    // Element is beyond the compared array, keep it
+                    filteredArray.append(value)
+                }
+            }
+            return .array(filteredArray)
+            
+        default:
+            // For non-collection types, return self if different, otherwise return null
+            return self == comparedValue ? .null : self
         }
     }
     
