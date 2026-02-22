@@ -39,6 +39,8 @@ extension OAuth {
     
 }
 
+extension OAuth.Credential: Encodable {}
+
 // MARK: - Convenience Inits
 
 public extension OAuth.Credential {
