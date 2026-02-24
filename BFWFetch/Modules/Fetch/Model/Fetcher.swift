@@ -13,6 +13,7 @@ public struct Fetcher<Value> {
     public let request: URLRequest
     public let refreshedAuthorizationValue: (() async throws -> String)?
     public let decoded: (Data) async throws -> Value
+    public let mappedError: ((Swift.Error) -> Swift.Error)?
     
     // TODO: Why is this init needed and not synthesized?
     
@@ -21,11 +22,13 @@ public struct Fetcher<Value> {
     public init(
         request: URLRequest,
         refreshedAuthorizationValue: (() async throws -> String)? = nil,
-        decoded: @escaping (Data) async throws -> Value
+        decoded: @escaping (Data) async throws -> Value,
+        mappedError: ((Swift.Error) -> Swift.Error)? = nil
     ) {
         self.request = request
         self.refreshedAuthorizationValue = refreshedAuthorizationValue
         self.decoded = decoded
+        self.mappedError = mappedError
     }
     
 }
@@ -43,9 +46,11 @@ public extension Fetcher where Value: Decodable{
         self.decoded = { data in
             try data.decoded(
                 decoder: decoder,
+                // TODO: Is mappedError needed here now?
                 mappedError: mappedError
             )
         }
+        self.mappedError = mappedError
     }
     
     init<Wrapped: Decodable>(
@@ -64,18 +69,28 @@ public extension Fetcher where Value: Decodable{
             )
             return try unwrap(wrapped)
         }
+        self.mappedError = mappedError
     }
 }
 
 public extension Fetcher {
     
     func fetched() async throws -> Value {
-        let responseData = if let refreshedAuthorizationValue {
-            try await request.responseData(refreshedAuthorizationValue: refreshedAuthorizationValue)
-        } else {
-            try await request.responseData()
+        do {
+            let responseData = if let refreshedAuthorizationValue {
+                // TODO: Perhaps simplify to one call with optional refreshedAuthorizationValue.
+                try await request.responseData(refreshedAuthorizationValue: refreshedAuthorizationValue)
+            } else {
+                try await request.responseData()
+            }
+            return try await decoded(responseData)
+        } catch {
+            if let mappedError {
+                throw mappedError(error)
+            } else {
+                throw error
+            }
         }
-        return try await decoded(responseData)
     }
     
     func map<T>(transform: @escaping (Value) async throws -> T) -> Fetcher<T> {
