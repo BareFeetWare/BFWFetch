@@ -87,24 +87,26 @@ public extension URLRequest {
         url: URL,
         path: String?,
         headers: [String: String]? = nil,
-        httpMethod: HTTPMethod
+        httpMethod: HTTPMethod? = nil
     ) {
         let pathedURL = path.map(url.appendingPathComponent) ?? url
         self = URLRequest(url: pathedURL)
             .addingHeaders(headers)
-        self.httpMethod = httpMethod.rawValue
+        if let httpMethod {
+            self.httpMethod = httpMethod.rawValue
+        }
     }
     
     init(
         url: URL,
         path: String?,
-        headers: [Header],
-        httpMethod: HTTPMethod
+        headers: [Header]?,
+        httpMethod: HTTPMethod? = nil
     ) {
         self.init(
             url: url,
             path: path,
-            headers: headers.reduce(into: [:]) { dictionary, header in
+            headers: headers?.reduce(into: [:]) { dictionary, header in
                 dictionary[header.key] = header.value
             },
             httpMethod: httpMethod
