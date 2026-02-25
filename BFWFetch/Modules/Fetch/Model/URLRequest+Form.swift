@@ -18,7 +18,7 @@ public extension URLRequest {
         public enum Encoding {
             case url
             case multipartForm(fileURL: URL)
-            case json
+            case json(encoder: JSONEncoder? = nil)
             case graphQL(query: String)
         }
         
@@ -75,10 +75,10 @@ public extension URLRequest {
                 mimeType: "image/jpeg",
                 boundary: boundary
             )
-        case .json:
+        case .json(let encoder):
             if let value {
                 newRequest.addHeaders([.contentJSON])
-                newRequest.httpBody = try JSONEncoder().encode(value)
+                newRequest.httpBody = try (encoder ?? .api).encode(value)
             }
         case .graphQL(let query):
             newRequest.addHeaders([.contentJSON])
