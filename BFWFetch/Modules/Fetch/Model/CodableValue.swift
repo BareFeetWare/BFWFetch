@@ -272,6 +272,13 @@ public extension CodableValue {
         string(key: "name", fallbackToPartial: true)
     }
     
+    var title: String? {
+        ["title", "name", "description", "descriptor"]
+            .lazy
+            .compactMap { string(key: $0) }
+            .first
+    }
+    
     var id: String? {
         string(key: "id", fallbackToPartial: true)
     }
