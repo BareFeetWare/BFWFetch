@@ -31,6 +31,16 @@ public extension URLRequest {
     
 }
 
+// MARK: - Static convenience instances
+
+public extension URLRequest.Form.Encoding {
+    
+    static var json: Self {
+        .json(encoder: nil)
+    }
+    
+}
+
 // MARK: - Modifiers
 
 public extension URLRequest {

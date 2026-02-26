@@ -40,10 +40,6 @@ extension GraphQL: Encodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(query, forKey: .query)
-        if let variables {
-            try variables.encode(to: container.superEncoder(forKey: .variables))
-        } else {
-            try container.encodeNil(forKey: .variables)
-        }
+        try variables?.encode(to: container.superEncoder(forKey: .variables))
     }
 }

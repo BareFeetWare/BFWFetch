@@ -166,7 +166,8 @@ public extension URLRequest {
         return try withURL(url.appendingQuery(dictionary))
     }
     
-    func withHTTPMethod(_ httpMethod: HTTPMethod) -> Self {
+    func withHTTPMethod(_ httpMethod: HTTPMethod?) -> Self {
+        guard let httpMethod else { return self }
         var newRequest = self
         newRequest.httpMethod = httpMethod.rawValue
         return newRequest
