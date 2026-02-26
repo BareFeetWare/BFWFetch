@@ -9,6 +9,7 @@
 
 import Foundation
 
+/// Fetch contains the URLRequest and response processing for an API call.
 public struct Fetcher<Value> {
     public let request: URLRequest
     public let refreshedAuthorizationValue: (() async throws -> String)?
@@ -32,6 +33,8 @@ public struct Fetcher<Value> {
     }
     
 }
+
+// MARK: - Convenience Inits
 
 public extension Fetcher where Value: Decodable{
     
@@ -73,7 +76,20 @@ public extension Fetcher where Value: Decodable{
     }
 }
 
+// MARK: - Functions
+
 public extension Fetcher {
+    
+    func mappedRequest(
+        _ transform: (URLRequest) async throws -> URLRequest
+    ) async throws -> Self {
+        try await .init(
+            request: transform(request),
+            refreshedAuthorizationValue: refreshedAuthorizationValue,
+            decoded: decoded,
+            mappedError: mappedError,
+        )
+    }
     
     func fetched() async throws -> Value {
         do {
@@ -101,6 +117,8 @@ public extension Fetcher {
         }
     }
 }
+
+// MARK: - Private Extensions
 
 private extension Data {
     
