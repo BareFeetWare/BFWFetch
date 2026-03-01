@@ -11,7 +11,15 @@ import Foundation
 public extension URLRequest {
     
     func urlFetched() async throws -> URLFetched {
-        debugPrint("request = \(self)")
+        debugPrint("request = \(httpMethod ?? "GET") \(self)")
+        if let headerFields = allHTTPHeaderFields {
+            let headersString = headerFields
+                .map { field in
+                    field.key + ": " + field.value.prefix(40)
+                }
+                .joined(separator: ", ")
+            debugPrint("request headers = \(headersString)")
+        }
         if let httpBody,
            let bodyString = String(data: httpBody, encoding: .utf8)
         {
