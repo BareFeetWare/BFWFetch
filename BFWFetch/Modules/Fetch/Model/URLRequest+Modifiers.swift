@@ -140,9 +140,10 @@ public extension URLRequest {
         addingHeaders(headers?.dictionary)
     }
     
-    /// Replaces just the given header values, leaving other exitsing headers untouched.
+    /// Replaces just the given header values, leaving other existing headers untouched.
     func replacingHeaders(_ headers: [Header]) -> Self {
-        let newHeadersDictionary = allHTTPHeaderFields?.merging(headers.dictionary) { $1 }
+        let newHeadersDictionary = (allHTTPHeaderFields ?? [:])
+            .merging(headers.dictionary) { $1 }
         var newRequest = self
         newRequest.allHTTPHeaderFields = newHeadersDictionary
         return newRequest
