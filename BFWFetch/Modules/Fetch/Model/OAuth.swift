@@ -19,6 +19,8 @@ extension OAuth {
         public let expiresTimeInterval: TimeInterval?
         public var refreshToken: String?
         public let idToken: String?
+        /// Set by the app as a reference for expiresTimeInterval. Not retrieved from the authorization API.
+        public let fetchedDate: Date?
     }
     
     public enum Grant: String {
@@ -56,6 +58,7 @@ extension OAuth.Credential: Decodable {
         } else {
             expiresTimeInterval = nil
         }
+        fetchedDate = Date()
     }
     
 }
@@ -71,12 +74,14 @@ public extension OAuth.Credential {
         tokenType: String? = nil,
         refreshToken: String? = nil,
         idToken: String? = nil,
+        fetchedDate: Date? = nil
     ) {
         self.accessToken = accessToken
         self.tokenType = tokenType
         self.expiresTimeInterval = nil
         self.refreshToken = refreshToken
         self.idToken = idToken
+        self.fetchedDate = fetchedDate
     }
     
 }
@@ -89,4 +94,17 @@ public extension OAuth.Credential {
         (accessToken ?? idToken).map { String($0.prefix(50)) }
     }
     
+    func remainingTimeInterval() -> TimeInterval? {
+        guard let expiresTimeInterval,
+              let fetchedDate
+        else { return nil }
+        return expiresTimeInterval - Date().timeIntervalSince(fetchedDate)
+    }
+    
+    func hasExpired() -> Bool {
+        guard let expiresTimeInterval,
+              let fetchedDate
+        else { return false }
+        return fetchedDate.addingTimeInterval(expiresTimeInterval) <= Date()
+    }
 }

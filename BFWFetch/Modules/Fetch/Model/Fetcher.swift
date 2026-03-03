@@ -12,7 +12,7 @@ import Foundation
 /// Fetch contains the URLRequest and response processing for an API call.
 public struct Fetcher<Value> {
     public let request: URLRequest
-    public let refreshedAuthorizationValue: (() async throws -> String)?
+    public let authorizationHeader: ((_ needsRefetch: Bool) async throws -> URLRequest.Header)?
     public let decoded: (Data) async throws -> Value
     public let mappedError: ((Swift.Error) -> Swift.Error)?
     
@@ -22,12 +22,12 @@ public struct Fetcher<Value> {
     
     public init(
         request: URLRequest,
-        refreshedAuthorizationValue: (() async throws -> String)? = nil,
+        authorizationHeader: ((_ needsRefetch: Bool) async throws -> URLRequest.Header)? = nil,
         decoded: @escaping (Data) async throws -> Value,
         mappedError: ((Swift.Error) -> Swift.Error)? = nil
     ) {
         self.request = request
-        self.refreshedAuthorizationValue = refreshedAuthorizationValue
+        self.authorizationHeader = authorizationHeader
         self.decoded = decoded
         self.mappedError = mappedError
     }
@@ -36,16 +36,30 @@ public struct Fetcher<Value> {
 
 // MARK: - Convenience Inits
 
+public extension Fetcher where Value == Data {
+    
+    init(
+        request: URLRequest,
+        authorizationHeader: ((_ needsRefetch: Bool) async throws -> URLRequest.Header)? = nil,
+        mappedError: ((Swift.Error) -> Swift.Error)? = nil
+    ) {
+        self.request = request
+        self.authorizationHeader = authorizationHeader
+        self.decoded = { $0 }
+        self.mappedError = mappedError
+    }
+}
+
 public extension Fetcher where Value: Decodable{
     
     init(
         request: URLRequest,
-        refreshedAuthorizationValue: (() async throws -> String)? = nil,
+        authorizationHeader: ((_ needsRefetch: Bool) async throws -> URLRequest.Header)? = nil,
         decoder: JSONDecoder? = nil,
         mappedError: ((Swift.Error) -> Swift.Error)? = nil
     ) {
         self.request = request
-        self.refreshedAuthorizationValue = refreshedAuthorizationValue
+        self.authorizationHeader = authorizationHeader
         self.decoded = { data in
             try data.decoded(
                 decoder: decoder,
@@ -58,13 +72,13 @@ public extension Fetcher where Value: Decodable{
     
     init<Wrapped: Decodable>(
         request: URLRequest,
-        refreshedAuthorizationValue: (() async throws -> String)? = nil,
+        authorizationHeader: ((_ needsRefetch: Bool) async throws -> URLRequest.Header)? = nil,
         decoder: JSONDecoder? = nil,
         mappedError: ((Swift.Error) -> Swift.Error)? = nil,
         unwrap: @escaping (Wrapped) throws -> Value
     ) {
         self.request = request
-        self.refreshedAuthorizationValue = refreshedAuthorizationValue
+        self.authorizationHeader = authorizationHeader
         self.decoded = { data in
             let wrapped: Wrapped = try data.decoded(
                 decoder: decoder,
@@ -85,7 +99,7 @@ public extension Fetcher {
     ) async throws -> Self {
         try await .init(
             request: transform(request),
-            refreshedAuthorizationValue: refreshedAuthorizationValue,
+            authorizationHeader: authorizationHeader,
             decoded: decoded,
             mappedError: mappedError,
         )
@@ -93,19 +107,17 @@ public extension Fetcher {
     
     func fetched() async throws -> Value {
         do {
-            let responseData = if let refreshedAuthorizationValue {
+            let responseData = if let authorizationHeader {
                 // TODO: Perhaps simplify to one call with optional refreshedAuthorizationValue.
-                try await request.responseData(refreshedAuthorizationValue: refreshedAuthorizationValue)
+                try await request
+                    .responseData(authorizationHeader: authorizationHeader)
             } else {
-                try await request.responseData()
+                try await request
+                    .responseData()
             }
             return try await decoded(responseData)
         } catch {
-            if let mappedError {
-                throw mappedError(error)
-            } else {
-                throw error
-            }
+            throw (mappedError?(error) ?? error)
         }
     }
     

@@ -32,54 +32,32 @@ public extension URLRequest {
         try await urlFetched().httpURLResponse()
     }
     
-    func refreshedAuthorization(
-        value: () async throws -> String
-    ) async throws -> Self {
-        replacingHeaders([.authorization(try await value())])
-    }
-    
     func responseData() async throws -> Data {
         try await urlFetched().responseData()
     }
     
     func responseData(
-        authorizingURLRequest: () async throws -> URLRequest
+        authorizationHeader: (_ needsRefetch: Bool) async throws -> URLRequest.Header
     ) async throws -> Data {
         do {
-            return try await responseData()
+            return try await self
+                .replacingHeaders([authorizationHeader(false)])
+                .responseData()
         } catch {
             if case let URLResponse.Error.httpURLResponse(httpURLResponse, _) = error,
                httpURLResponse.statusCode == 401
             {
                 debugPrint("Token expired. Refreshing...")
-                return try await authorizingURLRequest()
+                let authorizationHeader = try await authorizationHeader(true)
+                debugPrint("authorizationHeader: \(authorizationHeader.value)")
+                let reauthorizedRequest = self.replacingHeaders([authorizationHeader])
+                debugPrint("reauthorizedRequest: \(reauthorizedRequest)")
+                return try await reauthorizedRequest
                     .responseData()
             } else {
                 throw error
             }
         }
-    }
-    
-    func responseData(
-        refreshedBearerToken: () async throws -> String
-    ) async throws -> Data {
-        try await responseData(
-            authorizingURLRequest: {
-                self.replacingHeaders(
-                    [.authorization(bearerToken: try await refreshedBearerToken())]
-                )
-            }
-        )
-    }
-    
-    func responseData(
-        refreshedAuthorizationValue: () async throws -> String
-    ) async throws -> Data {
-        try await responseData(
-            authorizingURLRequest: {
-                try await refreshedAuthorization(value: refreshedAuthorizationValue)
-            }
-        )
     }
     
 }
@@ -98,17 +76,6 @@ public extension URLRequest {
             mappedError: mappedError
         )
         .fetched()
-    }
-    
-    func decodedResponse<Response: Decodable>(
-        decoder: JSONDecoder = .init(),
-        type: Response.Type = Response.self,
-        refreshedBearerToken: () async throws -> String
-    ) async throws -> Response {
-        try await decoder.decode(
-            Response.self,
-            from: responseData(refreshedBearerToken: refreshedBearerToken)
-        )
     }
     
 }
