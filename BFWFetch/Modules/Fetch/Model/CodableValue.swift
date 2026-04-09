@@ -273,7 +273,7 @@ public extension CodableValue {
     }
     
     var title: String? {
-        ["title", "name", "description", "descriptor"]
+        ["title", "name", "descriptor", "description"]
             .lazy
             .compactMap { string(key: $0) }
             .first
