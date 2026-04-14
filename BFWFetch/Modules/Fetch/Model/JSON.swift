@@ -1,5 +1,5 @@
 //
-//  CodableValue.swift
+//  JSON.swift
 //  BFWFetch
 //
 //  Created by Tom Brodhurst-Hill on 25/8/2025.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum CodableValue {
+public enum JSON {
     case string(String)
     case int(Int)
     case double(Double)
@@ -21,7 +21,7 @@ public enum CodableValue {
 
 // MARK: - Types
 
-extension CodableValue {
+extension JSON {
     
     enum Error: LocalizedError {
         case expectedType(String)
@@ -47,7 +47,7 @@ extension CodableValue {
 
 // MARK: - Convenience Inits
 
-public extension CodableValue {
+public extension JSON {
     
     init(_ encodable: Encodable) throws {
         self = try JSONDecoder().decode(Self.self, from: JSONEncoder().encode(encodable))
@@ -81,50 +81,50 @@ public extension CodableValue {
 
 // MARK: - Protocols
 
-extension CodableValue: ExpressibleByStringLiteral {
+extension JSON: ExpressibleByStringLiteral {
     public init(stringLiteral value: String) {
         self = .string(value)
     }
 }
 
-extension CodableValue: ExpressibleByIntegerLiteral {
+extension JSON: ExpressibleByIntegerLiteral {
     public init(integerLiteral value: Int) {
         self = .int(value)
     }
 }
 
-extension CodableValue: ExpressibleByFloatLiteral {
+extension JSON: ExpressibleByFloatLiteral {
     public init(floatLiteral value: Double) {
         self = .double(value)
     }
 }
 
-extension CodableValue: ExpressibleByBooleanLiteral {
+extension JSON: ExpressibleByBooleanLiteral {
     public init(booleanLiteral value: Bool) {
         self = .bool(value)
     }
 }
 
-extension CodableValue: ExpressibleByNilLiteral {
+extension JSON: ExpressibleByNilLiteral {
     public init(nilLiteral: ()) {
         self = .null
     }
 }
 
-extension CodableValue: ExpressibleByArrayLiteral {
-    public init(arrayLiteral elements: CodableValue...) {
+extension JSON: ExpressibleByArrayLiteral {
+    public init(arrayLiteral elements: JSON...) {
         self = .array(elements)
     }
 }
 
-extension CodableValue: ExpressibleByDictionaryLiteral {
-    public init(dictionaryLiteral elements: (String, CodableValue)...) {
+extension JSON: ExpressibleByDictionaryLiteral {
+    public init(dictionaryLiteral elements: (String, JSON)...) {
         self = .dictionary(Dictionary(uniqueKeysWithValues: elements))
     }
 }
 
-extension CodableValue: Equatable {
-    public static func == (lhs: CodableValue, rhs: CodableValue) -> Bool {
+extension JSON: Equatable {
+    public static func == (lhs: JSON, rhs: JSON) -> Bool {
         switch (lhs, rhs) {
         case (.string(let l), .string(let r)):
             return l == r
@@ -148,7 +148,7 @@ extension CodableValue: Equatable {
     }
 }
 
-extension CodableValue: Codable {
+extension JSON: Codable {
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
@@ -197,7 +197,7 @@ extension CodableValue: Codable {
 
 // MARK: - Functions
 
-public extension CodableValue {
+public extension JSON {
     
     var summary: String {
         switch self {
@@ -283,13 +283,13 @@ public extension CodableValue {
         string(key: "id", fallbackToPartial: true)
     }
     
-    func array() throws -> [CodableValue] {
+    func array() throws -> [JSON] {
         guard case let .array(array) = self
         else { throw Error.expectedType("array") }
         return array
     }
     
-    func dictionary() throws -> [String: CodableValue] {
+    func dictionary() throws -> [String: JSON] {
         guard case let .dictionary(dictionary) = self
         else { throw Error.expectedType("dictionary") }
         return dictionary
@@ -375,7 +375,7 @@ public extension CodableValue {
             
         case (.array(let selfArray), .array(let comparedArray)):
             // For arrays, filter by index and compact the result
-            var filteredArray: [CodableValue] = []
+            var filteredArray: [JSON] = []
             for (index, value) in selfArray.enumerated() {
                 if index < comparedArray.count {
                     // Compare with the element at the same index

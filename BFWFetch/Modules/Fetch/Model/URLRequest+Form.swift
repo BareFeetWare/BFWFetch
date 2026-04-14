@@ -58,7 +58,10 @@ public extension URLRequest {
                 .compactMapValues({ $0 })
                 .nilIfEmpty
             else { return self }
-            return try httpBody(encoding: encoding, value: CodableValue.init(dictionary: dictionary))
+            return try httpBody(
+                encoding: encoding,
+                value: JSON(dictionary: dictionary)
+            )
         }
     }
     

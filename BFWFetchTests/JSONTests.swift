@@ -1,5 +1,5 @@
 //
-//  CodableValueTests.swift
+//  JSONTests.swift
 //  BFWFetch
 //
 //  Created by Tom Brodhurst-Hill on 25/8/2025.
@@ -10,117 +10,117 @@ import Testing
 import Foundation
 @testable import BFWFetch
 
-@Suite("CodableValue Tests")
-struct CodableValueTests {
+@Suite("JSON Tests")
+struct JSONTests {
     
     // MARK: - Equatable Tests
     
     @Suite("Equatable Conformance")
     struct EquatableTests {
         
-        @Test("String values are equal")
+        @Test("String JSONs are equal")
         func stringEquality() {
-            let value1: CodableValue = "hello"
-            let value2: CodableValue = "hello"
-            let value3: CodableValue = "world"
-            #expect(value1 == value2)
-            #expect(value1 != value3)
+            let json1: JSON = "hello"
+            let json2: JSON = "hello"
+            let json3: JSON = "world"
+            #expect(json1 == json2)
+            #expect(json1 != json3)
         }
         
-        @Test("Int values are equal")
+        @Test("Int JSONs are equal")
         func intEquality() {
-            let value1: CodableValue = 42
-            let value2: CodableValue = 42
-            let value3: CodableValue = 100
-            #expect(value1 == value2)
-            #expect(value1 != value3)
+            let json1: JSON = 42
+            let json2: JSON = 42
+            let json3: JSON = 100
+            #expect(json1 == json2)
+            #expect(json1 != json3)
         }
         
-        @Test("Double values are equal")
+        @Test("Double JSONs are equal")
         func doubleEquality() {
-            let value1: CodableValue = 3.14
-            let value2: CodableValue = 3.14
-            let value3: CodableValue = 2.71
-            #expect(value1 == value2)
-            #expect(value1 != value3)
+            let json1: JSON = 3.14
+            let json2: JSON = 3.14
+            let json3: JSON = 2.71
+            #expect(json1 == json2)
+            #expect(json1 != json3)
         }
         
-        @Test("Bool values are equal")
+        @Test("Bool JSONs are equal")
         func boolEquality() {
-            let value1: CodableValue = true
-            let value2: CodableValue = true
-            let value3: CodableValue = false
-            #expect(value1 == value2)
-            #expect(value1 != value3)
+            let json1: JSON = true
+            let json2: JSON = true
+            let json3: JSON = false
+            #expect(json1 == json2)
+            #expect(json1 != json3)
         }
         
-        @Test("Null values are equal")
+        @Test("Null JSONs are equal")
         func nullEquality() {
-            let value1: CodableValue = .null
-            let value2: CodableValue = .null
-            #expect(value1 == value2)
+            let json1: JSON = .null
+            let json2: JSON = .null
+            #expect(json1 == json2)
         }
         
-        @Test("Array values are equal")
+        @Test("Array JSONs are equal")
         func arrayEquality() {
-            let value1: CodableValue = [1, 2, 3]
-            let value2: CodableValue = [1, 2, 3]
-            let value3: CodableValue = [1, 2, 4]
-            let value4: CodableValue = [1, 2]
-            #expect(value1 == value2)
-            #expect(value1 != value3)
-            #expect(value1 != value4)
+            let json1: JSON = [1, 2, 3]
+            let json2: JSON = [1, 2, 3]
+            let json3: JSON = [1, 2, 4]
+            let json4: JSON = [1, 2]
+            #expect(json1 == json2)
+            #expect(json1 != json3)
+            #expect(json1 != json4)
         }
         
-        @Test("Dictionary values are equal")
+        @Test("Dictionary JSONs are equal")
         func dictionaryEquality() {
-            let value1: CodableValue = ["name": "John", "age": 30]
-            let value2: CodableValue = ["name": "John", "age": 30]
-            let value3: CodableValue = ["name": "Jane", "age": 30]
-            let value4: CodableValue = ["name": "John"]
-            #expect(value1 == value2)
-            #expect(value1 != value3)
-            #expect(value1 != value4)
+            let json1: JSON = ["name": "John", "age": 30]
+            let json2: JSON = ["name": "John", "age": 30]
+            let json3: JSON = ["name": "Jane", "age": 30]
+            let json4: JSON = ["name": "John"]
+            #expect(json1 == json2)
+            #expect(json1 != json3)
+            #expect(json1 != json4)
         }
         
         @Test("Nested structures are equal")
         func nestedEquality() {
-            let value1: CodableValue = [
+            let json1: JSON = [
                 "user": [
                     "name": "John",
                     "age": 30,
                     "tags": ["swift", "ios"]
                 ]
             ]
-            let value2: CodableValue = [
+            let json2: JSON = [
                 "user": [
                     "name": "John",
                     "age": 30,
                     "tags": ["swift", "ios"]
                 ]
             ]
-            let value3: CodableValue = [
+            let json3: JSON = [
                 "user": [
                     "name": "John",
                     "age": 30,
                     "tags": ["swift", "macos"]
                 ]
             ]
-            #expect(value1 == value2)
-            #expect(value1 != value3)
+            #expect(json1 == json2)
+            #expect(json1 != json3)
         }
         
         @Test("Different types are not equal")
         func differentTypesInequality() {
-            let string: CodableValue = "42"
-            let int: CodableValue = 42
-            let double: CodableValue = 42.0
-            let bool: CodableValue = true
-            let null: CodableValue = .null
-            #expect(string != int)
-            #expect(int != double)
-            #expect(string != bool)
-            #expect(int != null)
+            let stringJSON: JSON = "42"
+            let intJSON: JSON = 42
+            let doubleJSON: JSON = 42.0
+            let boolJSON: JSON = true
+            let nullJSON: JSON = .null
+            #expect(stringJSON != intJSON)
+            #expect(intJSON != doubleJSON)
+            #expect(stringJSON != boolJSON)
+            #expect(intJSON != nullJSON)
         }
     }
     
@@ -129,15 +129,15 @@ struct CodableValueTests {
     @Suite("removingDuplicates Function")
     struct RemovingDuplicatesTests {
         
-        @Test("Remove duplicate values from dictionary")
+        @Test("Remove duplicate JSONs from dictionary")
         func dictionaryRemoveDuplicates() throws {
-            let original: CodableValue = [
+            let original: JSON = [
                 "name": "John",
                 "age": 30,
                 "city": "New York",
                 "country": "USA"
             ]
-            let compared: CodableValue = [
+            let compared: JSON = [
                 "name": "John",
                 "age": 25,
                 "city": "New York"
@@ -156,11 +156,11 @@ struct CodableValueTests {
         
         @Test("Remove all duplicates from dictionary")
         func dictionaryRemoveAllDuplicates() throws {
-            let original: CodableValue = [
+            let original: JSON = [
                 "name": "John",
                 "age": 30
             ]
-            let compared: CodableValue = [
+            let compared: JSON = [
                 "name": "John",
                 "age": 30
             ]
@@ -169,14 +169,14 @@ struct CodableValueTests {
             #expect(resultDict.isEmpty)
         }
         
-        @Test("Keep all values when no duplicates in dictionary")
+        @Test("Keep all JSONs when no duplicates in dictionary")
         func dictionaryKeepAllNoDuplicates() throws {
-            let original: CodableValue = [
+            let original: JSON = [
                 "name": "John",
                 "age": 30,
                 "city": "New York"
             ]
-            let compared: CodableValue = [
+            let compared: JSON = [
                 "name": "Jane",
                 "age": 25,
                 "city": "Boston"
@@ -189,14 +189,14 @@ struct CodableValueTests {
             #expect(resultDict["city"] == "New York")
         }
         
-        @Test("Keep values not in compared dictionary")
+        @Test("Keep JSONs not in compared dictionary")
         func dictionaryKeepUniqueKeys() throws {
-            let original: CodableValue = [
+            let original: JSON = [
                 "name": "John",
                 "age": 30,
                 "email": "john@example.com"
             ]
-            let compared: CodableValue = [
+            let compared: JSON = [
                 "name": "John"
             ]
             let result = try original.removingDuplicates(comparedValue: compared)
@@ -209,10 +209,10 @@ struct CodableValueTests {
             #expect(resultDict["name"] == nil)
         }
         
-        @Test("Remove duplicate values from array")
+        @Test("Remove duplicate JSONs from array")
         func arrayRemoveDuplicates() throws {
-            let original: CodableValue = [1, 2, 3, 4, 5]
-            let compared: CodableValue = [1, 20, 3, 40]
+            let original: JSON = [1, 2, 3, 4, 5]
+            let compared: JSON = [1, 20, 3, 40]
             let result = try original.removingDuplicates(comparedValue: compared)
             let resultArray = try result.array()
             
@@ -226,17 +226,17 @@ struct CodableValueTests {
         
         @Test("Remove all duplicates from array")
         func arrayRemoveAllDuplicates() throws {
-            let original: CodableValue = [1, 2, 3]
-            let compared: CodableValue = [1, 2, 3]
+            let original: JSON = [1, 2, 3]
+            let compared: JSON = [1, 2, 3]
             let result = try original.removingDuplicates(comparedValue: compared)
             let resultArray = try result.array()
             #expect(resultArray.isEmpty)
         }
         
-        @Test("Keep all values when array is longer than compared")
+        @Test("Keep all JSONs when array is longer than compared")
         func arrayKeepExtraElements() throws {
-            let original: CodableValue = [1, 2, 3, 4, 5]
-            let compared: CodableValue = [1, 2]
+            let original: JSON = [1, 2, 3, 4, 5]
+            let compared: JSON = [1, 2]
             let result = try original.removingDuplicates(comparedValue: compared)
             let resultArray = try result.array()
             
@@ -247,25 +247,25 @@ struct CodableValueTests {
             #expect(resultArray[2] == 5)
         }
         
-        @Test("Scalar values return null when equal")
+        @Test("Scalar JSONs return null when equal")
         func scalarEqualReturnsNull() throws {
-            let original: CodableValue = "hello"
-            let compared: CodableValue = "hello"
+            let original: JSON = "hello"
+            let compared: JSON = "hello"
             let result = try original.removingDuplicates(comparedValue: compared)
             #expect(result == .null)
         }
         
-        @Test("Scalar values return self when different")
+        @Test("Scalar JSONs return self when different")
         func scalarDifferentReturnsSelf() throws {
-            let original: CodableValue = "hello"
-            let compared: CodableValue = "world"
+            let original: JSON = "hello"
+            let compared: JSON = "world"
             let result = try original.removingDuplicates(comparedValue: compared)
             #expect(result == "hello")
         }
         
         @Test("Nested dictionary removes duplicates")
         func nestedDictionaryRemoveDuplicates() throws {
-            let original: CodableValue = [
+            let original: JSON = [
                 "user": [
                     "name": "John",
                     "age": 30,
@@ -273,7 +273,7 @@ struct CodableValueTests {
                 ],
                 "status": "active"
             ]
-            let compared: CodableValue = [
+            let compared: JSON = [
                 "user": [
                     "name": "John",
                     "age": 25,
@@ -303,68 +303,68 @@ struct CodableValueTests {
         
         @Test("Replace single placeholder")
         func singlePlaceholder() {
-            let value: CodableValue = ["id": "123"]
+            let json: JSON = ["id": "123"]
             let template = "vehicles/{id}/drivers"
-            let result = value.inserted(into: template)
+            let result = json.inserted(into: template)
             #expect(result == "vehicles/123/drivers")
         }
         
         @Test("Replace multiple placeholders")
         func multiplePlaceholders() {
-            let value: CodableValue = [
+            let json: JSON = [
                 "vehicleId": "456",
                 "driverId": "789"
             ]
             let template = "vehicles/{vehicleId}/drivers/{driverId}"
-            let result = value.inserted(into: template)
+            let result = json.inserted(into: template)
             #expect(result == "vehicles/456/drivers/789")
         }
         
         @Test("Leave unmatched placeholders unchanged")
         func unmatchedPlaceholders() {
-            let value: CodableValue = ["id": "123"]
+            let json: JSON = ["id": "123"]
             let template = "vehicles/{id}/drivers/{name}"
-            let result = value.inserted(into: template)
+            let result = json.inserted(into: template)
             #expect(result == "vehicles/123/drivers/{name}")
         }
         
         @Test("Handle underscore in key names")
         func underscoreInKeys() {
-            let value: CodableValue = ["user_id": "abc123"]
+            let json: JSON = ["user_id": "abc123"]
             let template = "users/{user_id}/profile"
-            let result = value.inserted(into: template)
+            let result = json.inserted(into: template)
             #expect(result == "users/abc123/profile")
         }
         
         @Test("Handle numeric values in placeholders")
         func numericPlaceholders() {
-            let value: CodableValue = ["id123": "value"]
+            let json: JSON = ["id123": "value"]
             let template = "items/{id123}"
-            let result = value.inserted(into: template)
+            let result = json.inserted(into: template)
             #expect(result == "items/value")
         }
         
         @Test("Return unchanged when no placeholders")
         func noPlaceholders() {
-            let value: CodableValue = ["id": "123"]
+            let json: JSON = ["id": "123"]
             let template = "vehicles/all/drivers"
-            let result = value.inserted(into: template)
+            let result = json.inserted(into: template)
             #expect(result == "vehicles/all/drivers")
         }
         
-        @Test("Return unchanged when value is not dictionary")
-        func nonDictionaryValue() {
-            let value: CodableValue = "not a dictionary"
+        @Test("Return unchanged when JSON is not dictionary")
+        func nonDictionary() {
+            let json: JSON = "not a dictionary"
             let template = "vehicles/{id}/drivers"
-            let result = value.inserted(into: template)
+            let result = json.inserted(into: template)
             #expect(result == "vehicles/{id}/drivers")
         }
         
         @Test("Handle empty dictionary")
         func emptyDictionary() {
-            let value: CodableValue = [:]
+            let json: JSON = [:]
             let template = "vehicles/{id}/drivers"
-            let result = value.inserted(into: template)
+            let result = json.inserted(into: template)
             #expect(result == "vehicles/{id}/drivers")
         }
     }
