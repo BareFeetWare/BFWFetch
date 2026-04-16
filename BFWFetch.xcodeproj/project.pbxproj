@@ -40,6 +40,7 @@
 		E29F61B32613DC7000947455 /* RootScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29F61B22613DC7000947455 /* RootScene.swift */; };
 		E29F61B62613E91B00947455 /* DetailRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29F61B52613E91B00947455 /* DetailRow.swift */; };
 		E29F61B82613EBF900947455 /* Site+Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29F61B72613EBF900947455 /* Site+Mock.swift */; };
+		E2A3C42A2F90974200EC3DDD /* OpenEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A3C4292F90974200EC3DDD /* OpenEnum.swift */; };
 		E2A5484D2C51CD6A00A037FD /* URLResponse.Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A5484C2C51CD6A00A037FD /* URLResponse.Error.swift */; };
 		E2A55EB521AAD48E00812DC6 /* URLRequest+Form.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A55EAF21AAD48D00812DC6 /* URLRequest+Form.swift */; };
 		E2A55EBF21AAD8E200812DC6 /* URLComponents+queryItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A55EBE21AAD64600812DC6 /* URLComponents+queryItems.swift */; };
@@ -128,6 +129,7 @@
 		E29F61B22613DC7000947455 /* RootScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootScene.swift; sourceTree = "<group>"; };
 		E29F61B52613E91B00947455 /* DetailRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRow.swift; sourceTree = "<group>"; };
 		E29F61B72613EBF900947455 /* Site+Mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Site+Mock.swift"; sourceTree = "<group>"; };
+		E2A3C4292F90974200EC3DDD /* OpenEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenEnum.swift; sourceTree = "<group>"; };
 		E2A5484C2C51CD6A00A037FD /* URLResponse.Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLResponse.Error.swift; sourceTree = "<group>"; };
 		E2A55E8D21AAD3A500812DC6 /* BFWFetch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BFWFetch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2A55E9121AAD3A500812DC6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -272,6 +274,7 @@
 				E24CE2C32E5C22C40086B30C /* JSON.swift */,
 				E29F61992610431400947455 /* JSONDecoder+Date.swift */,
 				E29339312C46961300810E45 /* OAuth.swift */,
+				E2A3C4292F90974200EC3DDD /* OpenEnum.swift */,
 				E2F673622F5B8DA400ED80D4 /* SharedTask.swift */,
 				E29F619F2610448000947455 /* String+SnakeCase.swift */,
 				E29F61A126104BB900947455 /* URL+PathComponents.swift */,
@@ -568,6 +571,7 @@
 				E2A5484D2C51CD6A00A037FD /* URLResponse.Error.swift in Sources */,
 				E24CE2B82E5703440086B30C /* WebView.swift in Sources */,
 				E29F360D2F4BBD15001F6459 /* Codable+UserDefaults.swift in Sources */,
+				E2A3C42A2F90974200EC3DDD /* OpenEnum.swift in Sources */,
 				E265077E2E83BE91008D1A01 /* Fetcher.swift in Sources */,
 				E29339322C46961300810E45 /* OAuth.swift in Sources */,
 				E29F61A526104BB900947455 /* URLRequest+Modifiers.swift in Sources */,
