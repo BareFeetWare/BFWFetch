@@ -37,20 +37,20 @@ public extension URLRequest {
     }
     
     func responseData(
-        authorizationHeader: (_ needsRefetch: Bool) async throws -> HTTP.Header
+        authorizationProvider: any AuthorizationProvider
     ) async throws -> Data {
         do {
             return try await self
-                .replacingHeaders([authorizationHeader(false)])
+                .replacingHeaders([authorizationProvider.authorizationHeader(needsRefetch: false)])
                 .responseData()
         } catch {
             if case let URLResponse.Error.httpURLResponse(httpURLResponse, _) = error,
                httpURLResponse.statusCode == 401
             {
                 debugPrint("Token expired. Refreshing...")
-                let authorizationHeader = try await authorizationHeader(true)
-                debugPrint("authorizationHeader: \(authorizationHeader.value)")
-                let reauthorizedRequest = self.replacingHeaders([authorizationHeader])
+                let header = try await authorizationProvider.authorizationHeader(needsRefetch: true)
+                debugPrint("authorizationHeader: \(header.value)")
+                let reauthorizedRequest = self.replacingHeaders([header])
                 debugPrint("reauthorizedRequest: \(reauthorizedRequest)")
                 return try await reauthorizedRequest
                     .responseData()
