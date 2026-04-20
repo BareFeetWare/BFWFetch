@@ -12,7 +12,7 @@ import Foundation
 /// Fetch contains the URLRequest and response processing for an API call.
 public struct Fetcher<Value> {
     public let request: URLRequest
-    public let authorizationHeader: ((_ needsRefetch: Bool) async throws -> URLRequest.Header)?
+    public let authorizationHeader: ((_ needsRefetch: Bool) async throws -> HTTP.Header)?
     public let decoded: (Data) async throws -> Value
     public let mappedError: ((Swift.Error) -> Swift.Error)?
     
@@ -22,7 +22,7 @@ public struct Fetcher<Value> {
     
     public init(
         request: URLRequest,
-        authorizationHeader: ((_ needsRefetch: Bool) async throws -> URLRequest.Header)? = nil,
+        authorizationHeader: ((_ needsRefetch: Bool) async throws -> HTTP.Header)? = nil,
         decoded: @escaping (Data) async throws -> Value,
         mappedError: ((Swift.Error) -> Swift.Error)? = nil
     ) {
@@ -40,7 +40,7 @@ public extension Fetcher where Value == Data {
     
     init(
         request: URLRequest,
-        authorizationHeader: ((_ needsRefetch: Bool) async throws -> URLRequest.Header)? = nil,
+        authorizationHeader: ((_ needsRefetch: Bool) async throws -> HTTP.Header)? = nil,
         mappedError: ((Swift.Error) -> Swift.Error)? = nil
     ) {
         self.request = request
@@ -54,7 +54,7 @@ public extension Fetcher where Value: Decodable{
     
     init(
         request: URLRequest,
-        authorizationHeader: ((_ needsRefetch: Bool) async throws -> URLRequest.Header)? = nil,
+        authorizationHeader: ((_ needsRefetch: Bool) async throws -> HTTP.Header)? = nil,
         decoder: JSONDecoder? = nil,
         mappedError: ((Swift.Error) -> Swift.Error)? = nil
     ) {
@@ -72,7 +72,7 @@ public extension Fetcher where Value: Decodable{
     
     init<Wrapped: Decodable>(
         request: URLRequest,
-        authorizationHeader: ((_ needsRefetch: Bool) async throws -> URLRequest.Header)? = nil,
+        authorizationHeader: ((_ needsRefetch: Bool) async throws -> HTTP.Header)? = nil,
         decoder: JSONDecoder? = nil,
         mappedError: ((Swift.Error) -> Swift.Error)? = nil,
         unwrap: @escaping (Wrapped) throws -> Value

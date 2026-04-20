@@ -37,7 +37,7 @@ public extension URLRequest {
     }
     
     func responseData(
-        authorizationHeader: (_ needsRefetch: Bool) async throws -> URLRequest.Header
+        authorizationHeader: (_ needsRefetch: Bool) async throws -> HTTP.Header
     ) async throws -> Data {
         do {
             return try await self

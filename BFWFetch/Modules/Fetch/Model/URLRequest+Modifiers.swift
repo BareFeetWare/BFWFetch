@@ -12,54 +12,6 @@ import Foundation
 
 public extension URLRequest {
     
-    enum HTTPMethod: String {
-        case get = "GET"
-        case post = "POST"
-        case delete = "DELETE"
-        case patch = "PATCH"
-        case put = "PUT"
-    }
-    
-    struct Header {
-        
-        let key: String
-        let value: String
-        
-        public init(key: String, value: String) {
-            self.key = key
-            self.value = value
-        }
-        
-        var dictionary: [String: String] { [key: value] }
-        
-        public static let acceptJSON = Self.init(key: "Accept", value: "application/json")
-        public static let contentJSON = Self.init(key: "Content-Type", value: "application/json")
-        public static let contentURLEncoded = Self.init(key: "Content-Type", value: "application/x-www-form-urlencoded")
-        
-        public static func contentMultipartForm(boundary: String) -> Self {
-            .init(key: "Content-Type", value: "multipart/form-data; boundary=\(boundary)")
-        }
-        
-        public static func authorization(_ value: String) -> Self {
-            .init(key: "Authorization", value: value)
-        }
-        
-        public static func authorization(basicToken: String) -> Self {
-            .authorization("Basic \(basicToken)")
-        }
-        
-        public static func authorization(
-            basicTokenUsername username: String,
-            password: String
-        ) -> Self {
-            .authorization(basicToken: Data((username + ":" + password).utf8).base64EncodedString())
-        }
-        
-        public static func authorization(bearerToken: String) -> Self {
-            .authorization("Bearer \(bearerToken)")
-        }
-    }
-    
     enum Error: LocalizedError {
         case noToken
         case url
@@ -87,7 +39,7 @@ public extension URLRequest {
         url: URL,
         path: String?,
         headers: [String: String]? = nil,
-        httpMethod: HTTPMethod? = nil
+        httpMethod: HTTP.Method? = nil
     ) {
         let pathedURL = path.map(url.appendingPathComponent) ?? url
         self = URLRequest(url: pathedURL)
@@ -100,8 +52,8 @@ public extension URLRequest {
     init(
         url: URL,
         path: String?,
-        headers: [Header]?,
-        httpMethod: HTTPMethod? = nil
+        headers: [HTTP.Header]?,
+        httpMethod: HTTP.Method? = nil
     ) {
         self.init(
             url: url,
@@ -117,7 +69,7 @@ public extension URLRequest {
 // MARK: - Instance Modifiers
 
 public extension URLRequest {
-
+    
     mutating func addHeaders(_ headers: [String: String]?) {
         guard let headers
         else { return }
@@ -126,7 +78,7 @@ public extension URLRequest {
         }
     }
     
-    mutating func addHeaders(_ headers: [Header]?) {
+    mutating func addHeaders(_ headers: [HTTP.Header]?) {
         addHeaders(headers?.dictionary)
     }
     
@@ -136,12 +88,12 @@ public extension URLRequest {
         return newRequest
     }
     
-    func addingHeaders(_ headers: [Header]?) -> Self {
+    func addingHeaders(_ headers: [HTTP.Header]?) -> Self {
         addingHeaders(headers?.dictionary)
     }
     
     /// Replaces just the given header values, leaving other existing headers untouched.
-    func replacingHeaders(_ headers: [Header]) -> Self {
+    func replacingHeaders(_ headers: [HTTP.Header]) -> Self {
         let newHeadersDictionary = (allHTTPHeaderFields ?? [:])
             .merging(headers.dictionary) { $1 }
         var newRequest = self
@@ -167,7 +119,7 @@ public extension URLRequest {
         return try withURL(url.appendingQuery(dictionary))
     }
     
-    func withHTTPMethod(_ httpMethod: HTTPMethod?) -> Self {
+    func withHTTPMethod(_ httpMethod: HTTP.Method?) -> Self {
         guard let httpMethod else { return self }
         var newRequest = self
         newRequest.httpMethod = httpMethod.rawValue
@@ -206,7 +158,7 @@ public extension URLRequest {
     
 }
 
-private extension Array where Element == URLRequest.Header {
+private extension Array where Element == HTTP.Header {
     var dictionary: [String: String] {
         self.reduce(into: [:]) { dictionary, header in
             dictionary[header.key] = header.value
