@@ -19,9 +19,12 @@ public protocol OAuthAuthorizationProvider: AuthorizationProvider {
 }
 
 public extension OAuthAuthorizationProvider {
-
+    
     func authorizationHeader(needsRefetch: Bool) async throws -> HTTP.Header {
-        if needsRefetch || credential?.hasExpired() == true {
+        if needsRefetch
+            || credential?.accessToken == nil
+            || credential?.hasExpired() == true
+        {
             try await refreshCredential()
         }
         guard let accessToken = credential?.accessToken
