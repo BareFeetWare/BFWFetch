@@ -59,7 +59,11 @@ public extension Fetcher where Value == String {
     ) {
         self.request = request
         self.authorizationProvider = authorizationProvider
-        self.decoded = { String(data: $0, encoding: .utf8) ?? "" }
+        self.decoded = { data in
+            guard let string = String(data: data, encoding: .utf8)
+            else { throw CocoaError(.fileReadInapplicableStringEncoding) }
+            return string
+        }
         self.mappedError = mappedError
     }
 }
