@@ -12,7 +12,7 @@ import Foundation
 /// Fetch contains the URLRequest and response processing for an API call.
 public struct Fetcher<Value> {
     public let request: URLRequest
-    public let authorizationHeader: ((_ needsRefetch: Bool) async throws -> HTTP.Header)?
+    public let authorizationProvider: (any AuthorizationProvider)?
     public let decoded: (Data) async throws -> Value
     public let mappedError: ((Swift.Error) -> Swift.Error)?
     
@@ -22,12 +22,12 @@ public struct Fetcher<Value> {
     
     public init(
         request: URLRequest,
-        authorizationHeader: ((_ needsRefetch: Bool) async throws -> HTTP.Header)? = nil,
+        authorizationProvider: (any AuthorizationProvider)? = nil,
         decoded: @escaping (Data) async throws -> Value,
         mappedError: ((Swift.Error) -> Swift.Error)? = nil
     ) {
         self.request = request
-        self.authorizationHeader = authorizationHeader
+        self.authorizationProvider = authorizationProvider
         self.decoded = decoded
         self.mappedError = mappedError
     }
@@ -40,11 +40,11 @@ public extension Fetcher where Value == Data {
     
     init(
         request: URLRequest,
-        authorizationHeader: ((_ needsRefetch: Bool) async throws -> HTTP.Header)? = nil,
+        authorizationProvider: (any AuthorizationProvider)? = nil,
         mappedError: ((Swift.Error) -> Swift.Error)? = nil
     ) {
         self.request = request
-        self.authorizationHeader = authorizationHeader
+        self.authorizationProvider = authorizationProvider
         self.decoded = { $0 }
         self.mappedError = mappedError
     }
@@ -54,11 +54,11 @@ public extension Fetcher where Value == String {
     
     init(
         request: URLRequest,
-        authorizationHeader: ((_ needsRefetch: Bool) async throws -> HTTP.Header)? = nil,
+        authorizationProvider: (any AuthorizationProvider)? = nil,
         mappedError: ((Swift.Error) -> Swift.Error)? = nil
     ) {
         self.request = request
-        self.authorizationHeader = authorizationHeader
+        self.authorizationProvider = authorizationProvider
         self.decoded = { String(data: $0, encoding: .utf8) ?? "" }
         self.mappedError = mappedError
     }
@@ -68,12 +68,12 @@ public extension Fetcher where Value: Decodable{
     
     init(
         request: URLRequest,
-        authorizationHeader: ((_ needsRefetch: Bool) async throws -> HTTP.Header)? = nil,
+        authorizationProvider: (any AuthorizationProvider)? = nil,
         decoder: JSONDecoder? = nil,
         mappedError: ((Swift.Error) -> Swift.Error)? = nil
     ) {
         self.request = request
-        self.authorizationHeader = authorizationHeader
+        self.authorizationProvider = authorizationProvider
         self.decoded = { data in
             try data.decoded(
                 decoder: decoder,
@@ -86,13 +86,13 @@ public extension Fetcher where Value: Decodable{
     
     init<Wrapped: Decodable>(
         request: URLRequest,
-        authorizationHeader: ((_ needsRefetch: Bool) async throws -> HTTP.Header)? = nil,
+        authorizationProvider: (any AuthorizationProvider)? = nil,
         decoder: JSONDecoder? = nil,
         mappedError: ((Swift.Error) -> Swift.Error)? = nil,
         unwrap: @escaping (Wrapped) throws -> Value
     ) {
         self.request = request
-        self.authorizationHeader = authorizationHeader
+        self.authorizationProvider = authorizationProvider
         self.decoded = { data in
             let wrapped: Wrapped = try data.decoded(
                 decoder: decoder,
@@ -113,7 +113,7 @@ public extension Fetcher {
     ) async throws -> Self {
         try await .init(
             request: transform(request),
-            authorizationHeader: authorizationHeader,
+            authorizationProvider: authorizationProvider,
             decoded: decoded,
             mappedError: mappedError,
         )
@@ -121,10 +121,10 @@ public extension Fetcher {
     
     func fetched() async throws -> Value {
         do {
-            let responseData = if let authorizationHeader {
+            let responseData = if let authorizationProvider {
                 // TODO: Perhaps simplify to one call with optional refreshedAuthorizationValue.
                 try await request
-                    .responseData(authorizationHeader: authorizationHeader)
+                    .responseData(authorizationProvider: authorizationProvider)
             } else {
                 try await request
                     .responseData()
