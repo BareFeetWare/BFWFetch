@@ -50,6 +50,20 @@ public extension Fetcher where Value == Data {
     }
 }
 
+public extension Fetcher where Value == String {
+    
+    init(
+        request: URLRequest,
+        authorizationHeader: ((_ needsRefetch: Bool) async throws -> HTTP.Header)? = nil,
+        mappedError: ((Swift.Error) -> Swift.Error)? = nil
+    ) {
+        self.request = request
+        self.authorizationHeader = authorizationHeader
+        self.decoded = { String(data: $0, encoding: .utf8) ?? "" }
+        self.mappedError = mappedError
+    }
+}
+
 public extension Fetcher where Value: Decodable{
     
     init(
