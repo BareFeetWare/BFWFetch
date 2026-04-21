@@ -44,6 +44,7 @@
 		E29F61B82613EBF900947455 /* Site+Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29F61B72613EBF900947455 /* Site+Mock.swift */; };
 		E2A00001304400000000A001 /* AuthorizationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A00001304400000000A000 /* AuthorizationProvider.swift */; };
 		E2A00001304400000000B001 /* OAuthAuthorizationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A00001304400000000B000 /* OAuthAuthorizationProvider.swift */; };
+		E2A00001304400000000C001 /* BearerCredential.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A00001304400000000C000 /* BearerCredential.swift */; };
 		E2A3C42A2F90974200EC3DDD /* OpenEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A3C4292F90974200EC3DDD /* OpenEnum.swift */; };
 		E2A5484D2C51CD6A00A037FD /* URLResponse.Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A5484C2C51CD6A00A037FD /* URLResponse.Error.swift */; };
 		E2A55EB521AAD48E00812DC6 /* URLRequest+Body.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A55EAF21AAD48D00812DC6 /* URLRequest+Body.swift */; };
@@ -137,6 +138,7 @@
 		E29F61B72613EBF900947455 /* Site+Mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Site+Mock.swift"; sourceTree = "<group>"; };
 		E2A00001304400000000A000 /* AuthorizationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationProvider.swift; sourceTree = "<group>"; };
 		E2A00001304400000000B000 /* OAuthAuthorizationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuthAuthorizationProvider.swift; sourceTree = "<group>"; };
+		E2A00001304400000000C000 /* BearerCredential.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BearerCredential.swift; sourceTree = "<group>"; };
 		E2A3C4292F90974200EC3DDD /* OpenEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenEnum.swift; sourceTree = "<group>"; };
 		E2A5484C2C51CD6A00A037FD /* URLResponse.Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLResponse.Error.swift; sourceTree = "<group>"; };
 		E2A55E8D21AAD3A500812DC6 /* BFWFetch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BFWFetch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -273,6 +275,7 @@
 			children = (
 				E2C884242E6975D400484B0E /* Array+Appending.swift */,
 				E2A00001304400000000A000 /* AuthorizationProvider.swift */,
+				E2A00001304400000000C000 /* BearerCredential.swift */,
 				E216D01C2BB4F8C000BB5385 /* Bundle+Resource.swift */,
 				E29F360C2F4BBD15001F6459 /* Codable+UserDefaults.swift */,
 				E2C8842C2E6AA1DC00484B0E /* Collection+Empty.swift */,
@@ -574,6 +577,7 @@
 				E29F619E2610442900947455 /* DateFormatter+Fetch.swift in Sources */,
 				E2A00001304400000000A001 /* AuthorizationProvider.swift in Sources */,
 				E2A00001304400000000B001 /* OAuthAuthorizationProvider.swift in Sources */,
+				E2A00001304400000000C001 /* BearerCredential.swift in Sources */,
 				E2C884252E6975DE00484B0E /* Array+Appending.swift in Sources */,
 				E24CE2B32E56F6F10086B30C /* URL+QueryItem.swift in Sources */,
 				E2C8842D2E6AA1E200484B0E /* Collection+Empty.swift in Sources */,

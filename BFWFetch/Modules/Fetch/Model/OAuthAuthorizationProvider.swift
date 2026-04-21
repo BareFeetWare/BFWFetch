@@ -8,13 +8,14 @@
 
 import Foundation
 
-/// An ``AuthorizationProvider`` backed by an ``OAuth/Credential``.
+/// An ``AuthorizationProvider`` backed by a ``BearerCredential``.
 ///
 /// Conformers supply the credential storage and a refresh hook; the default
 /// ``authorizationHeader(needsRefetch:)`` handles expiry checking, refresh on
 /// demand, and returns the access token as a `Bearer` header.
 public protocol OAuthAuthorizationProvider: AuthorizationProvider {
-    var credential: OAuth.Credential? { get }
+    associatedtype Credential: BearerCredential
+    var credential: Credential? { get }
     func refreshCredential() async throws
 }
 

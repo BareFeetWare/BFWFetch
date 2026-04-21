@@ -65,6 +65,15 @@ extension OAuth.Credential: Decodable {
 
 extension OAuth.Credential: Encodable {}
 
+extension OAuth.Credential: BearerCredential {
+    
+    public var expiry: Date? {
+        guard let fetchedDate, let expiresTimeInterval
+        else { return nil }
+        return fetchedDate.addingTimeInterval(expiresTimeInterval)
+    }
+}
+
 // MARK: - Convenience Inits
 
 public extension OAuth.Credential {
@@ -101,10 +110,4 @@ public extension OAuth.Credential {
         return expiresTimeInterval - Date().timeIntervalSince(fetchedDate)
     }
     
-    func hasExpired() -> Bool {
-        guard let expiresTimeInterval,
-              let fetchedDate
-        else { return false }
-        return fetchedDate.addingTimeInterval(expiresTimeInterval) <= Date()
-    }
 }
