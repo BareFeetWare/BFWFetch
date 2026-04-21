@@ -81,27 +81,30 @@ private extension Data {
         parts: [HTTP.Body.Part],
         boundary: String
     ) throws -> Self {
+        let crlf = "\r\n"
         var body = Data()
         for part in parts {
-            let disposition: String = {
-                if let filename = part.filename {
-                    return #"Content-Disposition: form-data; name="\#(part.name)"; filename="\#(filename)""#
-                } else {
-                    return #"Content-Disposition: form-data; name="\#(part.name)""#
-                }
-            }()
-            let contentType = part.mimeType.map { "Content-Type: \($0.rawValue)\n" } ?? ""
-            let header =
-                """
-                --\(boundary)
-                \(disposition)
-                \(contentType)
-                """
-            body.append(try Data(httpBody: header))
+            var headerLines = ["--\(boundary)"]
+            if let filename = part.filename {
+                headerLines.append(#"Content-Disposition: form-data; name="\#(part.name)"; filename="\#(filename)""#)
+            } else {
+                headerLines.append(#"Content-Disposition: form-data; name="\#(part.name)""#)
+            }
+            if let mimeType = part.mimeType {
+                headerLines.append("Content-Type: \(mimeType.rawValue)")
+            }
+            let header = headerLines.joined(separator: crlf) + crlf + crlf
+            guard let headerData = header.data(using: .utf8)
+            else { throw Error.convertFromString }
+            body.append(headerData)
             body.append(part.data)
-            body.append(try Data(httpBody: "\n"))
+            guard let crlfData = crlf.data(using: .utf8)
+            else { throw Error.convertFromString }
+            body.append(crlfData)
         }
-        body.append(try Data(httpBody: "--\(boundary)--\n"))
+        guard let closing = "--\(boundary)--\(crlf)".data(using: .utf8)
+        else { throw Error.convertFromString }
+        body.append(closing)
         return body
     }
 }
