@@ -47,6 +47,12 @@
 		E2A00001304400000000C001 /* BearerCredential.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A00001304400000000C000 /* BearerCredential.swift */; };
 		E2A3C42A2F90974200EC3DDD /* OpenEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A3C4292F90974200EC3DDD /* OpenEnum.swift */; };
 		E2A3C6C42F98BC1600EC3DDD /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A3C6C32F98BC1600EC3DDD /* Keychain.swift */; };
+		E2A3C7242F99F71400EC3DDD /* BFWFetch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2A55E8D21AAD3A500812DC6 /* BFWFetch.framework */; };
+		E2A3C7252F99F71400EC3DDD /* BFWFetch.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E2A55E8D21AAD3A500812DC6 /* BFWFetch.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		E2A3C72B2F99F9F200EC3DDD /* AWSCognitoIdentityProvider in Frameworks */ = {isa = PBXBuildFile; productRef = E2A3C72A2F99F9F200EC3DDD /* AWSCognitoIdentityProvider */; };
+		E2A3C72D2F99F9F200EC3DDD /* AWSCore in Frameworks */ = {isa = PBXBuildFile; productRef = E2A3C72C2F99F9F200EC3DDD /* AWSCore */; };
+		E2A3D0022F99AA0100EC3DDD /* CredentialStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A3D0012F99AA0100EC3DDD /* CredentialStore.swift */; };
+		E2A3D0042F99AA0100EC3DDD /* CredentialProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A3D0032F99AA0100EC3DDD /* CredentialProviding.swift */; };
 		E2A5484D2C51CD6A00A037FD /* URLResponse.Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A5484C2C51CD6A00A037FD /* URLResponse.Error.swift */; };
 		E2A55EB521AAD48E00812DC6 /* URLRequest+Body.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A55EAF21AAD48D00812DC6 /* URLRequest+Body.swift */; };
 		E2A55EBF21AAD8E200812DC6 /* URLComponents+queryItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A55EBE21AAD64600812DC6 /* URLComponents+queryItems.swift */; };
@@ -84,6 +90,13 @@
 			remoteGlobalIDString = E2A55E8C21AAD3A500812DC6;
 			remoteInfo = BFWFetch;
 		};
+		E2A3C7262F99F71400EC3DDD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E2A55E8421AAD3A500812DC6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E2A55E8C21AAD3A500812DC6;
+			remoteInfo = BFWFetch;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -94,6 +107,17 @@
 			dstSubfolderSpec = 10;
 			files = (
 				E29168E222A29902005D638E /* BFWFetch.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E2A3C7282F99F71400EC3DDD /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				E2A3C7252F99F71400EC3DDD /* BFWFetch.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -142,6 +166,9 @@
 		E2A00001304400000000C000 /* BearerCredential.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BearerCredential.swift; sourceTree = "<group>"; };
 		E2A3C4292F90974200EC3DDD /* OpenEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenEnum.swift; sourceTree = "<group>"; };
 		E2A3C6C32F98BC1600EC3DDD /* Keychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
+		E2A3C7162F99F52000EC3DDD /* BFWFetchCognito.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BFWFetchCognito.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E2A3D0012F99AA0100EC3DDD /* CredentialStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredentialStore.swift; sourceTree = "<group>"; };
+		E2A3D0032F99AA0100EC3DDD /* CredentialProviding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredentialProviding.swift; sourceTree = "<group>"; };
 		E2A5484C2C51CD6A00A037FD /* URLResponse.Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLResponse.Error.swift; sourceTree = "<group>"; };
 		E2A55E8D21AAD3A500812DC6 /* BFWFetch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BFWFetch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2A55E9121AAD3A500812DC6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -168,6 +195,7 @@
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		E29F35F12F4AB8F4001F6459 /* BFWFetchTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = BFWFetchTests; sourceTree = "<group>"; };
+		E2A3C7172F99F52000EC3DDD /* BFWFetchCognito */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "BFWFetchCognito"; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,6 +212,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				E29F35F42F4AB8F4001F6459 /* BFWFetch.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E2A3C7132F99F52000EC3DDD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E2A3C72D2F99F9F200EC3DDD /* AWSCore in Frameworks */,
+				E2A3C7242F99F71400EC3DDD /* BFWFetch.framework in Frameworks */,
+				E2A3C72B2F99F9F200EC3DDD /* AWSCognitoIdentityProvider in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -290,6 +328,8 @@
 				E24CE2C32E5C22C40086B30C /* JSON.swift */,
 				E29F61992610431400947455 /* JSONDecoder+Date.swift */,
 				E2A3C6C32F98BC1600EC3DDD /* Keychain.swift */,
+				E2A3D0032F99AA0100EC3DDD /* CredentialProviding.swift */,
+				E2A3D0012F99AA0100EC3DDD /* CredentialStore.swift */,
 				E29339312C46961300810E45 /* OAuth.swift */,
 				E2A00001304400000000B000 /* OAuthAuthorizationProvider.swift */,
 				E2A3C4292F90974200EC3DDD /* OpenEnum.swift */,
@@ -340,6 +380,13 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		E2A3C7232F99F71400EC3DDD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		E2A55E8321AAD3A500812DC6 = {
 			isa = PBXGroup;
 			children = (
@@ -347,6 +394,8 @@
 				E2A55E8F21AAD3A500812DC6 /* BFWFetch */,
 				E29168C822A2973D005D638E /* BFWFetch-Demo */,
 				E29F35F12F4AB8F4001F6459 /* BFWFetchTests */,
+				E2A3C7172F99F52000EC3DDD /* BFWFetchCognito */,
+				E2A3C7232F99F71400EC3DDD /* Frameworks */,
 				E2A55E8E21AAD3A500812DC6 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -357,6 +406,7 @@
 				E2A55E8D21AAD3A500812DC6 /* BFWFetch.framework */,
 				E29168C722A2973D005D638E /* BFWFetch-Demo.app */,
 				E29F35F02F4AB8F4001F6459 /* BFWFetchTests.xctest */,
+				E2A3C7162F99F52000EC3DDD /* BFWFetchCognito.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -390,6 +440,13 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		E2A3C7112F99F52000EC3DDD /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E2A55E8821AAD3A500812DC6 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -442,6 +499,33 @@
 			productReference = E29F35F02F4AB8F4001F6459 /* BFWFetchTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		E2A3C7152F99F52000EC3DDD /* BFWFetchCognito */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E2A3C71E2F99F52000EC3DDD /* Build configuration list for PBXNativeTarget "BFWFetchCognito" */;
+			buildPhases = (
+				E2A3C7112F99F52000EC3DDD /* Headers */,
+				E2A3C7122F99F52000EC3DDD /* Sources */,
+				E2A3C7132F99F52000EC3DDD /* Frameworks */,
+				E2A3C7142F99F52000EC3DDD /* Resources */,
+				E2A3C7282F99F71400EC3DDD /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E2A3C7272F99F71400EC3DDD /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				E2A3C7172F99F52000EC3DDD /* BFWFetchCognito */,
+			);
+			name = "BFWFetchCognito";
+			packageProductDependencies = (
+				E2A3C72A2F99F9F200EC3DDD /* AWSCognitoIdentityProvider */,
+				E2A3C72C2F99F9F200EC3DDD /* AWSCore */,
+			);
+			productName = "BFWFetchCognito";
+			productReference = E2A3C7162F99F52000EC3DDD /* BFWFetchCognito.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 		E2A55E8C21AAD3A500812DC6 /* BFWFetch */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = E2A55E9521AAD3A500812DC6 /* Build configuration list for PBXNativeTarget "BFWFetch" */;
@@ -467,7 +551,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastSwiftUpdateCheck = 2630;
+				LastSwiftUpdateCheck = 2640;
 				LastUpgradeCheck = 2600;
 				ORGANIZATIONNAME = BareFeetWare;
 				TargetAttributes = {
@@ -476,6 +560,9 @@
 					};
 					E29F35EF2F4AB8F4001F6459 = {
 						CreatedOnToolsVersion = 26.3;
+					};
+					E2A3C7152F99F52000EC3DDD = {
+						CreatedOnToolsVersion = 26.4;
 					};
 					E2A55E8C21AAD3A500812DC6 = {
 						CreatedOnToolsVersion = 10.1;
@@ -492,11 +579,15 @@
 				Base,
 			);
 			mainGroup = E2A55E8321AAD3A500812DC6;
+			packageReferences = (
+				E2A3C7292F99F9F200EC3DDD /* XCRemoteSwiftPackageReference "aws-sdk-ios-spm" */,
+			);
 			productRefGroup = E2A55E8E21AAD3A500812DC6 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				E2A55E8C21AAD3A500812DC6 /* BFWFetch */,
+				E2A3C7152F99F52000EC3DDD /* BFWFetchCognito */,
 				E29168C622A2973D005D638E /* BFWFetch-Demo */,
 				E29F35EF2F4AB8F4001F6459 /* BFWFetchTests */,
 			);
@@ -513,6 +604,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		E29F35EE2F4AB8F4001F6459 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E2A3C7142F99F52000EC3DDD /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -569,6 +667,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E2A3C7122F99F52000EC3DDD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E2A55E8921AAD3A500812DC6 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -603,6 +708,8 @@
 				8AE7F2E1663A417C97CDA7E0 /* HTTP.swift in Sources */,
 				A34BF8396B39482092A48EF4 /* Deprecations.swift in Sources */,
 				E2A3C6C42F98BC1600EC3DDD /* Keychain.swift in Sources */,
+				E2A3D0042F99AA0100EC3DDD /* CredentialProviding.swift in Sources */,
+				E2A3D0022F99AA0100EC3DDD /* CredentialStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -618,6 +725,11 @@
 			isa = PBXTargetDependency;
 			target = E2A55E8C21AAD3A500812DC6 /* BFWFetch */;
 			targetProxy = E29F35F52F4AB8F4001F6459 /* PBXContainerItemProxy */;
+		};
+		E2A3C7272F99F71400EC3DDD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E2A55E8C21AAD3A500812DC6 /* BFWFetch */;
+			targetProxy = E2A3C7262F99F71400EC3DDD /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -703,6 +815,89 @@
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		E2A3C71C2F99F52000EC3DDD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2X3652T48P;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 BareFeetWare. All rights reserved.";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.barefeetware.BFWFetchCognito";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INSTALL_MODULE = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		E2A3C71D2F99F52000EC3DDD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2X3652T48P;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 BareFeetWare. All rights reserved.";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.barefeetware.BFWFetchCognito";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INSTALL_MODULE = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -910,6 +1105,15 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		E2A3C71E2F99F52000EC3DDD /* Build configuration list for PBXNativeTarget "BFWFetchCognito" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E2A3C71C2F99F52000EC3DDD /* Debug */,
+				E2A3C71D2F99F52000EC3DDD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		E2A55E8721AAD3A500812DC6 /* Build configuration list for PBXProject "BFWFetch" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -929,6 +1133,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		E2A3C7292F99F9F200EC3DDD /* XCRemoteSwiftPackageReference "aws-sdk-ios-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/aws-amplify/aws-sdk-ios-spm";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.41.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E2A3C72A2F99F9F200EC3DDD /* AWSCognitoIdentityProvider */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E2A3C7292F99F9F200EC3DDD /* XCRemoteSwiftPackageReference "aws-sdk-ios-spm" */;
+			productName = AWSCognitoIdentityProvider;
+		};
+		E2A3C72C2F99F9F200EC3DDD /* AWSCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E2A3C7292F99F9F200EC3DDD /* XCRemoteSwiftPackageReference "aws-sdk-ios-spm" */;
+			productName = AWSCore;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = E2A55E8421AAD3A500812DC6 /* Project object */;
 }
