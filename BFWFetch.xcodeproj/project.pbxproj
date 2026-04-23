@@ -46,6 +46,7 @@
 		E2A00001304400000000B001 /* OAuthAuthorizationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A00001304400000000B000 /* OAuthAuthorizationProvider.swift */; };
 		E2A00001304400000000C001 /* BearerCredential.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A00001304400000000C000 /* BearerCredential.swift */; };
 		E2A3C42A2F90974200EC3DDD /* OpenEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A3C4292F90974200EC3DDD /* OpenEnum.swift */; };
+		E2A3C6C42F98BC1600EC3DDD /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A3C6C32F98BC1600EC3DDD /* Keychain.swift */; };
 		E2A5484D2C51CD6A00A037FD /* URLResponse.Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A5484C2C51CD6A00A037FD /* URLResponse.Error.swift */; };
 		E2A55EB521AAD48E00812DC6 /* URLRequest+Body.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A55EAF21AAD48D00812DC6 /* URLRequest+Body.swift */; };
 		E2A55EBF21AAD8E200812DC6 /* URLComponents+queryItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A55EBE21AAD64600812DC6 /* URLComponents+queryItems.swift */; };
@@ -140,6 +141,7 @@
 		E2A00001304400000000B000 /* OAuthAuthorizationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuthAuthorizationProvider.swift; sourceTree = "<group>"; };
 		E2A00001304400000000C000 /* BearerCredential.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BearerCredential.swift; sourceTree = "<group>"; };
 		E2A3C4292F90974200EC3DDD /* OpenEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenEnum.swift; sourceTree = "<group>"; };
+		E2A3C6C32F98BC1600EC3DDD /* Keychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
 		E2A5484C2C51CD6A00A037FD /* URLResponse.Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLResponse.Error.swift; sourceTree = "<group>"; };
 		E2A55E8D21AAD3A500812DC6 /* BFWFetch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BFWFetch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2A55E9121AAD3A500812DC6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -287,6 +289,7 @@
 				AD3A008F2644484A93CC0D71 /* HTTP.swift */,
 				E24CE2C32E5C22C40086B30C /* JSON.swift */,
 				E29F61992610431400947455 /* JSONDecoder+Date.swift */,
+				E2A3C6C32F98BC1600EC3DDD /* Keychain.swift */,
 				E29339312C46961300810E45 /* OAuth.swift */,
 				E2A00001304400000000B000 /* OAuthAuthorizationProvider.swift */,
 				E2A3C4292F90974200EC3DDD /* OpenEnum.swift */,
@@ -599,6 +602,7 @@
 				E2D829882C4DC44B00463E10 /* URLFetched.swift in Sources */,
 				8AE7F2E1663A417C97CDA7E0 /* HTTP.swift in Sources */,
 				A34BF8396B39482092A48EF4 /* Deprecations.swift in Sources */,
+				E2A3C6C42F98BC1600EC3DDD /* Keychain.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -19,8 +19,24 @@ extension OAuth {
         public let expiresTimeInterval: TimeInterval?
         public var refreshToken: String?
         public let idToken: String?
-        /// Set by the app as a reference for expiresTimeInterval. Not retrieved from the authorization API.
+        /// Set by the app when the credential is received. Absent from OAuth server responses; preserved across encode/decode so persisted credentials keep their original expiry.
         public let fetchedDate: Date?
+        
+        public init(
+            accessToken: String? = nil,
+            tokenType: String? = nil,
+            expiresTimeInterval: TimeInterval? = nil,
+            refreshToken: String? = nil,
+            idToken: String? = nil,
+            fetchedDate: Date? = nil
+        ) {
+            self.accessToken = accessToken
+            self.tokenType = tokenType
+            self.expiresTimeInterval = expiresTimeInterval
+            self.refreshToken = refreshToken
+            self.idToken = idToken
+            self.fetchedDate = fetchedDate
+        }
     }
     
     public enum Grant: String {
@@ -42,6 +58,7 @@ extension OAuth.Credential: Decodable {
         case expiresTimeInterval = "expires_in"
         case refreshToken = "refresh_token"
         case idToken = "id_token"
+        case fetchedDate = "fetched_date"
     }
     
     public init(from decoder: Decoder) throws {
@@ -58,7 +75,7 @@ extension OAuth.Credential: Decodable {
         } else {
             expiresTimeInterval = nil
         }
-        fetchedDate = Date()
+        fetchedDate = try container.decodeIfPresent(Date.self, forKey: .fetchedDate) ?? Date()
     }
     
 }
@@ -72,27 +89,6 @@ extension OAuth.Credential: BearerCredential {
         else { return nil }
         return fetchedDate.addingTimeInterval(expiresTimeInterval)
     }
-}
-
-// MARK: - Convenience Inits
-
-public extension OAuth.Credential {
-    
-    init(
-        accessToken: String? = nil,
-        tokenType: String? = nil,
-        refreshToken: String? = nil,
-        idToken: String? = nil,
-        fetchedDate: Date? = nil
-    ) {
-        self.accessToken = accessToken
-        self.tokenType = tokenType
-        self.expiresTimeInterval = nil
-        self.refreshToken = refreshToken
-        self.idToken = idToken
-        self.fetchedDate = fetchedDate
-    }
-    
 }
 
 // MARK: - Functions
