@@ -47,6 +47,19 @@ public final class CredentialStore: ObservableObject {
         self.password = (try? keychain.string(forKey: "password")) ?? ""
         self.credential = try? keychain.codable(OAuth.Credential.self, forKey: "credential")
     }
+
+    /// Convenience init that constructs a Keychain scoped to `<this app's bundle identifier>.<keychainSuffix>`.
+    public convenience init(
+        keychainSuffix: String,
+        bearerPrefix: String = "",
+        provider: any CredentialProviding
+    ) {
+        self.init(
+            keychain: Keychain(suffix: keychainSuffix),
+            bearerPrefix: bearerPrefix,
+            provider: provider
+        )
+    }
 }
 
 // MARK: - Types

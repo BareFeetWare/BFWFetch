@@ -187,6 +187,28 @@ public extension Keychain {
     }
 }
 
+// MARK: - Bundle Convenience
+
+public extension Keychain {
+    
+    /// Creates a Keychain whose service string is `<this app's bundle identifier>.<suffix>`.
+    ///
+    /// Avoids hardcoding the domain or app identifier, so credentials stay scoped
+    /// correctly when the bundle identifier changes (e.g. Debug vs Release variants
+    /// with distinct `PRODUCT_BUNDLE_IDENTIFIER`s, or a rebrand).
+    ///
+    /// - Precondition: `Bundle.main.bundleIdentifier` is non-nil. This holds for any
+    ///   normal app target. If you hit the precondition you're either calling this from
+    ///   a context without a bundle identifier (a CLI tool, unbundled framework, or a
+    ///   misconfigured test target) or `PRODUCT_BUNDLE_IDENTIFIER` isn't set on the
+    ///   running target.
+    init(suffix: String) {
+        guard let bundleID = Bundle.main.bundleIdentifier
+        else { preconditionFailure("Bundle.main has no bundleIdentifier — Keychain(suffix:) requires an app target with PRODUCT_BUNDLE_IDENTIFIER set.") }
+        self.init(service: "\(bundleID).\(suffix)")
+    }
+}
+
 // MARK: - Private
 
 private extension Keychain {
