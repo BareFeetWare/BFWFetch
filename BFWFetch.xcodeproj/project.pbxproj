@@ -54,6 +54,7 @@
 		E2A3D0022F99AA0100EC3DDD /* CredentialStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A3D0012F99AA0100EC3DDD /* CredentialStore.swift */; };
 		E2A3D0042F99AA0100EC3DDD /* CredentialProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A3D0032F99AA0100EC3DDD /* CredentialProviding.swift */; };
 		E2A3D10B2F9A000100EC3DDD /* OAuth.PKCE.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A3D10A2F9A000100EC3DDD /* OAuth.PKCE.swift */; };
+		E2A3D11B2F9A000100EC3DDE /* OAuth.Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A3D11A2F9A000100EC3DDE /* OAuth.Client.swift */; };
 		E2A5484D2C51CD6A00A037FD /* URLResponse.Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A5484C2C51CD6A00A037FD /* URLResponse.Error.swift */; };
 		E2A55EB521AAD48E00812DC6 /* URLRequest+Body.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A55EAF21AAD48D00812DC6 /* URLRequest+Body.swift */; };
 		E2A55EBF21AAD8E200812DC6 /* URLComponents+queryItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A55EBE21AAD64600812DC6 /* URLComponents+queryItems.swift */; };
@@ -171,6 +172,7 @@
 		E2A3D0012F99AA0100EC3DDD /* CredentialStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredentialStore.swift; sourceTree = "<group>"; };
 		E2A3D0032F99AA0100EC3DDD /* CredentialProviding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredentialProviding.swift; sourceTree = "<group>"; };
 		E2A3D10A2F9A000100EC3DDD /* OAuth.PKCE.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuth.PKCE.swift; sourceTree = "<group>"; };
+		E2A3D11A2F9A000100EC3DDE /* OAuth.Client.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuth.Client.swift; sourceTree = "<group>"; };
 		E2A5484C2C51CD6A00A037FD /* URLResponse.Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLResponse.Error.swift; sourceTree = "<group>"; };
 		E2A55E8D21AAD3A500812DC6 /* BFWFetch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BFWFetch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2A55E9121AAD3A500812DC6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -333,6 +335,7 @@
 				E2A3D0032F99AA0100EC3DDD /* CredentialProviding.swift */,
 				E2A3D0012F99AA0100EC3DDD /* CredentialStore.swift */,
 				E29339312C46961300810E45 /* OAuth.swift */,
+				E2A3D11A2F9A000100EC3DDE /* OAuth.Client.swift */,
 				E2A3D10A2F9A000100EC3DDD /* OAuth.PKCE.swift */,
 				E2A00001304400000000B000 /* OAuthAuthorizationProvider.swift */,
 				E2A3C4292F90974200EC3DDD /* OpenEnum.swift */,
@@ -714,6 +717,7 @@
 				E2A3D0042F99AA0100EC3DDD /* CredentialProviding.swift in Sources */,
 				E2A3D0022F99AA0100EC3DDD /* CredentialStore.swift in Sources */,
 				E2A3D10B2F9A000100EC3DDD /* OAuth.PKCE.swift in Sources */,
+				E2A3D11B2F9A000100EC3DDE /* OAuth.Client.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
