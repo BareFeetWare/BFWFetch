@@ -50,4 +50,31 @@ public extension Bundle {
         return data
     }
     
+    /// Returns the value for `key` from `infoDictionary` if present and non-empty, else `nil`.
+    func infoString(forKey key: String) -> String? {
+        guard let value = object(forInfoDictionaryKey: key) as? String,
+              !value.isEmpty
+        else { return nil }
+        return value
+    }
+    
+    /// Looks up a non-empty Info.plist string for `key`, asserting (and returning empty)
+    /// if missing. Use for keys that must be present in shipping builds.
+    func infoValue<K: RawRepresentable>(for key: K) -> String where K.RawValue == String {
+        guard let value = infoString(forKey: key.rawValue)
+        else {
+            assertionFailure("Missing Info.plist value for key \(key.rawValue).")
+            return ""
+        }
+        return value
+    }
+    
+    /// The subset of `keyType.allCases` whose Info.plist values are missing or empty.
+    func missingInfoKeys<K: RawRepresentable & CaseIterable>(_ keyType: K.Type) -> [String]
+    where K.RawValue == String {
+        keyType.allCases
+            .map(\.rawValue)
+            .filter { infoString(forKey: $0) == nil }
+    }
+    
 }
