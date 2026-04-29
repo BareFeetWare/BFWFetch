@@ -78,3 +78,10 @@ public extension Bundle {
     }
     
 }
+
+public extension RawRepresentable where Self.RawValue == String {
+    
+    /// Convenience for `Bundle.main.infoValue(for: self)`. Lets a `String`-raw-valued
+    /// enum case act as a typed handle to its Info.plist value: `MyKey.clientID.infoValue`.
+    var infoValue: String { Bundle.main.infoValue(for: self) }
+}
