@@ -199,7 +199,7 @@
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		E29F35F12F4AB8F4001F6459 /* BFWFetchTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = BFWFetchTests; sourceTree = "<group>"; };
-		E2A3C7172F99F52000EC3DDD /* BFWFetchCognito */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "BFWFetchCognito"; sourceTree = "<group>"; };
+		E2A3C7172F99F52000EC3DDD /* BFWFetchCognito */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = BFWFetchCognito; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -523,12 +523,12 @@
 			fileSystemSynchronizedGroups = (
 				E2A3C7172F99F52000EC3DDD /* BFWFetchCognito */,
 			);
-			name = "BFWFetchCognito";
+			name = BFWFetchCognito;
 			packageProductDependencies = (
 				E2A3C72A2F99F9F200EC3DDD /* AWSCognitoIdentityProvider */,
 				E2A3C72C2F99F9F200EC3DDD /* AWSCore */,
 			);
-			productName = "BFWFetchCognito";
+			productName = BFWFetchCognito;
 			productReference = E2A3C7162F99F52000EC3DDD /* BFWFetchCognito.framework */;
 			productType = "com.apple.product-type.framework";
 		};
@@ -856,7 +856,7 @@
 				MARKETING_VERSION = 1.0;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.barefeetware.BFWFetchCognito";
+				PRODUCT_BUNDLE_IDENTIFIER = com.barefeetware.BFWFetchCognito;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -898,7 +898,7 @@
 				MARKETING_VERSION = 1.0;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.barefeetware.BFWFetchCognito";
+				PRODUCT_BUNDLE_IDENTIFIER = com.barefeetware.BFWFetchCognito;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -1052,6 +1052,7 @@
 				ENABLE_MODULE_VERIFIER = YES;
 				INFOPLIST_FILE = BFWFetch/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1078,6 +1079,7 @@
 				ENABLE_MODULE_VERIFIER = YES;
 				INFOPLIST_FILE = BFWFetch/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
