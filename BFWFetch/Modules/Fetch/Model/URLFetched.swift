@@ -10,8 +10,8 @@ import Foundation
 
 /// A simple struct to hold the values of the tuple response from URLSession data(for: URLRequest), so we can refer to .data and .urlResponse rather than .0 and .1.
 public struct URLFetched {
-    let data: Data
-    let urlResponse: URLResponse
+    public let data: Data
+    public let urlResponse: URLResponse
 }
 
 public extension URLFetched {
