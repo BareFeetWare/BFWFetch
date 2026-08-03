@@ -28,6 +28,13 @@ public extension URLRequest {
         return try await URLFetched(URLSession.shared.data(for: self))
     }
     
+    /// The fetch result, having thrown `URLResponse.Error.httpURLResponse` for any status of 400 or above.
+    func validatedURLFetched() async throws -> URLFetched {
+        let fetched = try await urlFetched()
+        _ = try fetched.httpURLResponse()
+        return fetched
+    }
+    
     func httpURLResponse() async throws -> HTTPURLResponse? {
         try await urlFetched().httpURLResponse()
     }
@@ -36,13 +43,13 @@ public extension URLRequest {
         try await urlFetched().responseData()
     }
     
-    func responseData(
+    func urlFetched(
         authorizationProvider: any AuthorizationProvider
-    ) async throws -> Data {
+    ) async throws -> URLFetched {
         do {
             return try await self
                 .replacingHeaders([authorizationProvider.authorizationHeader(needsRefetch: false)])
-                .responseData()
+                .validatedURLFetched()
         } catch {
             if case let URLResponse.Error.httpURLResponse(httpURLResponse, _) = error,
                httpURLResponse.statusCode == 401
@@ -53,11 +60,18 @@ public extension URLRequest {
                 let reauthorizedRequest = self.replacingHeaders([header])
                 debugPrint("reauthorizedRequest: \(reauthorizedRequest)")
                 return try await reauthorizedRequest
-                    .responseData()
+                    .validatedURLFetched()
             } else {
                 throw error
             }
         }
+    }
+    
+    func responseData(
+        authorizationProvider: any AuthorizationProvider
+    ) async throws -> Data {
+        try await urlFetched(authorizationProvider: authorizationProvider)
+            .data
     }
     
 }

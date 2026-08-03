@@ -11,6 +11,14 @@ import Foundation
 public struct GraphQL {
     public let query: String
     public let variables: Encodable?
+    
+    public init(
+        query: String,
+        variables: Encodable?
+    ) {
+        self.query = query
+        self.variables = variables
+    }
 }
 
 // MARK: - Convenience Inits
