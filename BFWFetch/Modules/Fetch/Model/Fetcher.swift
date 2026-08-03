@@ -140,11 +140,16 @@ public extension Fetcher {
     }
     
     func map<T>(transform: @escaping (Value) async throws -> T) -> Fetcher<T> {
-        .init(request: request) { data in
-            try await transform(
-                try decoded(data)
-            )
-        }
+        .init(
+            request: request,
+            authorizationProvider: authorizationProvider,
+            decoded: { data in
+                try await transform(
+                    try decoded(data)
+                )
+            },
+            mappedError: mappedError
+        )
     }
 }
 
