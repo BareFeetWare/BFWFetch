@@ -9,6 +9,8 @@
 import Foundation
 
 /// Wrapper for a String RawRepresentable enum, tolerating unknown values that aren't in the Known type.
+///
+/// A value sent as a number is kept as its digits rather than thrown, since throwing would discard the whole enclosing object and every element of any array it belongs to.
 public enum OpenEnum<Known: RawRepresentable & Sendable> where Known.RawValue == String {
     case known(Known)
     case unknown(String)
@@ -16,8 +18,7 @@ public enum OpenEnum<Known: RawRepresentable & Sendable> where Known.RawValue ==
 
 extension OpenEnum: Decodable {
     public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let stringValue = try container.decode(String.self)
+        let stringValue = try StringOrNumber(from: decoder).rawValue
         if let value = Known(rawValue: stringValue) {
             self = .known(value)
         } else {
