@@ -19,7 +19,7 @@ public extension JSONDecoder {
         self.dateDecodingStrategy = .formatted(dateFormatter)
     }
     
-    convenience init(dateFormatters: [DateFormatter]) {
+    convenience init(dateFormatters: [DateFormatting]) {
         self.init()
         self.dateDecodingStrategy = .formatted(dateFormatters)
     }
@@ -28,27 +28,24 @@ public extension JSONDecoder {
 
 extension JSONDecoder.DateDecodingStrategy {
     
-    enum Error: Swift.Error {
-        case dateFormat
-    }
-    
-    static func formatted(_ formatters: [DateFormatter]) -> Self {
+    static func formatted(_ formatters: [DateFormatting]) -> Self {
         custom(decoderToDateFunction(dateFormatters: formatters))
     }
     
-    private static func decoderToDateFunction(dateFormatters: [DateFormatter]) -> (Decoder) throws -> Date {
+    /// Reads the date with the first formatter that recognises it, and throws a `DecodingError` naming the value and where it sat when none does — so a caller catching it learns which string could not be read and not only that one could not.
+    private static func decoderToDateFunction(dateFormatters: [DateFormatting]) -> (Decoder) throws -> Date {
         { decoder in
-            let dateString = try decoder.singleValueContainer().decode(String.self)
-            guard let date = (
-                dateFormatters
-                    .map { $0.date(from: dateString) }
-                    .compactMap { $0 }
-                    .first
-                // TODO: Optimize chain above.
-            )
+            let container = try decoder.singleValueContainer()
+            let dateString = try container.decode(String.self)
+            guard let date = dateFormatters
+                .lazy
+                .compactMap({ $0.date(from: dateString) })
+                .first
             else {
-                debugPrint("\(#function) couldn't decode date string \(dateString)")
-                throw Error.dateFormat
+                throw DecodingError.dataCorruptedError(
+                    in: container,
+                    debugDescription: "Date not in any of the \(dateFormatters.count) expected formats: \(dateString)"
+                )
             }
             return date
         }

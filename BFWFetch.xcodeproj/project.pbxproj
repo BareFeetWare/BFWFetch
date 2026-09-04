@@ -32,6 +32,7 @@
 		E29F360D2F4BBD15001F6459 /* Codable+UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29F360C2F4BBD15001F6459 /* Codable+UserDefaults.swift */; };
 		E29F619A2610431400947455 /* JSONDecoder+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29F61992610431400947455 /* JSONDecoder+Date.swift */; };
 		E29F619E2610442900947455 /* DateFormatter+Fetch.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29F619D2610442900947455 /* DateFormatter+Fetch.swift */; };
+		E2DF0003304400000000B003 /* DateFormatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DF0001304400000000B001 /* DateFormatting.swift */; };
 		E29F61A02610448000947455 /* String+SnakeCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29F619F2610448000947455 /* String+SnakeCase.swift */; };
 		E2A3C4502F90974200EC3DDD /* StringOrNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A3C4512F90974200EC3DDD /* StringOrNumber.swift */; };
 		E29F61A426104BB900947455 /* URL+PathComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29F61A126104BB900947455 /* URL+PathComponents.swift */; };
@@ -154,6 +155,7 @@
 		E29F360C2F4BBD15001F6459 /* Codable+UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Codable+UserDefaults.swift"; sourceTree = "<group>"; };
 		E29F61992610431400947455 /* JSONDecoder+Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "JSONDecoder+Date.swift"; sourceTree = "<group>"; };
 		E29F619D2610442900947455 /* DateFormatter+Fetch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Fetch.swift"; sourceTree = "<group>"; };
+		E2DF0001304400000000B001 /* DateFormatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatting.swift; sourceTree = "<group>"; };
 		E29F619F2610448000947455 /* String+SnakeCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+SnakeCase.swift"; sourceTree = "<group>"; };
 		E2A3C4512F90974200EC3DDD /* StringOrNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringOrNumber.swift; sourceTree = "<group>"; };
 		E29F61A126104BB900947455 /* URL+PathComponents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URL+PathComponents.swift"; sourceTree = "<group>"; };
@@ -326,6 +328,7 @@
 				E29F360C2F4BBD15001F6459 /* Codable+UserDefaults.swift */,
 				E2C8842C2E6AA1DC00484B0E /* Collection+Empty.swift */,
 				E29F619D2610442900947455 /* DateFormatter+Fetch.swift */,
+				E2DF0001304400000000B001 /* DateFormatting.swift */,
 				E2BF239E2BFDBE010016EBC1 /* DecoderProvider.swift */,
 				C876F4FC459F4D7A8807D603 /* Deprecations.swift */,
 				E265077D2E83BE8E008D1A01 /* Fetcher.swift */,
@@ -693,6 +696,7 @@
 				E2BF239F2BFDBE010016EBC1 /* DecoderProvider.swift in Sources */,
 				E29F619A2610431400947455 /* JSONDecoder+Date.swift in Sources */,
 				E29F619E2610442900947455 /* DateFormatter+Fetch.swift in Sources */,
+				E2DF0003304400000000B003 /* DateFormatting.swift in Sources */,
 				E2A00001304400000000A001 /* AuthorizationProvider.swift in Sources */,
 				E2A00001304400000000B001 /* OAuthAuthorizationProvider.swift in Sources */,
 				E2A00001304400000000C001 /* BearerCredential.swift in Sources */,
